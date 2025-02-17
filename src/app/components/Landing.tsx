@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import React from "react";
+import Stars from "./Stars"; // Import Stars component
 
 const missionStatement =
   "Bringing authentic South African flavors to Houston, one family recipe at a time. At Angus Biltong, we're more than a store – we're a taste of home for expats and a delicious adventure for locals.";
@@ -10,7 +11,7 @@ const missionStatement =
 const Landing: React.FC = () => {
   return (
     <section className="h-screen flex flex-col items-center justify-center bg-white text-center">
-      {/* Motion effect for flickering logo animation */}
+      {/* Logo Animation */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: [0, 1, 0.8, 1], scale: [0.8, 1, 0.9, 1] }}
@@ -26,15 +27,18 @@ const Landing: React.FC = () => {
         />
       </motion.div>
 
-      {/* Mission Statement - Whole Sentence Rising Together */}
+      {/* Mission Statement Animation */}
       <motion.p
-        initial={{ opacity: 0, y: 30 }} // Starts below
-        animate={{ opacity: 1, y: 0 }} // Moves up into place
-        transition={{ delay: 1.5, duration: 2, ease: "easeOut" }} // Slower and smoother
-        className="mt-6 text-xl font-bold text-gray-800 max-w-lg leading-relaxed"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.5, duration: 2, ease: "easeOut" }}
+        className="mt-6 text-lg font-bold text-gray-800 max-w-lg leading-relaxed"
       >
         {missionStatement}
       </motion.p>
+
+      {/* 5 Stars Animation Below Mission Statement */}
+      <Stars />
     </section>
   );
 };
