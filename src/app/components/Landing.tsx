@@ -27,7 +27,7 @@ const Landing: React.FC = () => {
   }, []);
 
   return (
-    <section className="h-screen flex flex-col items-center justify-center bg-[#4B7B3F] text-center">
+    <section className="h-screen flex flex-col items-center justify-center bg-[#fdfbd4] text-center">
       {/* Logo Animation - Slow Fade-in & Scale-Up */}
       <motion.div
         initial={{ opacity: 0, scale: 0.5 }} // Starts smaller & invisible
