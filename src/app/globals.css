@@ -24,3 +24,29 @@ body {
 .zen-kaku {
   font-family: var(--font-zen-kaku), sans-serif;
 }
+
+/* 🔹 Text Pull-Up Animation (Per Line) */
+@keyframes pullUpText {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+}
+
+.animate-pullText {
+  display: block;
+  overflow: hidden;
+  transform-origin: center;
+}
+
+.animate-pullText span {
+  display: inline-block;
+  transform: translateY(100%);
+  opacity: 0;
+  animation: pullUpText 1s ease-out forwards;
+  animation-fill-mode: forwards; /* Ensures it stays visible */
+}

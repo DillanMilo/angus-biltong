@@ -2,13 +2,29 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import React from "react";
-import Stars from "./Stars"; // Import Stars component
+import React, { useEffect, useRef } from "react";
+import Stars from "./Stars";
 
-const missionStatement =
-  "Bringing authentic South African flavors to Houston, one family recipe at a time. At Angus Biltong, we're more than a store – we're a taste of home for expats and a delicious adventure for locals.";
+const missionStatementLines = [
+  "Bringing authentic South African flavors to Houston,",
+  "one family recipe at a time.",
+  "At Angus Biltong, we're more than a store –",
+  "we're a taste of home for expats and a delicious adventure for locals.",
+];
 
 const Landing: React.FC = () => {
+  const missionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (missionRef.current) {
+      missionRef.current
+        .querySelectorAll(".animate-pullText span")
+        .forEach((span, index) => {
+          (span as HTMLElement).style.animationDelay = `${1.5 + index * 0.2}s`; // Ensure staggered effect
+        });
+    }
+  }, []);
+
   return (
     <section className="h-screen flex flex-col items-center justify-center bg-white text-center">
       {/* Logo Animation */}
@@ -27,15 +43,17 @@ const Landing: React.FC = () => {
         />
       </motion.div>
 
-      {/* Mission Statement Animation */}
-      <motion.p
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.5, duration: 2, ease: "easeOut" }}
-        className="mt-6 text-lg font-bold text-gray-800 max-w-lg leading-relaxed"
+      {/* Mission Statement - Each Line Pulled Up Together */}
+      <div
+        ref={missionRef}
+        className="mt-6 text-lg text-gray-800 max-w-lg leading-relaxed font-bold"
       >
-        {missionStatement}
-      </motion.p>
+        {missionStatementLines.map((line, i) => (
+          <p key={i} className="animate-pullText">
+            <span>{line}</span>
+          </p>
+        ))}
+      </div>
 
       {/* 5 Stars Animation Below Mission Statement */}
       <Stars />
