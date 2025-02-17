@@ -9,7 +9,7 @@ import SocialIcons from "./SocialIcons";
 const missionStatementLines = [
   "Bringing authentic South African flavors to Houston,",
   "one family recipe at a time.",
-  "At Angus Biltong, we're more than a store –",
+  "We're more than a store –",
   "we're a taste of home for expats and a delicious adventure for locals.",
 ];
 
@@ -47,7 +47,7 @@ const Landing: React.FC = () => {
       {/* Mission Statement - Each Line Pulled Up Together */}
       <div
         ref={missionRef}
-        className="mt-6 text-lg text-gray-800 max-w-lg leading-relaxed font-bold"
+        className="mt-6 text-xl text-gray-800 max-w-lg leading-relaxed font-bold"
       >
         {missionStatementLines.map((line, i) => (
           <p key={i} className="animate-pullText">
@@ -55,7 +55,7 @@ const Landing: React.FC = () => {
           </p>
         ))}
       </div>
-
+      <br></br>
       {/* 5 Stars Animation Below Mission Statement */}
       <Stars />
       <SocialIcons />
