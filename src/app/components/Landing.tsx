@@ -26,7 +26,7 @@ const Landing: React.FC = () => {
   }, []);
 
   return (
-    <section className="h-screen flex flex-col items-center justify-center bg-white text-center">
+    <section className="h-screen flex flex-col items-center justify-center bg-[#4B7B3F] text-center">
       {/* Logo Animation */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
