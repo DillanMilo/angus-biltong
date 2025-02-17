@@ -31,7 +31,7 @@ const Landing: React.FC = () => {
         initial={{ opacity: 0, y: 30 }} // Starts below
         animate={{ opacity: 1, y: 0 }} // Moves up into place
         transition={{ delay: 1.5, duration: 2, ease: "easeOut" }} // Slower and smoother
-        className="mt-6 text-lg text-gray-800 max-w-lg leading-relaxed"
+        className="mt-6 text-xl font-bold text-gray-800 max-w-lg leading-relaxed"
       >
         {missionStatement}
       </motion.p>
