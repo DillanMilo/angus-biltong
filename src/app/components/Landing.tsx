@@ -27,11 +27,11 @@ const Landing: React.FC = () => {
 
   return (
     <section className="h-screen flex flex-col items-center justify-center bg-[#4B7B3F] text-center">
-      {/* Logo Animation */}
+      {/* Logo Animation - Slow Fade-in & Scale-Up */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: [0, 1, 0.8, 1], scale: [0.8, 1, 0.9, 1] }}
-        transition={{ duration: 1.5, ease: "easeInOut", repeat: 0 }}
+        initial={{ opacity: 0, scale: 0.5 }} // Starts smaller & invisible
+        animate={{ opacity: 1, scale: [0.5, 1.05, 1] }} // Slowly fades in & grows to full size
+        transition={{ duration: 1.5, ease: "easeInOut" }} // Slow fade-in, smooth scaling
       >
         <Image
           src="/AB-Logo-300dpi-Alpha-Only-2.png"
