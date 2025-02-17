@@ -16,25 +16,25 @@ const Navbar: React.FC = () => {
     >
       {/* Search Icon */}
       <Search
-        size={24}
+        size={30}
         className="cursor-pointer hover:text-gray-600 transition-colors"
       />
 
       {/* Profile Icon */}
       <User
-        size={24}
+        size={30}
         className="cursor-pointer hover:text-gray-600 transition-colors"
       />
 
       {/* Gift Box Icon */}
       <Gift
-        size={24}
+        size={30}
         className="cursor-pointer hover:text-gray-600 transition-colors"
       />
 
       {/* Shopping Cart Icon */}
       <ShoppingCart
-        size={24}
+        size={30}
         className="cursor-pointer hover:text-gray-600 transition-colors"
       />
 

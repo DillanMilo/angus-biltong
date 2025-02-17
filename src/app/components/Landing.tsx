@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import React, { useEffect, useRef } from "react";
 import Stars from "./Stars";
+import SocialIcons from "./SocialIcons";
 
 const missionStatementLines = [
   "Bringing authentic South African flavors to Houston,",
@@ -57,6 +58,7 @@ const Landing: React.FC = () => {
 
       {/* 5 Stars Animation Below Mission Statement */}
       <Stars />
+      <SocialIcons />
     </section>
   );
 };
