@@ -16,7 +16,7 @@ const missionStatementLines = [
 const Landing: React.FC = () => {
   const missionRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll(); // Track scroll progress
-  const fadeOut = useTransform(scrollYProgress, [0.6, 1], [1, 0]); // Fades out at 60% scroll
+  const fadeOut = useTransform(scrollYProgress, [0.3, 1], [1, 0]); // Fades out at 30% scroll
 
   useEffect(() => {
     if (missionRef.current) {
@@ -30,7 +30,7 @@ const Landing: React.FC = () => {
 
   return (
     <motion.section
-      className="relative h-screen flex flex-col items-center justify-center text-center bg-[#47B6A5]"
+      className="relative h-screen flex flex-col items-center justify-center text-center bg-[#f4f8f1]"
       style={{ opacity: fadeOut }} // Delayed fade out
     >
       {/* Background Image with 3s Fade-In Covering Entire Section */}
