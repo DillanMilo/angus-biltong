@@ -39,7 +39,7 @@ const SocialIcons: React.FC = () => {
             duration: 0.8,
             ease: "easeOut",
           }} // Delayed for last effect
-          className="text-gray-800 hover:text-black transition-colors"
+          className="text-gray-800 hover:text-[#47B6A5] transition-colors"
         >
           {item.icon}
         </motion.a>
