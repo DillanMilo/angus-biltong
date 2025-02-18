@@ -1,7 +1,7 @@
 "use client"; // Needed for animations in Next.js
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import React, { useEffect, useRef } from "react";
 import Stars from "./Stars";
 import SocialIcons from "./SocialIcons";
@@ -15,6 +15,8 @@ const missionStatementLines = [
 
 const Landing: React.FC = () => {
   const missionRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll(); // Track scroll progress
+  const fadeOut = useTransform(scrollYProgress, [0.8, 1], [1, 0]); // Fades out at 80% scroll
 
   useEffect(() => {
     if (missionRef.current) {
@@ -27,12 +29,15 @@ const Landing: React.FC = () => {
   }, []);
 
   return (
-    <section className="relative h-screen flex flex-col items-center justify-center text-center bg-[#47B6A5]">
+    <motion.section
+      className="relative h-screen flex flex-col items-center justify-center text-center bg-[#47B6A5]"
+      style={{ opacity: fadeOut }} // Delayed fade out
+    >
       {/* Background Image with 3s Fade-In Covering Entire Section */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1.5, delay: 0.75 }} // 0.75-second delay before fading in
+        transition={{ duration: 1.5, delay: 3 }} // 3-second delay before fading in
         className="absolute inset-0 w-full h-full bg-cover bg-center"
         style={{ backgroundImage: "url('/image-5.jpg')" }}
       />
@@ -40,8 +45,8 @@ const Landing: React.FC = () => {
       {/* Dim Overlay to Improve Contrast */}
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: 0.2 }}
-        transition={{ duration: 1.5, delay: 2.2 }} // Slight delay after image loads
+        animate={{ opacity: 0.4 }}
+        transition={{ duration: 1.5, delay: 3.2 }} // Slight delay after image loads
         className="absolute inset-0 bg-black"
       />
 
@@ -73,12 +78,21 @@ const Landing: React.FC = () => {
           </p>
         ))}
       </div>
-      <br></br>
+      <br />
 
       {/* 5 Stars Animation Below Mission Statement */}
       <Stars />
-      <SocialIcons />
-    </section>
+
+      {/* Social Icons with Exit Animation */}
+      <motion.div
+        initial={{ opacity: 1, y: 0 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -50 }} // Moves out in opposite direction on scroll
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
+        <SocialIcons />
+      </motion.div>
+    </motion.section>
   );
 };
 
