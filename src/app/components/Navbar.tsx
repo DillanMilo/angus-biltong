@@ -12,7 +12,7 @@ const Navbar: React.FC = () => {
       initial={{ opacity: 0, x: 50 }} // Start off-screen to the right
       animate={{ opacity: 1, x: 0 }} // Move into place
       transition={{ delay: 1.5, duration: 2, ease: "easeOut" }} // Matches mission statement timing
-      className="fixed top-5 right-10 flex items-center space-x-6 text-gray-800"
+      className="fixed top-5 right-10 flex items-center space-x-6 text-gray-800 z-10"
     >
       {/* Search Icon */}
       <Search

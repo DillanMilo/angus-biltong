@@ -27,7 +27,15 @@ const Landing: React.FC = () => {
   }, []);
 
   return (
-    <section className="h-screen flex flex-col items-center justify-center bg-[#47B6A5] text-center">
+    <section
+      className="relative h-screen flex flex-col items-center justify-center text-center"
+      style={{
+        backgroundImage: "url('/image-5.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "bottom",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
       {/* Logo Animation - Slow Fade-in & Scale-Up */}
       <motion.div
         initial={{ opacity: 0, scale: 0.5 }} // Starts smaller & invisible
@@ -56,6 +64,7 @@ const Landing: React.FC = () => {
         ))}
       </div>
       <br></br>
+
       {/* 5 Stars Animation Below Mission Statement */}
       <Stars />
       <SocialIcons />
