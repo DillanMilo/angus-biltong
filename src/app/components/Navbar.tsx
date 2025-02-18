@@ -45,8 +45,8 @@ const Navbar: React.FC = () => {
           <Image
             src="/AB-Logo-300dpi-Alpha-Only-2.png"
             alt="Angus Biltong Logo"
-            width={128}
-            height={128}
+            width={100}
+            height={110}
             priority
           />
         )}
@@ -91,16 +91,24 @@ const Navbar: React.FC = () => {
               transition={{ duration: 0.3, ease: "easeOut" }}
               className="absolute right-0 mt-3 w-48 bg-white shadow-lg rounded-lg py-2"
             >
-              {["Shop All", "Dried Meats", "Sausage", "Groceries"].map(
-                (item, index) => (
-                  <button
-                    key={index}
-                    className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-200 transition"
-                  >
-                    {item}
-                  </button>
-                )
-              )}
+              {[
+                "Shop All",
+                "Dried Meats",
+                "Sausage",
+                "Groceries",
+                "Sign In",
+                "Gift",
+                "Cart",
+                "Search",
+                "Logout",
+              ].map((item, index) => (
+                <button
+                  key={index}
+                  className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-200 transition"
+                >
+                  {item}
+                </button>
+              ))}
             </motion.div>
           )}
         </motion.div>

@@ -38,7 +38,7 @@ const Featured: React.FC = () => {
 
   return (
     <motion.section
-      className="py-16 text-center relative bg-[#f4f8f1]" // Added background color here
+      className="py-16 text-center relative bg-[#f4f8f1]" // Background color remains
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 1, ease: "easeOut" }}
@@ -82,24 +82,6 @@ const Featured: React.FC = () => {
               </motion.div>
             ))}
           </div>
-
-          {/* Scroll Left Arrow (Appears Only When Scrolled) */}
-          {showBackArrow && (
-            <button
-              onClick={handleScrollBack}
-              className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-lg hover:scale-110 transition"
-            >
-              <ArrowLeft size={30} className="text-gray-600" />
-            </button>
-          )}
-
-          {/* Scroll Right Arrow */}
-          <button
-            onClick={handleScrollForward}
-            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-lg hover:scale-110 transition"
-          >
-            <ArrowRight size={30} className="text-gray-600" />
-          </button>
         </div>
       </div>
 
@@ -139,26 +121,30 @@ const Featured: React.FC = () => {
               </motion.div>
             ))}
           </div>
-
-          {/* Scroll Left Arrow (Appears Only When Scrolled) */}
-          {showBackArrow && (
-            <button
-              onClick={handleScrollBack}
-              className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-lg hover:scale-110 transition"
-            >
-              <ArrowLeft size={30} className="text-gray-600" />
-            </button>
-          )}
-
-          {/* Scroll Right Arrow */}
-          <button
-            onClick={handleScrollForward}
-            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-lg hover:scale-110 transition"
-          >
-            <ArrowRight size={30} className="text-gray-600" />
-          </button>
         </div>
       </div>
+
+      {/* 🛒 "Shop All" Button at the Bottom */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5, duration: 0.8, ease: "easeOut" }}
+        viewport={{ once: true }}
+        className="mt-12"
+      >
+        <button className="bg-[#4B7B3F] text-white text-lg font-semibold py-3 px-8 rounded-md shadow-lg hover:bg-[#3a612f] transition">
+          Shop All
+        </button>
+      </motion.div>
+
+      {/* 📸 Fade-in Transition for Gallery Section */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ delay: 0.5, duration: 1, ease: "easeOut" }}
+        viewport={{ once: true }}
+        className="mt-16"
+      ></motion.div>
     </motion.section>
   );
 };
