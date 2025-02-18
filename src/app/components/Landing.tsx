@@ -27,20 +27,22 @@ const Landing: React.FC = () => {
   }, []);
 
   return (
-    <section
-      className="relative h-screen flex flex-col items-center justify-center text-center"
-      style={{
-        backgroundImage: "url('/image-5.jpg')",
-        backgroundSize: "cover",
-        backgroundPosition: "bottom",
-        backgroundRepeat: "no-repeat",
-      }}
-    >
+    <section className="relative h-screen flex flex-col items-center justify-center text-center bg-[#47B6A5]">
+      {/* Background Image with 3s Fade-In Covering Entire Section */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.5, delay: 0.5 }} // 3-second delay before fading in
+        className="absolute inset-0 w-full h-full bg-cover bg-center"
+        style={{ backgroundImage: "url('/image-5.jpg')" }}
+      />
+
       {/* Logo Animation - Slow Fade-in & Scale-Up */}
       <motion.div
         initial={{ opacity: 0, scale: 0.5 }} // Starts smaller & invisible
         animate={{ opacity: 1, scale: [0.5, 1.05, 1] }} // Slowly fades in & grows to full size
         transition={{ duration: 1.5, ease: "easeInOut" }} // Slow fade-in, smooth scaling
+        className="relative z-10" // Ensure logo stays visible
       >
         <Image
           src="/AB-Logo-300dpi-Alpha-Only-2.png"
@@ -55,7 +57,7 @@ const Landing: React.FC = () => {
       {/* Mission Statement - Each Line Pulled Up Together */}
       <div
         ref={missionRef}
-        className="mt-6 text-xl text-[#fdfbd4] max-w-lg leading-relaxed font-bold"
+        className="mt-6 text-xl text-[#fdfbd4] max-w-lg leading-relaxed font-bold relative z-10"
       >
         {missionStatementLines.map((line, i) => (
           <p key={i} className="animate-pullText">
