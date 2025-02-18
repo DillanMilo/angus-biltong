@@ -9,13 +9,16 @@ const Navbar: React.FC = () => {
   const [showStickyLogo, setShowStickyLogo] = useState(false);
   const [showIcons, setShowIcons] = useState(false); // Controls delay for icons
   const [menuOpen, setMenuOpen] = useState(false); // State for dropdown menu
+  const [hideIcons, setHideIcons] = useState(false); // Controls icon visibility except menu
 
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > window.innerHeight * 0.6) {
         setShowStickyLogo(true);
+        setHideIcons(true); // Hide all icons except menu
       } else {
         setShowStickyLogo(false);
+        setHideIcons(false); // Show all icons when on landing
       }
     };
 
@@ -63,14 +66,18 @@ const Navbar: React.FC = () => {
           <motion.div
             key={index}
             initial={{ opacity: 0, y: -10 }}
-            animate={showIcons ? { opacity: 1, y: 0 } : { opacity: 0, y: -10 }}
+            animate={
+              showIcons && !hideIcons
+                ? { opacity: 1, y: 0 }
+                : { opacity: 0, y: -10 }
+            }
             transition={{ delay, duration: 0.6, ease: "easeOut" }}
           >
             <Icon size={28} className="cursor-pointer hover:text-gray-600" />
           </motion.div>
         ))}
 
-        {/* Menu Icon with Dropdown Toggle */}
+        {/* Menu Icon (Remains Visible) */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={showIcons ? { opacity: 1, y: 0 } : { opacity: 0, y: -10 }}
