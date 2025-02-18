@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Facebook, Instagram, Mail, Phone } from "lucide-react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const socialLinks = [
   {
@@ -24,8 +24,28 @@ const socialLinks = [
 ];
 
 const SocialIcons: React.FC = () => {
+  const [hideSocials, setHideSocials] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > window.innerHeight * 0.6) {
+        setHideSocials(true); // Hide socials when scrolling past landing
+      } else {
+        setHideSocials(false); // Show socials when on landing
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <div className="fixed top-6 left-6 flex flex-col space-y-4">
+    <motion.div
+      initial={{ opacity: 1 }}
+      animate={{ opacity: hideSocials ? 0 : 1 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className="fixed top-6 left-6 flex flex-col space-y-4 transition-opacity"
+    >
       {socialLinks.map((item, index) => (
         <motion.a
           key={item.id}
@@ -44,7 +64,7 @@ const SocialIcons: React.FC = () => {
           {item.icon}
         </motion.a>
       ))}
-    </div>
+    </motion.div>
   );
 };
 
