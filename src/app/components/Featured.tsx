@@ -3,7 +3,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Star, ArrowRight, ArrowLeft } from "lucide-react";
 import Image from "next/image";
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 // Dummy product placeholders
 const featuredProducts = [
@@ -34,12 +34,61 @@ const Featured: React.FC = () => {
 
   const fadeOut = useTransform(scrollYProgress, [0.3, 1], [1, 0]); // Fades out at 30% scroll
 
+  const [hideSocials, setHideSocials] = useState(false); // Controls social icons visibility
+
+  // Track scroll progress to fade out socials when leaving Landing
+  const { scrollY } = useScroll();
+  const fadeOutSocials = useTransform(
+    scrollY,
+    [window.innerHeight * 0.6, window.innerHeight],
+    [1, 0]
+  );
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > window.innerHeight * 0.6) {
+        setHideSocials(true);
+      } else {
+        setHideSocials(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Placeholder function for scrolling logic
+  const handleScrollForward = () => {
+    setShowBackArrow(true); // When scrolled, show back arrow
+    console.log("Scroll Forward Clicked!");
+  };
+
+  const handleScrollBack = () => {
+    setShowBackArrow(false); // Hide back arrow when back to start
+    console.log("Scroll Back Clicked!");
+  };
+
   return (
     <motion.section
       ref={featuredRef}
-      className="py-16 text-center relative bg-[#f4f8f1]"
-      style={{ opacity: fadeOut }} // Apply fade effect
+      style={{ opacity: fadeOut }}
+      className="py-16 text-center relative bg-[#f4f8f1]" // Background color remains
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 1, ease: "easeOut" }}
+      viewport={{ once: true }}
     >
+      {/* Social Icons - Fade Out When Leaving Landing */}
+      <motion.div
+        style={{ opacity: fadeOutSocials }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className={`fixed top-10 left-10 transition-opacity ${
+          hideSocials ? "opacity-0" : "opacity-100"
+        }`}
+      >
+        {/* Add your social icons here */}
+      </motion.div>
+
       {/* Featured Products Section */}
       <div className="max-w-6xl mx-auto px-4 relative">
         <h2 className="text-3xl font-bold text-gray-900 mb-6">
@@ -69,7 +118,7 @@ const Featured: React.FC = () => {
                 />
                 <h3 className="text-lg font-semibold mt-4">{product.name}</h3>
                 <p className="text-gray-600">{product.price}</p>
-                {/* ⭐ Star Rating */}
+                {/* Star Rating */}
                 <div className="flex justify-center mt-2">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} size={18} className="text-yellow-500" />
@@ -78,6 +127,14 @@ const Featured: React.FC = () => {
               </motion.div>
             ))}
           </div>
+
+          {/* Scroll Right Arrow for Featured Products */}
+          <button
+            onClick={handleScrollForward}
+            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-lg hover:scale-110 transition"
+          >
+            <ArrowRight size={30} className="text-gray-600" />
+          </button>
         </div>
       </div>
 
@@ -108,7 +165,7 @@ const Featured: React.FC = () => {
                 />
                 <h3 className="text-lg font-semibold mt-4">{product.name}</h3>
                 <p className="text-gray-600">{product.price}</p>
-                {/* ⭐ Star Rating */}
+                {/* Star Rating */}
                 <div className="flex justify-center mt-2">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} size={18} className="text-yellow-500" />
@@ -117,6 +174,14 @@ const Featured: React.FC = () => {
               </motion.div>
             ))}
           </div>
+
+          {/* Scroll Right Arrow for Most Popular Section */}
+          <button
+            onClick={handleScrollForward}
+            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-lg hover:scale-110 transition"
+          >
+            <ArrowRight size={30} className="text-gray-600" />
+          </button>
         </div>
       </div>
 
@@ -132,15 +197,6 @@ const Featured: React.FC = () => {
           Shop All
         </button>
       </motion.div>
-
-      {/* 📸 Fade-in Transition for Gallery Section */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ delay: 0.5, duration: 1, ease: "easeOut" }}
-        viewport={{ once: true }}
-        className="mt-16"
-      ></motion.div>
     </motion.section>
   );
 };
