@@ -11,11 +11,11 @@ const Gallery: React.FC = () => {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1.5, ease: "easeOut" }}
+        transition={{ duration: 2.5, ease: "easeOut" }}
         className="overflow-hidden bg-[#0BDA51] text-black py-4 text-7xl font-bold"
       >
         <motion.div
-          className="flex space-x-12 whitespace-nowrap"
+          className="flex space-x-40 whitespace-nowrap"
           animate={{ x: ["100%", "-100%"] }}
           transition={{ repeat: Infinity, duration: 10, ease: "linear" }}
         >
