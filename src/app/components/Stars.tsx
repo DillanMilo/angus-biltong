@@ -12,7 +12,7 @@ const Stars: React.FC = () => {
       animate={{ opacity: 1 }}
       transition={{ delay: 2, duration: 1.5, ease: "easeOut" }}
     >
-      {/* Star Icons with Delayed Animation */}
+      {/* Filled Star Icons with Delayed Animation */}
       <div className="flex space-x-1">
         {[...Array(5)].map((_, i) => (
           <motion.div
@@ -21,7 +21,12 @@ const Stars: React.FC = () => {
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 2 + i * 0.2, duration: 0.4, ease: "easeOut" }}
           >
-            <Star size={28} className="text-yellow-500" />
+            <Star
+              size={32}
+              className="text-yellow-500 fill-current" // Fill the star completely
+              fill="currentColor" // Ensure it takes the text color
+              stroke="none" // Remove the stroke outline
+            />
           </motion.div>
         ))}
       </div>
@@ -33,7 +38,7 @@ const Stars: React.FC = () => {
         transition={{ delay: 3, duration: 0.8, ease: "easeOut" }}
         className="mt-2 text-lg font-semibold text-gray-800"
       >
-        5 Stars on Google ⭐⭐⭐⭐⭐
+        5 Stars on Google Reviews!
       </motion.p>
     </motion.div>
   );
