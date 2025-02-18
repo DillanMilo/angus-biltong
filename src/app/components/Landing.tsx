@@ -32,7 +32,7 @@ const Landing: React.FC = () => {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1.5, delay: 0.75 }} // 0.5-second delay before fading in
+        transition={{ duration: 1.5, delay: 0.75 }} // 0.75-second delay before fading in
         className="absolute inset-0 w-full h-full bg-cover bg-center"
         style={{ backgroundImage: "url('/image-5.jpg')" }}
       />
