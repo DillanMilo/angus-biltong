@@ -16,7 +16,7 @@ const missionStatementLines = [
 const Landing: React.FC = () => {
   const missionRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll(); // Track scroll progress
-  const fadeOut = useTransform(scrollYProgress, [0.8, 1], [1, 0]); // Fades out at 80% scroll
+  const fadeOut = useTransform(scrollYProgress, [0.6, 1], [1, 0]); // Fades out at 60% scroll
 
   useEffect(() => {
     if (missionRef.current) {
@@ -37,7 +37,7 @@ const Landing: React.FC = () => {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1.5, delay: 3 }} // 3-second delay before fading in
+        transition={{ duration: 1.5, delay: 0.75 }} // 0.75-second delay before fading in
         className="absolute inset-0 w-full h-full bg-cover bg-center"
         style={{ backgroundImage: "url('/image-5.jpg')" }}
       />
