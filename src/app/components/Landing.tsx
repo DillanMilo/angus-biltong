@@ -32,9 +32,17 @@ const Landing: React.FC = () => {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1.5, delay: 0.5 }} // 3-second delay before fading in
+        transition={{ duration: 1.5, delay: 0.75 }} // 0.5-second delay before fading in
         className="absolute inset-0 w-full h-full bg-cover bg-center"
         style={{ backgroundImage: "url('/image-5.jpg')" }}
+      />
+
+      {/* Dim Overlay to Improve Contrast */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.2 }}
+        transition={{ duration: 1.5, delay: 2.2 }} // Slight delay after image loads
+        className="absolute inset-0 bg-black"
       />
 
       {/* Logo Animation - Slow Fade-in & Scale-Up */}

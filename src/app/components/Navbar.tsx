@@ -17,25 +17,25 @@ const Navbar: React.FC = () => {
       {/* Search Icon */}
       <Search
         size={30}
-        className="cursor-pointer hover:text-[#47B6A5] transition-colors"
+        className="cursor-pointer hover:text-[#C7E4DC] transition-colors"
       />
 
       {/* Profile Icon */}
       <User
         size={30}
-        className="cursor-pointer hover:text-[#47B6A5] transition-colors"
+        className="cursor-pointer hover:text-[#C7E4DC] transition-colors"
       />
 
       {/* Gift Box Icon */}
       <Gift
         size={30}
-        className="cursor-pointer hover:text-[#47B6A5] transition-colors"
+        className="cursor-pointer hover:text-[#C7E4DC] transition-colors"
       />
 
       {/* Shopping Cart Icon */}
       <ShoppingCart
         size={30}
-        className="cursor-pointer hover:text-[#47B6A5] transition-colors"
+        className="cursor-pointer hover:text-[#C7E4DC] transition-colors"
       />
 
       {/* Menu Icon (with dropdown) */}
