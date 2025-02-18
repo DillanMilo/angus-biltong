@@ -50,3 +50,45 @@ body {
   animation: pullUpText 1s ease-out forwards;
   animation-fill-mode: forwards; /* Ensures it stays visible */
 }
+
+/* 🔹 Bottom Banner Background */
+.bg-bottom-banner {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 35vh; /* Adjust to cover the bottom third */
+  background-image: url("/image-5.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: -1; /* Ensures it stays behind content */
+  opacity: 0; /* Initially hidden */
+}
+
+/* 🔹 Smooth Fade-In Animation */
+@keyframes fadeInBanner {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-bannerFadeIn {
+  animation: fadeInBanner 1.5s ease-out forwards;
+  animation-delay: 3.5s; /* Delays banner fade-in until everything else loads */
+}
+
+/* ✅ Fix for Banner Not Showing Properly */
+.bg-bottom-banner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: inherit;
+  background-size: inherit;
+  background-position: inherit;
+  background-repeat: inherit;
+  z-index: -1;
+}
