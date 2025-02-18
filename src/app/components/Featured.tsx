@@ -1,9 +1,9 @@
-"use client"; // Needed for animations in Next.js
+"use client";
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Star, ArrowRight, ArrowLeft } from "lucide-react";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 // Dummy product placeholders
 const featuredProducts = [
@@ -23,26 +23,22 @@ const mostPopularProducts = [
 ];
 
 const Featured: React.FC = () => {
-  const [showBackArrow, setShowBackArrow] = useState(false); // Controls left arrow
+  const [showBackArrow, setShowBackArrow] = useState(false);
+  const featuredRef = useRef(null);
 
-  // Placeholder function for scrolling logic
-  const handleScrollForward = () => {
-    setShowBackArrow(true); // When scrolled, show back arrow
-    console.log("Scroll Forward Clicked!");
-  };
+  // 📜 Track scroll & fade out Featured section when scrolling down
+  const { scrollYProgress } = useScroll({
+    target: featuredRef,
+    offset: ["start end", "end start"],
+  });
 
-  const handleScrollBack = () => {
-    setShowBackArrow(false); // Hide back arrow when back to start
-    console.log("Scroll Back Clicked!");
-  };
+  const fadeOut = useTransform(scrollYProgress, [0.3, 1], [1, 0]); // Fades out at 30% scroll
 
   return (
     <motion.section
-      className="py-16 text-center relative bg-[#f4f8f1]" // Background color remains
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 1, ease: "easeOut" }}
-      viewport={{ once: true }}
+      ref={featuredRef}
+      className="py-16 text-center relative bg-[#f4f8f1]"
+      style={{ opacity: fadeOut }} // Apply fade effect
     >
       {/* Featured Products Section */}
       <div className="max-w-6xl mx-auto px-4 relative">
@@ -73,7 +69,7 @@ const Featured: React.FC = () => {
                 />
                 <h3 className="text-lg font-semibold mt-4">{product.name}</h3>
                 <p className="text-gray-600">{product.price}</p>
-                {/* Star Rating */}
+                {/* ⭐ Star Rating */}
                 <div className="flex justify-center mt-2">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} size={18} className="text-yellow-500" />
@@ -112,7 +108,7 @@ const Featured: React.FC = () => {
                 />
                 <h3 className="text-lg font-semibold mt-4">{product.name}</h3>
                 <p className="text-gray-600">{product.price}</p>
-                {/* Star Rating */}
+                {/* ⭐ Star Rating */}
                 <div className="flex justify-center mt-2">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} size={18} className="text-yellow-500" />
