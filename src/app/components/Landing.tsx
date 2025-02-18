@@ -47,7 +47,7 @@ const Landing: React.FC = () => {
       {/* Mission Statement - Each Line Pulled Up Together */}
       <div
         ref={missionRef}
-        className="mt-6 text-xl text-gray-800 max-w-lg leading-relaxed font-bold"
+        className="mt-6 text-xl text-[#fdfbd4] max-w-lg leading-relaxed font-bold"
       >
         {missionStatementLines.map((line, i) => (
           <p key={i} className="animate-pullText">
