@@ -1,70 +1,76 @@
-"use client"; // Needed for animations in Next.js
+"use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
-import { Search, User, Gift, ShoppingCart, Menu } from "lucide-react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Search, User, ShoppingCart, Gift, Menu } from "lucide-react";
 
 const Navbar: React.FC = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showStickyLogo, setShowStickyLogo] = useState(false);
+  const [showIcons, setShowIcons] = useState(false); // Controls delay for icons
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > window.innerHeight * 0.6) {
+        setShowStickyLogo(true);
+      } else {
+        setShowStickyLogo(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Adds a 1s delay before navbar icons start appearing
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setShowIcons(true);
+    }, 1000); // 1 second delay
+
+    return () => clearTimeout(timeout);
+  }, []);
 
   return (
-    <motion.nav
-      initial={{ opacity: 0, x: 50 }} // Start off-screen to the right
-      animate={{ opacity: 1, x: 0 }} // Move into place
-      transition={{ delay: 1.5, duration: 2, ease: "easeOut" }} // Matches mission statement timing
-      className="fixed top-5 right-10 flex items-center space-x-6 text-gray-800 z-10"
-    >
-      {/* Search Icon */}
-      <Search
-        size={30}
-        className="cursor-pointer hover:text-[#C7E4DC] transition-colors"
-      />
-
-      {/* Profile Icon */}
-      <User
-        size={30}
-        className="cursor-pointer hover:text-[#C7E4DC] transition-colors"
-      />
-
-      {/* Gift Box Icon */}
-      <Gift
-        size={30}
-        className="cursor-pointer hover:text-[#C7E4DC] transition-colors"
-      />
-
-      {/* Shopping Cart Icon */}
-      <ShoppingCart
-        size={30}
-        className="cursor-pointer hover:text-[#C7E4DC] transition-colors"
-      />
-
-      {/* Menu Icon (with dropdown) */}
-      <div className="relative">
-        <button
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="focus:outline-none"
-        >
-          <Menu
-            size={28}
-            className="cursor-pointer hover:text-[#C7E4DC] transition-colors"
+    <nav className="fixed top-0 w-full flex justify-between items-center px-6 py-3 z-50">
+      {/* Left Side - Logo (Appears Only After Scrolling) */}
+      <motion.div
+        className="w-32"
+        initial={{ opacity: 0, y: -20 }}
+        animate={showStickyLogo ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
+        {showStickyLogo && (
+          <Image
+            src="/AB-Logo-300dpi-Alpha-Only-2.png"
+            alt="Angus Biltong Logo"
+            width={128}
+            height={128}
+            priority
           />
-        </button>
-
-        {/* Dropdown (Hidden by default) */}
-        {isMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-            className="absolute right-0 mt-3 w-48 bg-white shadow-lg rounded-md p-3"
-          >
-            <p className="text-gray-700">Menu Item 1</p>
-            <p className="text-gray-700">Menu Item 2</p>
-            <p className="text-gray-700">Menu Item 3</p>
-          </motion.div>
         )}
+      </motion.div>
+
+      {/* Right Side - Navbar Icons (Fade In One by One After 1s Delay) */}
+      <div className="flex space-x-6 text-gray-800">
+        {[
+          { Icon: Search, delay: 1.3 },
+          { Icon: User, delay: 1.5 },
+          { Icon: Gift, delay: 1.7 },
+          { Icon: ShoppingCart, delay: 1.9 },
+          { Icon: Menu, delay: 2.1 },
+        ].map(({ Icon, delay }, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: -10 }}
+            animate={showIcons ? { opacity: 1, y: 0 } : { opacity: 0, y: -10 }}
+            transition={{ delay, duration: 0.6, ease: "easeOut" }}
+          >
+            <Icon size={28} className="cursor-pointer hover:text-gray-600" />
+          </motion.div>
+        ))}
       </div>
-    </motion.nav>
+    </nav>
   );
 };
 

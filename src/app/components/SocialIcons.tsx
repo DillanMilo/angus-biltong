@@ -7,20 +7,20 @@ import React from "react";
 const socialLinks = [
   {
     id: "facebook",
-    icon: <Facebook size={35} />,
+    icon: <Facebook size={28} />,
     link: "https://www.facebook.com/angusbiltong",
   },
   {
     id: "instagram",
-    icon: <Instagram size={35} />,
+    icon: <Instagram size={28} />,
     link: "https://www.instagram.com/angusbiltong",
   },
   {
     id: "email",
-    icon: <Mail size={35} />,
+    icon: <Mail size={28} />,
     link: "mailto:info@angusbiltong.com",
   },
-  { id: "phone", icon: <Phone size={35} />, link: "tel:+12817198577" },
+  { id: "phone", icon: <Phone size={28} />, link: "tel:+12817198577" },
 ];
 
 const SocialIcons: React.FC = () => {
