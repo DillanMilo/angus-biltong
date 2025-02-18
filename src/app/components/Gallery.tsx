@@ -9,24 +9,26 @@ const Gallery: React.FC = () => {
     <section className="relative w-full text-center py-16">
       {/* Moving Banner */}
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 2.5, ease: "easeOut" }}
+        initial={{ opacity: 0, y: 50 }} // Pull-up animation
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.5, ease: "easeOut" }}
         className="overflow-hidden bg-[#0BDA51] text-black py-4 text-7xl font-bold"
       >
         <motion.div
-          className="flex space-x-64 whitespace-nowrap"
-          animate={{ x: ["100%", "-100%"] }}
-          transition={{ repeat: Infinity, duration: 8, ease: "linear" }}
+          className="flex space-x-64 whitespace-nowrap w-max"
+          animate={{ x: ["0%", "-100%"] }}
+          transition={{
+            repeat: Infinity,
+            duration: 32,
+            ease: "linear",
+          }}
         >
-          <span>Family</span>
-          <span>Integrity</span>
-          <span>Quality</span>
-          <span>Community</span>
-          <span>Family</span>
-          <span>Integrity</span>
-          <span>Quality</span>
-          <span>Community</span>
+          {[...Array(3)].flatMap((_, i) => [
+            <span key={`family-${i}`}>Family</span>,
+            <span key={`integrity-${i}`}>Integrity</span>,
+            <span key={`quality-${i}`}>Quality</span>,
+            <span key={`community-${i}`}>Community</span>,
+          ])}
         </motion.div>
       </motion.div>
 

@@ -32,7 +32,7 @@ const Featured: React.FC = () => {
     offset: ["start end", "end start"],
   });
 
-  const fadeOut = useTransform(scrollYProgress, [0.3, 1], [1, 0]); // Fades out at 30% scroll
+  const fadeOut = useTransform(scrollYProgress, [0.6, 1], [1, 0]); // Fades out at 60% scroll
 
   const [hideSocials, setHideSocials] = useState(false); // Controls social icons visibility
 
