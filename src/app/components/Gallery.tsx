@@ -12,12 +12,12 @@ const Gallery: React.FC = () => {
         initial={{ opacity: 0, y: 50 }} // Pull-up animation
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.5, ease: "easeOut" }}
-        className="overflow-hidden bg-[#0BDA51] text-black py-8 text-[100px] font-medium tracking-wider uppercase"
+        className="overflow-hidden bg-[#0BDA51] text-black py-8 text-[100px] tracking-wider uppercase font-[600]"
         style={{
-          height: "140px", // Increased height for better balance
+          height: "140px", // Increased height for balance
           display: "flex",
-          alignItems: "center", // Keep text centered
-          fontFamily: "var(--font-schibsted-grotesk)", // ✅ Use the new font
+          alignItems: "center",
+          fontFamily: "var(--font-roboto-condensed)", // ✅ Ensure Roboto Condensed
         }}
       >
         <motion.div
@@ -30,16 +30,28 @@ const Gallery: React.FC = () => {
           }}
         >
           {[...Array(3)].flatMap((_, i) => [
-            <span key={`family-${i}`} className="text-[100px]">
+            <span
+              key={`family-${i}`}
+              className="text-[100px] font-semibold uppercase"
+            >
               FAMILY
             </span>,
-            <span key={`integrity-${i}`} className="text-[100px]">
+            <span
+              key={`integrity-${i}`}
+              className="text-[100px] font-semibold uppercase"
+            >
               INTEGRITY
             </span>,
-            <span key={`quality-${i}`} className="text-[100px]">
+            <span
+              key={`quality-${i}`}
+              className="text-[100px] font-semibold uppercase"
+            >
               QUALITY
             </span>,
-            <span key={`community-${i}`} className="text-[100px]">
+            <span
+              key={`community-${i}`}
+              className="text-[100px] font-semibold uppercase"
+            >
               COMMUNITY
             </span>,
           ])}

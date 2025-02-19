@@ -3,7 +3,7 @@ import {
   Geist,
   Geist_Mono,
   Zen_Kaku_Gothic_New,
-  Schibsted_Grotesk,
+  Roboto_Condensed,
 } from "next/font/google";
 import "./globals.css";
 
@@ -24,11 +24,11 @@ const zenKaku = Zen_Kaku_Gothic_New({
   weight: "400",
 });
 
-// ✅ New Font Import (Schibsted Grotesk)
-const schibstedGrotesk = Schibsted_Grotesk({
-  variable: "--font-schibsted-grotesk",
+// ✅ Import Roboto Condensed (Semi-Bold 600)
+const robotoCondensed = Roboto_Condensed({
+  variable: "--font-roboto-condensed",
   subsets: ["latin"],
-  weight: "500", // Medium weight as requested
+  weight: "600", // Semi-Bold
 });
 
 export const metadata: Metadata = {
@@ -42,7 +42,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${zenKaku.variable} ${schibstedGrotesk.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${zenKaku.variable} ${robotoCondensed.variable} antialiased`}
       >
         {children}
       </body>
