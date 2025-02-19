@@ -44,7 +44,7 @@ const SocialIcons: React.FC = () => {
       initial={{ opacity: 1 }}
       animate={{ opacity: hideSocials ? 0 : 1 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      className="fixed top-6 left-6 flex flex-col space-y-4 transition-opacity"
+      className="fixed top-9 left-6 flex flex-col space-y-5 transition-opacity"
     >
       {socialLinks.map((item, index) => (
         <motion.a
