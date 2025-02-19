@@ -45,7 +45,7 @@ const Landing: React.FC = () => {
       {/* Dim Overlay to Improve Contrast */}
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: 0.2 }}
+        animate={{ opacity: 0.15 }}
         transition={{ duration: 1.5, delay: 2.5 }} // Slight delay after image loads
         className="absolute inset-0 bg-black"
       />
