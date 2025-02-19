@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Facebook, Instagram } from "lucide-react";
+import { Facebook, Instagram, Mail, Phone } from "lucide-react"; // ✅ Added Mail & Phone icons
 import React from "react";
 
 const Footer: React.FC = () => {
@@ -60,6 +60,8 @@ const Footer: React.FC = () => {
             socialIcons: [
               { Icon: Facebook, link: "#" },
               { Icon: Instagram, link: "#" },
+              { Icon: Mail, link: "mailto:info@angusbiltong.com" }, // ✅ Mail icon with mailto
+              { Icon: Phone, link: "tel:+12817198577" }, // ✅ Phone icon with tel
             ],
           },
         ].map((section, index) => (
