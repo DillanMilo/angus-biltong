@@ -99,14 +99,14 @@ const Navbar: React.FC = () => {
               className="absolute right-0 mt-3 w-48 bg-white shadow-lg rounded-lg py-2"
             >
               {[
+                "Search",
+                "Sign In",
                 "Shop All",
                 "Dried Meats",
                 "Sausage",
                 "Groceries",
-                "Sign In",
                 "Gift",
                 "Cart",
-                "Search",
                 "Logout",
               ].map((item, index) => (
                 <button

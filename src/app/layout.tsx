@@ -1,7 +1,13 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Zen_Kaku_Gothic_New } from "next/font/google";
+import {
+  Geist,
+  Geist_Mono,
+  Zen_Kaku_Gothic_New,
+  Schibsted_Grotesk,
+} from "next/font/google";
 import "./globals.css";
 
+// Existing fonts
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -15,7 +21,14 @@ const geistMono = Geist_Mono({
 const zenKaku = Zen_Kaku_Gothic_New({
   variable: "--font-zen-kaku",
   subsets: ["latin"],
-  weight: "400", // Use the specific weight you selected
+  weight: "400",
+});
+
+// ✅ New Font Import (Schibsted Grotesk)
+const schibstedGrotesk = Schibsted_Grotesk({
+  variable: "--font-schibsted-grotesk",
+  subsets: ["latin"],
+  weight: "500", // Medium weight as requested
 });
 
 export const metadata: Metadata = {
@@ -25,13 +38,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${zenKaku.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${zenKaku.variable} ${schibstedGrotesk.variable} antialiased`}
       >
         {children}
       </body>
