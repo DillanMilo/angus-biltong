@@ -45,7 +45,7 @@ const Gallery: React.FC = () => {
         whileInView={{ scaleX: 1 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
         viewport={{ once: true }}
-        className="origin-center overflow-hidden bg-[#0BDA51] text-black py-8 text-[100px] tracking-wider uppercase font-[600]"
+        className="origin-center overflow-hidden bg-[#cd1c18] text-white py-8 text-[100px] tracking-wider uppercase font-[600]"
         style={{
           height: "140px",
           display: "flex",
