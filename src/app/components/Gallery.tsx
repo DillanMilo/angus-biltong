@@ -7,12 +7,17 @@ import React from "react";
 const Gallery: React.FC = () => {
   return (
     <section className="relative w-full text-center py-16">
-      {/* Moving Banner */}
+      {/* Moving Banner - Stretched for Height & Enlarged Text */}
       <motion.div
         initial={{ opacity: 0, y: 50 }} // Pull-up animation
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.5, ease: "easeOut" }}
-        className="overflow-hidden bg-[#0BDA51] text-black py-4 text-7xl font-bold"
+        className="overflow-hidden bg-[#0BDA51] text-black py-8 text-[100px] font-bold tracking-wider" // Increased font size
+        style={{
+          height: "140px", // Increased height for better balance
+          display: "flex",
+          alignItems: "center", // Keep text centered
+        }}
       >
         <motion.div
           className="flex space-x-64 whitespace-nowrap w-max"
@@ -24,10 +29,18 @@ const Gallery: React.FC = () => {
           }}
         >
           {[...Array(3)].flatMap((_, i) => [
-            <span key={`family-${i}`}>Family</span>,
-            <span key={`integrity-${i}`}>Integrity</span>,
-            <span key={`quality-${i}`}>Quality</span>,
-            <span key={`community-${i}`}>Community</span>,
+            <span key={`family-${i}`} className="text-[100px]">
+              Family
+            </span>,
+            <span key={`integrity-${i}`} className="text-[100px]">
+              Integrity
+            </span>,
+            <span key={`quality-${i}`} className="text-[100px]">
+              Quality
+            </span>,
+            <span key={`community-${i}`} className="text-[100px]">
+              Community
+            </span>,
           ])}
         </motion.div>
       </motion.div>
