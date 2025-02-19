@@ -107,7 +107,7 @@ const Gallery: React.FC = () => {
           href="https://www.spearheadmissions.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-[#0BDA51] font-semibold hover:underline"
+          className="text-[#0BDA8F] font-semibold hover:underline"
         >
           Spearhead Missions
         </a>
