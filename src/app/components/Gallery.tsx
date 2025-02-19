@@ -58,11 +58,11 @@ const Gallery: React.FC = () => {
           animate={{ x: ["0%", "-100%"] }}
           transition={{
             repeat: Infinity,
-            duration: 32,
+            duration: 320,
             ease: "linear",
           }}
         >
-          {[...Array(3)].flatMap((_, i) => [
+          {[...Array(30)].flatMap((_, i) => [
             <span
               key={`family-${i}`}
               className="text-[100px] font-semibold uppercase"

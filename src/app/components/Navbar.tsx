@@ -55,7 +55,7 @@ const Navbar: React.FC = () => {
           animate={{ x: ["0%", "-100%"] }}
           transition={{
             repeat: Infinity,
-            duration: 200,
+            duration: 240,
             ease: "linear",
           }}
         >

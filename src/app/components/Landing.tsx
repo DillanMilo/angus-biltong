@@ -33,7 +33,7 @@ const Landing: React.FC = () => {
       className="relative h-screen flex flex-col items-center justify-center text-center bg-[#f4f8f1]"
       style={{ opacity: fadeOut }} // Delayed fade out
     >
-      {/* Background Image with 3s Fade-In Covering Entire Section */}
+      {/* Background Image with 0.75s Fade-In Covering Entire Section */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
