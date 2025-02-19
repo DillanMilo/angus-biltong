@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { Star } from "lucide-react"; // Import Star icon
 import React from "react";
 
 const reviews = [
@@ -38,17 +39,18 @@ const reviews = [
 const Gallery: React.FC = () => {
   return (
     <section className="relative w-full text-center py-16">
-      {/* Moving Banner - Stretched for Height & Enlarged Text */}
+      {/* Moving Banner - Expands from Center on Scroll */}
       <motion.div
-        initial={{ opacity: 0, y: 50 }} // Pull-up animation
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.5, ease: "easeOut" }}
-        className="overflow-hidden bg-[#0BDA51] text-black py-8 text-[100px] tracking-wider uppercase font-[600]"
+        initial={{ scaleX: 0 }} // Curtain effect
+        whileInView={{ scaleX: 1 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        viewport={{ once: true }}
+        className="origin-center overflow-hidden bg-[#0BDA51] text-black py-8 text-[100px] tracking-wider uppercase font-[600]"
         style={{
-          height: "140px", // Increased height for balance
+          height: "140px",
           display: "flex",
           alignItems: "center",
-          fontFamily: "var(--font-roboto-condensed)", // ✅ Ensure Roboto Condensed
+          fontFamily: "var(--font-roboto-condensed)",
         }}
       >
         <motion.div
@@ -107,6 +109,37 @@ const Gallery: React.FC = () => {
         />
       </motion.div>
 
+      {/* 🏆 Review Cards - Load in from Left to Right */}
+      <div className="mt-16 px-6 max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+        {reviews.map((review, index) => (
+          <motion.div
+            key={review.id}
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{
+              delay: index * 0.3, // Staggered effect
+              duration: 1,
+              ease: "easeOut",
+            }}
+            viewport={{ once: true }}
+            className="bg-white p-6 rounded-lg shadow-lg border border-gray-200 text-left"
+          >
+            <p className="text-gray-700 italic">"{review.review}"</p>
+            <p className="font-bold mt-4 text-[#0BDA51]">{review.name}</p>
+            {/* ⭐ Star Rating */}
+            <div className="flex justify-start mt-2">
+              {[...Array(review.rating)].map((_, i) => (
+                <Star
+                  key={i}
+                  size={20}
+                  className="text-yellow-500 fill-current"
+                />
+              ))}
+            </div>
+          </motion.div>
+        ))}
+      </div>
+
       {/* Second Image Below */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
@@ -124,34 +157,6 @@ const Gallery: React.FC = () => {
           priority
         />
       </motion.div>
-
-      {/* ⭐ Review Cards Section (Loads in One by One) */}
-      <div className="mt-16 px-6 max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-        {reviews.map((review, index) => (
-          <motion.div
-            key={review.id}
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{
-              duration: 0.6,
-              delay: index * 0.2,
-              ease: "easeOut",
-            }}
-            viewport={{ once: true }}
-            className="bg-white p-6 rounded-lg shadow-lg"
-          >
-            <p className="text-gray-700 italic">"{review.review}"</p>
-            <p className="font-bold mt-4 text-[#0BDA51]">{review.name}</p>
-            <div className="flex justify-center mt-2">
-              {[...Array(review.rating)].map((_, i) => (
-                <span key={i} className="text-yellow-500 text-lg">
-                  ⭐
-                </span>
-              ))}
-            </div>
-          </motion.div>
-        ))}
-      </div>
 
       {/* Caption */}
       <motion.p
