@@ -20,7 +20,11 @@ const socialLinks = [
     icon: <Mail size={28} />,
     link: "mailto:info@angusbiltong.com",
   },
-  { id: "phone", icon: <Phone size={28} />, link: "tel:+12817198577" },
+  {
+    id: "phone",
+    icon: <Phone size={28} />,
+    link: "tel:+12817198577",
+  },
 ];
 
 const SocialIcons: React.FC = () => {
@@ -29,9 +33,9 @@ const SocialIcons: React.FC = () => {
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > window.innerHeight * 0.6) {
-        setHideSocials(true); // Hide socials when scrolling past landing
+        setHideSocials(true);
       } else {
-        setHideSocials(false); // Show socials when on landing
+        setHideSocials(false);
       }
     };
 
@@ -44,7 +48,9 @@ const SocialIcons: React.FC = () => {
       initial={{ opacity: 1 }}
       animate={{ opacity: hideSocials ? 0 : 1 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      className="fixed top-9 left-6 flex flex-col space-y-5 transition-opacity"
+      className={`fixed top-9 left-6 flex-col space-y-5 transition-opacity hidden sm:flex ${
+        hideSocials ? "hidden" : "flex"
+      }`}
     >
       {socialLinks.map((item, index) => (
         <motion.a
@@ -58,7 +64,7 @@ const SocialIcons: React.FC = () => {
             delay: 2.7 + index * 0.3,
             duration: 0.8,
             ease: "easeOut",
-          }} // Delayed for last effect
+          }}
           className="text-gray-800 hover:text-[#C7E4DC] transition-colors"
         >
           {item.icon}
