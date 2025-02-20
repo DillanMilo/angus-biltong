@@ -25,6 +25,7 @@ const mostPopularProducts = [
 const Featured: React.FC = () => {
   const [showBackArrow, setShowBackArrow] = useState(false);
   const featuredRef = useRef(null);
+  const [scrollRange, setScrollRange] = useState([0, 0]); // Add state for dynamic range
 
   // 📜 Track scroll & fade out Featured section when scrolling down
   const { scrollYProgress } = useScroll({
@@ -38,11 +39,15 @@ const Featured: React.FC = () => {
 
   // Track scroll progress to fade out socials when leaving Landing
   const { scrollY } = useScroll();
-  const fadeOutSocials = useTransform(
-    scrollY,
-    [window.innerHeight * 0.6, window.innerHeight],
-    [1, 0]
-  );
+
+  // Set scroll range on client side after mount
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setScrollRange([window.innerHeight * 0.6, window.innerHeight]);
+    }
+  }, []);
+
+  const fadeOutSocials = useTransform(scrollY, scrollRange, [1, 0]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -70,7 +75,7 @@ const Featured: React.FC = () => {
 
   return (
     <motion.section
-      id="featured" // Added ID here
+      id="featured"
       ref={featuredRef}
       style={{ opacity: fadeOut }}
       className="py-16 text-center relative bg-[#f4f8f1]" // Background color remains
