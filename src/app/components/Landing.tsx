@@ -30,6 +30,7 @@ const Landing: React.FC = () => {
 
   return (
     <motion.section
+      id="landing" // Added ID here
       className="relative h-screen flex flex-col items-center justify-center text-center bg-[#f4f8f1]"
       style={{ opacity: fadeOut }} // Delayed fade out
     >

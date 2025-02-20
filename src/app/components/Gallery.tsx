@@ -38,7 +38,10 @@ const reviews = [
 
 const Gallery: React.FC = () => {
   return (
-    <section className="relative w-full text-center py-16">
+    <section
+      id="gallery" // Added ID here
+      className="relative w-full text-center py-16"
+    >
       {/* Moving Banner - Expands from Center on Scroll */}
       <motion.div
         initial={{ scaleX: 0 }} // Curtain effect

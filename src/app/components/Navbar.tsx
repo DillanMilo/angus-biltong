@@ -10,9 +10,37 @@ const Navbar: React.FC = () => {
   const [showIcons, setShowIcons] = useState(false); // Controls delay for icons
   const [menuOpen, setMenuOpen] = useState(false); // State for dropdown menu
   const [hideIcons, setHideIcons] = useState(false); // Controls icon visibility except menu
+  const [showBanner, setShowBanner] = useState(true); // Controls banner visibility
 
   useEffect(() => {
     const handleScroll = () => {
+      const gallerySection = document.getElementById("gallery");
+      const footerSection = document.getElementById("footer");
+      const featuredSection = document.getElementById("featured");
+      const landingSection = document.getElementById("landing");
+
+      if (
+        gallerySection &&
+        footerSection &&
+        featuredSection &&
+        landingSection
+      ) {
+        const scrollPosition = window.scrollY + window.innerHeight / 2;
+
+        // Check if we're in gallery or footer sections
+        const inGallerySection = scrollPosition >= gallerySection.offsetTop;
+        const inFooterSection = scrollPosition >= footerSection.offsetTop;
+
+        // Check if we're in featured or landing sections
+        const inFeaturedSection =
+          scrollPosition >= featuredSection.offsetTop &&
+          scrollPosition < gallerySection.offsetTop;
+        const inLandingSection = scrollPosition < featuredSection.offsetTop;
+
+        // Show banner only in landing and featured sections
+        setShowBanner(inLandingSection || inFeaturedSection);
+      }
+
       if (window.scrollY > window.innerHeight * 0.6) {
         setShowStickyLogo(true);
         setHideIcons(true); // Hide all icons except menu
@@ -38,34 +66,36 @@ const Navbar: React.FC = () => {
   return (
     <header className="fixed top-0 w-full z-50">
       {/* 📢 Free Shipping Banner with Curtain Load-In & Infinite Scroll */}
-      <motion.div
-        initial={{ scaleX: 0 }} // Curtain effect
-        whileInView={{ scaleX: 1 }}
-        transition={{ duration: 2, ease: "easeOut" }}
-        viewport={{ once: true }}
-        className="origin-center overflow-hidden bg-black text-white py-3 text-lg font-semibold uppercase"
-        style={{
-          height: "25px", // Adjust banner height
-          display: "flex",
-          alignItems: "center",
-        }}
-      >
+      {showBanner && (
         <motion.div
-          className="flex space-x-32 whitespace-nowrap w-max"
-          animate={{ x: ["0%", "-100%"] }}
-          transition={{
-            repeat: Infinity,
-            duration: 240,
-            ease: "linear",
+          initial={{ scaleX: 0 }} // Curtain effect
+          animate={{ scaleX: 1 }}
+          exit={{ scaleX: 0 }} // Curtain close effect
+          transition={{ duration: 2, ease: "easeOut" }}
+          className="origin-center overflow-hidden bg-black text-white py-3 text-lg font-semibold uppercase"
+          style={{
+            height: "25px", // Adjust banner height
+            display: "flex",
+            alignItems: "center",
           }}
         >
-          {[...Array(80)].flatMap((_, i) => [
-            <span key={`shipping-${i}`} className="text-white">
-              FREE SHIPPING ON ALL ORDERS OVER $79
-            </span>,
-          ])}
+          <motion.div
+            className="flex space-x-32 whitespace-nowrap w-max"
+            animate={{ x: ["0%", "-100%"] }}
+            transition={{
+              repeat: Infinity,
+              duration: 240,
+              ease: "linear",
+            }}
+          >
+            {[...Array(80)].flatMap((_, i) => (
+              <span key={`shipping-${i}`} className="text-white">
+                FREE SHIPPING ON ALL ORDERS OVER $79
+              </span>
+            ))}
+          </motion.div>
         </motion.div>
-      </motion.div>
+      )}
 
       {/* 🔹 Navbar */}
       <nav className="w-full flex justify-between items-center px-6 py-3 bg-transparent">

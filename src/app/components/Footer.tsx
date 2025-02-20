@@ -6,7 +6,10 @@ import React from "react";
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-black text-white py-12">
+    <footer
+      id="footer" // Added ID here
+      className="bg-black text-white py-12"
+    >
       {/* Newsletter Section - Loads in from Left to Right */}
       <motion.div
         initial={{ opacity: 0, x: -100 }}
@@ -122,7 +125,7 @@ const Footer: React.FC = () => {
         </div>
         <p className="text-gray-400">255 Sawdust Rd, Spring, TX 77380</p>
         <p className="text-gray-400">281-719-8577</p>
-        <p className="text-gray-400 mt-4">&copy; 2025 Angus Biltong</p>
+        <p className="text-gray-400 mt-4">© 2025 Angus Biltong</p>
       </motion.div>
     </footer>
   );

@@ -70,6 +70,7 @@ const Featured: React.FC = () => {
 
   return (
     <motion.section
+      id="featured" // Added ID here
       ref={featuredRef}
       style={{ opacity: fadeOut }}
       className="py-16 text-center relative bg-[#f4f8f1]" // Background color remains
