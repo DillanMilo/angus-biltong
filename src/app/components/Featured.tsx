@@ -25,84 +25,41 @@ const mostPopularProducts = [
 const Featured: React.FC = () => {
   const [showBackArrow, setShowBackArrow] = useState(false);
   const featuredRef = useRef(null);
-  const [scrollRange, setScrollRange] = useState([0, 0]); // Add state for dynamic range
+  const [scrollRange, setScrollRange] = useState([0, 0]);
 
-  // 📜 Track scroll & fade out Featured section when scrolling down
+  // Track scroll & fade out Featured section when scrolling down
   const { scrollYProgress } = useScroll({
     target: featuredRef,
     offset: ["start end", "end start"],
   });
 
-  const fadeOut = useTransform(scrollYProgress, [0.6, 1], [1, 0]); // Fades out at 60% scroll
+  const fadeOut = useTransform(scrollYProgress, [0.6, 1], [1, 0]);
 
-  const [hideSocials, setHideSocials] = useState(false); // Controls social icons visibility
-
-  // Track scroll progress to fade out socials when leaving Landing
-  const { scrollY } = useScroll();
-
-  // Set scroll range on client side after mount
   useEffect(() => {
     if (typeof window !== "undefined") {
       setScrollRange([window.innerHeight * 0.6, window.innerHeight]);
     }
   }, []);
 
-  const fadeOutSocials = useTransform(scrollY, scrollRange, [1, 0]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > window.innerHeight * 0.6) {
-        setHideSocials(true);
-      } else {
-        setHideSocials(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  // Placeholder function for scrolling logic
-  const handleScrollForward = () => {
-    setShowBackArrow(true); // When scrolled, show back arrow
-    console.log("Scroll Forward Clicked!");
-  };
-
-  const handleScrollBack = () => {
-    setShowBackArrow(false); // Hide back arrow when back to start
-    console.log("Scroll Back Clicked!");
-  };
-
   return (
     <motion.section
       id="featured"
       ref={featuredRef}
       style={{ opacity: fadeOut }}
-      className="py-16 text-center relative bg-[#f4f8f1]" // Background color remains
+      className="py-16 text-center relative bg-[#f4f8f1]"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 1, ease: "easeOut" }}
       viewport={{ once: true }}
     >
-      {/* Social Icons - Fade Out When Leaving Landing */}
-      <motion.div
-        style={{ opacity: fadeOutSocials }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-        className={`fixed top-10 left-10 transition-opacity ${
-          hideSocials ? "opacity-0" : "opacity-100"
-        }`}
-      >
-        {/* Add your social icons here */}
-      </motion.div>
-
       {/* Featured Products Section */}
       <div className="max-w-6xl mx-auto px-4 relative">
-        <h2 className="text-3xl font-bold text-gray-900 mb-6">
+        <h2 className="text-3xl underline font-bold text-gray-900 mb-6">
           Featured Products
         </h2>
         <div className="relative">
-          <div className="grid grid-cols-5 gap-6">
-            {featuredProducts.map((product, index) => (
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
+            {featuredProducts.slice(0, 5).map((product, index) => (
               <motion.div
                 key={product.id}
                 initial={{ opacity: 0, x: -50 }}
@@ -133,23 +90,17 @@ const Featured: React.FC = () => {
               </motion.div>
             ))}
           </div>
-
-          {/* Scroll Right Arrow for Featured Products */}
-          <button
-            onClick={handleScrollForward}
-            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-lg hover:scale-110 transition"
-          >
-            <ArrowRight size={30} className="text-gray-600" />
-          </button>
         </div>
       </div>
 
       {/* Most Popular Section */}
       <div className="max-w-6xl mx-auto px-4 mt-12 relative">
-        <h2 className="text-3xl font-bold text-gray-900 mb-6">Most Popular</h2>
+        <h2 className="text-3xl underline font-bold text-gray-900 mb-6">
+          Most Popular
+        </h2>
         <div className="relative">
-          <div className="grid grid-cols-5 gap-6">
-            {mostPopularProducts.map((product, index) => (
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
+            {mostPopularProducts.slice(0, 5).map((product, index) => (
               <motion.div
                 key={product.id}
                 initial={{ opacity: 0, x: -50 }}
@@ -180,14 +131,6 @@ const Featured: React.FC = () => {
               </motion.div>
             ))}
           </div>
-
-          {/* Scroll Right Arrow for Most Popular Section */}
-          <button
-            onClick={handleScrollForward}
-            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-lg hover:scale-110 transition"
-          >
-            <ArrowRight size={30} className="text-gray-600" />
-          </button>
         </div>
       </div>
 
