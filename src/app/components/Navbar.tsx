@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { Search, User, ShoppingCart, Gift, Menu } from "lucide-react";
 
@@ -10,9 +10,14 @@ const Navbar: React.FC = () => {
   const [showIcons, setShowIcons] = useState(false); // Controls delay for icons
   const [menuOpen, setMenuOpen] = useState(false); // State for dropdown menu
   const [hideIcons, setHideIcons] = useState(false); // Controls icon visibility except menu
-  const [showBanner, setShowBanner] = useState(true); // Controls banner visibility
+  const [showBanner, setShowBanner] = useState(false); // Changed to false initially
 
   useEffect(() => {
+    // Delay banner appearance by 1.5 seconds on page load
+    const bannerTimeout = setTimeout(() => {
+      setShowBanner(true);
+    }, 1000); // 1 seconds
+
     const handleScroll = () => {
       const gallerySection = document.getElementById("gallery");
       const footerSection = document.getElementById("footer");
@@ -37,7 +42,7 @@ const Navbar: React.FC = () => {
           scrollPosition < gallerySection.offsetTop;
         const inLandingSection = scrollPosition < featuredSection.offsetTop;
 
-        // Show banner only in landing and featured sections
+        // Show banner only in landing and featured sections, after initial delay
         setShowBanner(inLandingSection || inFeaturedSection);
       }
 
@@ -51,7 +56,10 @@ const Navbar: React.FC = () => {
     };
 
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      clearTimeout(bannerTimeout); // Clean up timeout
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   // Adds a 1s delay before navbar icons start appearing
@@ -65,37 +73,39 @@ const Navbar: React.FC = () => {
 
   return (
     <header className="fixed top-0 w-full z-50">
-      {/* 📢 Free Shipping Banner with Curtain Load-In & Infinite Scroll */}
-      {showBanner && (
-        <motion.div
-          initial={{ scaleX: 0 }} // Curtain effect
-          animate={{ scaleX: 1 }}
-          exit={{ scaleX: 0 }} // Curtain close effect
-          transition={{ duration: 2, ease: "easeOut" }}
-          className="origin-center overflow-hidden bg-black text-white py-3 text-lg font-semibold uppercase"
-          style={{
-            height: "25px", // Adjust banner height
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
+      {/* 📢 Free Shipping Banner with Curtain Load-In & Out */}
+      <AnimatePresence>
+        {showBanner && (
           <motion.div
-            className="flex space-x-32 whitespace-nowrap w-max"
-            animate={{ x: ["0%", "-100%"] }}
-            transition={{
-              repeat: Infinity,
-              duration: 240,
-              ease: "linear",
+            initial={{ scaleX: 0 }} // Curtain effect (open from center)
+            animate={{ scaleX: 1 }} // Opens to full width
+            exit={{ scaleX: 0 }} // Closes back to center when disappearing
+            transition={{ duration: 0.5, ease: "easeOut" }} // Smooth enter/exit
+            className="origin-center overflow-hidden bg-black text-white py-3 text-lg font-semibold uppercase"
+            style={{
+              height: "25px", // Adjust banner height
+              display: "flex",
+              alignItems: "center",
             }}
           >
-            {[...Array(80)].flatMap((_, i) => (
-              <span key={`shipping-${i}`} className="text-white">
-                FREE SHIPPING ON ALL ORDERS OVER $79
-              </span>
-            ))}
+            <motion.div
+              className="flex space-x-32 whitespace-nowrap w-max"
+              animate={{ x: ["0%", "-100%"] }}
+              transition={{
+                repeat: Infinity,
+                duration: 240,
+                ease: "linear",
+              }}
+            >
+              {[...Array(80)].flatMap((_, i) => (
+                <span key={`shipping-${i}`} className="text-white">
+                  FREE SHIPPING ON ALL ORDERS OVER $79
+                </span>
+              ))}
+            </motion.div>
           </motion.div>
-        </motion.div>
-      )}
+        )}
+      </AnimatePresence>
 
       {/* 🔹 Navbar */}
       <nav className="w-full flex justify-between items-center px-6 py-3 bg-transparent">
