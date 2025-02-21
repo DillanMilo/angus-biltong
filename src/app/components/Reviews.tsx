@@ -1,4 +1,5 @@
-"use client"; // Needed for animations in Next.js
+/*
+"use client"; 
 
 import { motion } from "framer-motion";
 import { Star } from "lucide-react";
@@ -72,4 +73,4 @@ const Reviews: React.FC = () => {
   );
 };
 
-export default Reviews;
+export default Reviews; */
