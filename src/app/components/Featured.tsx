@@ -1,8 +1,8 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { Star, ArrowRight, ArrowLeft } from "lucide-react";
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 
 // Dummy product placeholders
 const featuredProducts = [
@@ -22,29 +22,20 @@ const mostPopularProducts = [
 ];
 
 const Featured: React.FC = () => {
-  const [showBackArrow, setShowBackArrow] = useState(false);
-  const featuredRef = useRef(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768; // Mobile check
 
-  const { scrollYProgress } = useScroll({
-    target: featuredRef,
-    offset: ["start end", "end start"],
-  });
-
-  const fadeOut = useTransform(scrollYProgress, [0.6, 1], [1, 0]);
-
-  const handleScrollForward = () => {
-    setShowBackArrow(true);
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev < (isMobile ? 1 : 1) ? prev + 1 : prev)); // Adjusted for mobile scroll
   };
 
-  const handleScrollBack = () => {
-    setShowBackArrow(false);
+  const handlePrev = () => {
+    setCurrentIndex((prev) => (prev > 0 ? prev - 1 : prev));
   };
 
   return (
     <motion.section
       id="featured"
-      ref={featuredRef}
-      style={{ opacity: fadeOut }}
       className="py-16 text-center relative bg-[#f4f8f1]"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -57,17 +48,18 @@ const Featured: React.FC = () => {
           Featured Products
         </h2>
         <div className="relative">
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
-            {featuredProducts.slice(0, 4).map((product, index) => (
+          <div
+            className="grid grid-cols-2 md:grid-cols-5 gap-6 transition-transform duration-500 ease-in-out"
+            style={{
+              transform: `translateX(-${currentIndex * 100}%)`,
+            }}
+          >
+            {featuredProducts.slice(0, isMobile ? 4 : 5).map((product) => (
               <motion.div
                 key={product.id}
                 initial={{ opacity: 0, x: -50 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                transition={{
-                  delay: index * 0.2,
-                  duration: 0.6,
-                  ease: "easeOut",
-                }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
                 viewport={{ once: true }}
                 className="bg-white rounded-lg shadow-lg p-4"
               >
@@ -84,7 +76,7 @@ const Featured: React.FC = () => {
                       key={i}
                       size={18}
                       strokeWidth={2}
-                      className="text-yellow-500 fill-current"
+                      className="text-yellow-500"
                     />
                   ))}
                 </div>
@@ -92,22 +84,46 @@ const Featured: React.FC = () => {
             ))}
           </div>
 
-          {/* Scroll Arrows */}
-          {showBackArrow && (
-            <button
-              onClick={handleScrollBack}
-              className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-lg hover:scale-110 transition"
-            >
-              <ArrowLeft size={30} strokeWidth={2} className="text-gray-600" />
-            </button>
-          )}
+          {/* Scroll Arrows - ONLY on Desktop */}
+          <div className="hidden md:block">
+            {currentIndex > 0 && (
+              <button
+                onClick={handlePrev}
+                className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-lg hover:scale-110 transition"
+              >
+                <ArrowLeft
+                  size={30}
+                  strokeWidth={2}
+                  className="text-gray-600"
+                />
+              </button>
+            )}
 
-          <button
-            onClick={handleScrollForward}
-            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-lg hover:scale-110 transition"
-          >
-            <ArrowRight size={30} strokeWidth={2} className="text-gray-600" />
-          </button>
+            {currentIndex < 1 && (
+              <button
+                onClick={handleNext}
+                className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-lg hover:scale-110 transition"
+              >
+                <ArrowRight
+                  size={30}
+                  strokeWidth={2}
+                  className="text-gray-600"
+                />
+              </button>
+            )}
+          </div>
+
+          {/* Scroll Dots - Visible on ALL Screens */}
+          <div className="flex justify-center mt-4">
+            {[...Array(2)].map((_, i) => (
+              <span
+                key={i}
+                className={`h-2 w-2 mx-1 rounded-full ${
+                  currentIndex === i ? "bg-gray-900" : "bg-gray-400"
+                } transition-colors duration-300`}
+              />
+            ))}
+          </div>
         </div>
       </div>
 
@@ -115,17 +131,18 @@ const Featured: React.FC = () => {
       <div className="max-w-6xl mx-auto px-4 mt-12 relative">
         <h2 className="text-3xl font-bold text-gray-900 mb-6">Most Popular</h2>
         <div className="relative">
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
-            {mostPopularProducts.slice(0, 4).map((product, index) => (
+          <div
+            className="grid grid-cols-2 md:grid-cols-5 gap-6 transition-transform duration-500 ease-in-out"
+            style={{
+              transform: `translateX(-${currentIndex * 100}%)`,
+            }}
+          >
+            {mostPopularProducts.slice(0, isMobile ? 4 : 5).map((product) => (
               <motion.div
                 key={product.id}
                 initial={{ opacity: 0, x: -50 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                transition={{
-                  delay: index * 0.2,
-                  duration: 0.6,
-                  ease: "easeOut",
-                }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
                 viewport={{ once: true }}
                 className="bg-white rounded-lg shadow-lg p-4"
               >
@@ -142,7 +159,7 @@ const Featured: React.FC = () => {
                       key={i}
                       size={18}
                       strokeWidth={2}
-                      className="text-yellow-500 fill-current"
+                      className="text-yellow-500"
                     />
                   ))}
                 </div>
@@ -150,22 +167,17 @@ const Featured: React.FC = () => {
             ))}
           </div>
 
-          {/* Scroll Arrows */}
-          {showBackArrow && (
-            <button
-              onClick={handleScrollBack}
-              className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-lg hover:scale-110 transition"
-            >
-              <ArrowLeft size={30} strokeWidth={2} className="text-gray-600" />
-            </button>
-          )}
-
-          <button
-            onClick={handleScrollForward}
-            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-lg hover:scale-110 transition"
-          >
-            <ArrowRight size={30} strokeWidth={2} className="text-gray-600" />
-          </button>
+          {/* Scroll Dots - Visible on ALL Screens */}
+          <div className="flex justify-center mt-4">
+            {[...Array(2)].map((_, i) => (
+              <span
+                key={i}
+                className={`h-2 w-2 mx-1 rounded-full ${
+                  currentIndex === i ? "bg-gray-900" : "bg-gray-400"
+                } transition-colors duration-300`}
+              />
+            ))}
+          </div>
         </div>
       </div>
 
