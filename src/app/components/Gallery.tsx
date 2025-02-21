@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { Star } from "lucide-react";
 import React from "react";
 
 const reviews = [
@@ -37,13 +38,10 @@ const reviews = [
 
 const Gallery: React.FC = () => {
   return (
-    <section
-      id="gallery"
-      className="relative w-full text-center py-16 bg-[#f4f8f1]"
-    >
-      {/* 🎯 Moving Banner - Expands from Center on Scroll */}
+    <section className="relative w-full text-center py-16">
+      {/* Moving Banner - Seamless Loop */}
       <motion.div
-        initial={{ scaleX: 0 }}
+        initial={{ scaleX: 0 }} // Curtain effect
         whileInView={{ scaleX: 1 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
         viewport={{ once: true }}
@@ -56,44 +54,36 @@ const Gallery: React.FC = () => {
         }}
       >
         <motion.div
-          className="flex space-x-64 whitespace-nowrap w-max"
-          animate={{ x: ["0%", "-100%"] }}
+          className="flex whitespace-nowrap w-max"
+          animate={{ x: ["0%", "-50%"] }}
           transition={{
             repeat: Infinity,
-            duration: 320,
+            duration: 10, // ✅ Adjusted for smooth looping
             ease: "linear",
           }}
         >
-          {[...Array(30)].flatMap((_, i) => [
+          {/* 🔥 DUPLICATE THE TEXT WITH NO GAPS */}
+          {["FAMILY", "INTEGRITY", "QUALITY", "COMMUNITY"].map((word, i) => (
             <span
-              key={`family-${i}`}
-              className="text-[100px] font-semibold uppercase"
+              key={i}
+              className="text-[100px] font-semibold uppercase mx-16"
             >
-              FAMILY
-            </span>,
+              {word}
+            </span>
+          ))}
+          {/* 🔁 DUPLICATE AGAIN TO ENSURE CONTINUITY */}
+          {["FAMILY", "INTEGRITY", "QUALITY", "COMMUNITY"].map((word, i) => (
             <span
-              key={`integrity-${i}`}
-              className="text-[100px] font-semibold uppercase"
+              key={`duplicate-${i}`}
+              className="text-[100px] font-semibold uppercase mx-16"
             >
-              INTEGRITY
-            </span>,
-            <span
-              key={`quality-${i}`}
-              className="text-[100px] font-semibold uppercase"
-            >
-              QUALITY
-            </span>,
-            <span
-              key={`community-${i}`}
-              className="text-[100px] font-semibold uppercase"
-            >
-              COMMUNITY
-            </span>,
-          ])}
+              {word}
+            </span>
+          ))}
         </motion.div>
       </motion.div>
 
-      {/* 🖼️ Storefront Image */}
+      {/* Storefront Image */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -106,12 +96,12 @@ const Gallery: React.FC = () => {
           alt="Angus Biltong Storefront"
           width={1000}
           height={600}
-          className="rounded-lg shadow-lg w-full md:w-auto"
+          className="rounded-lg shadow-lg"
           priority
         />
       </motion.div>
 
-      {/* ⭐ Reviews Section */}
+      {/* 🏆 Review Cards - Load in from Left to Right */}
       <div className="mt-16 px-6 max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
         {reviews.map((review, index) => (
           <motion.div
@@ -126,21 +116,23 @@ const Gallery: React.FC = () => {
             viewport={{ once: true }}
             className="bg-white p-6 rounded-lg shadow-lg border border-gray-200 text-left"
           >
-            <p className="text-gray-700 italic">"{review.review}"</p>
+            <p className="text-gray-700 italic">&quot;{review.review}&quot;</p>
             <p className="font-bold mt-4 text-[#0BDA51]">{review.name}</p>
             {/* ⭐ Star Rating */}
             <div className="flex justify-start mt-2">
               {[...Array(review.rating)].map((_, i) => (
-                <span key={i} className="text-yellow-500 text-lg">
-                  ⭐
-                </span>
+                <Star
+                  key={i}
+                  size={20}
+                  className="text-yellow-500 fill-current"
+                />
               ))}
             </div>
           </motion.div>
         ))}
       </div>
 
-      {/* 📸 Second Image */}
+      {/* Second Image Below */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -153,12 +145,12 @@ const Gallery: React.FC = () => {
           alt="Spearhead Missions Support"
           width={200}
           height={175}
-          className="rounded-lg shadow-lg w-full md:w-auto"
+          className="rounded-lg shadow-lg"
           priority
         />
       </motion.div>
 
-      {/* 🏆 Caption with Link */}
+      {/* Caption */}
       <motion.p
         initial={{ opacity: 0, y: 10 }}
         whileInView={{ opacity: 1, y: 0 }}
