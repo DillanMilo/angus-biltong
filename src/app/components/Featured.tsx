@@ -44,7 +44,7 @@ const Featured: React.FC = () => {
     >
       {/* Featured Products Section */}
       <div className="max-w-6xl mx-auto px-4 relative">
-        <h2 className="text-3xl font-bold text-gray-900 mb-6">
+        <h2 className="text-3xl font-bold text-gray-900 mb-6 underline">
           Featured Products
         </h2>
         <div className="relative">
@@ -76,7 +76,7 @@ const Featured: React.FC = () => {
                       key={i}
                       size={18}
                       strokeWidth={2}
-                      className="text-yellow-500"
+                      className="text-yellow-500 fill-current"
                     />
                   ))}
                 </div>
@@ -129,7 +129,9 @@ const Featured: React.FC = () => {
 
       {/* Most Popular Section */}
       <div className="max-w-6xl mx-auto px-4 mt-12 relative">
-        <h2 className="text-3xl font-bold text-gray-900 mb-6">Most Popular</h2>
+        <h2 className="text-3xl font-bold text-gray-900 mb-6 underline">
+          Most Popular
+        </h2>
         <div className="relative">
           <div
             className="grid grid-cols-2 md:grid-cols-5 gap-6 transition-transform duration-500 ease-in-out"
@@ -159,7 +161,7 @@ const Featured: React.FC = () => {
                       key={i}
                       size={18}
                       strokeWidth={2}
-                      className="text-yellow-500"
+                      className="text-yellow-500 fill-current"
                     />
                   ))}
                 </div>

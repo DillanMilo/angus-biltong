@@ -13,7 +13,6 @@ const Navbar: React.FC = () => {
   const [showBanner, setShowBanner] = useState(false);
 
   useEffect(() => {
-    // Delay banner appearance by 1.5 seconds on page load
     const bannerTimeout = setTimeout(() => {
       setShowBanner(true);
     }, 1000);
@@ -91,7 +90,7 @@ const Navbar: React.FC = () => {
 
       {/* 🔹 Navbar */}
       <nav className="w-full flex justify-between items-center px-6 py-3 bg-transparent">
-        {/* Left Side - Menu Icon (Mobile Only) */}
+        {/* Left Side - Menu Icon (Mobile & Tablet) */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -126,7 +125,7 @@ const Navbar: React.FC = () => {
         </motion.div>
 
         {/* Right Side - Navbar Icons (Aligned in a Row on Desktop) */}
-        <div className="hidden md:flex items-center space-x-6 text-gray-800">
+        <div className="hidden md:flex items-center space-x-6 text-gray-800 relative">
           {[
             { Icon: Search, delay: 1.3 },
             { Icon: User, delay: 1.5 },
@@ -152,14 +151,14 @@ const Navbar: React.FC = () => {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="cursor-pointer hover:text-gray-600"
+            className="cursor-pointer hover:text-gray-600 relative"
             onClick={() => setMenuOpen(!menuOpen)}
           >
             <Menu size={32} />
           </motion.div>
         </div>
 
-        {/* 🌟 Dropdown Menu (Opens on Click, Mobile & Desktop) */}
+        {/* 🌟 Dropdown Menu (Opens Below Menu Button for Both Desktop & Mobile) */}
         <AnimatePresence>
           {menuOpen && (
             <motion.div
@@ -167,7 +166,7 @@ const Navbar: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.3, ease: "easeOut" }}
-              className="absolute top-16 left-4 md:right-4 md:left-auto w-48 bg-white shadow-lg rounded-lg py-2"
+              className="absolute top-full left-4 md:right-4 md:left-auto w-48 bg-white shadow-lg rounded-lg py-2 mt-2"
             >
               {[
                 "Search",
