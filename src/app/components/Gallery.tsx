@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Star } from "lucide-react"; // Import Star icon
 import React from "react";
 
 const reviews = [
@@ -39,12 +38,12 @@ const reviews = [
 const Gallery: React.FC = () => {
   return (
     <section
-      id="gallery" // Added ID here
-      className="relative w-full text-center py-16"
+      id="gallery"
+      className="relative w-full text-center py-16 bg-[#f4f8f1]"
     >
-      {/* Moving Banner - Expands from Center on Scroll */}
+      {/* 🎯 Moving Banner - Expands from Center on Scroll */}
       <motion.div
-        initial={{ scaleX: 0 }} // Curtain effect
+        initial={{ scaleX: 0 }}
         whileInView={{ scaleX: 1 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
         viewport={{ once: true }}
@@ -94,7 +93,7 @@ const Gallery: React.FC = () => {
         </motion.div>
       </motion.div>
 
-      {/* Storefront Image */}
+      {/* 🖼️ Storefront Image */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -107,12 +106,12 @@ const Gallery: React.FC = () => {
           alt="Angus Biltong Storefront"
           width={1000}
           height={600}
-          className="rounded-lg shadow-lg"
+          className="rounded-lg shadow-lg w-full md:w-auto"
           priority
         />
       </motion.div>
 
-      {/* 🏆 Review Cards - Load in from Left to Right */}
+      {/* ⭐ Reviews Section */}
       <div className="mt-16 px-6 max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
         {reviews.map((review, index) => (
           <motion.div
@@ -120,7 +119,7 @@ const Gallery: React.FC = () => {
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{
-              delay: index * 0.3, // Staggered effect
+              delay: index * 0.3,
               duration: 1,
               ease: "easeOut",
             }}
@@ -132,18 +131,16 @@ const Gallery: React.FC = () => {
             {/* ⭐ Star Rating */}
             <div className="flex justify-start mt-2">
               {[...Array(review.rating)].map((_, i) => (
-                <Star
-                  key={i}
-                  size={20}
-                  className="text-yellow-500 fill-current"
-                />
+                <span key={i} className="text-yellow-500 text-lg">
+                  ⭐
+                </span>
               ))}
             </div>
           </motion.div>
         ))}
       </div>
 
-      {/* Second Image Below */}
+      {/* 📸 Second Image */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -156,12 +153,12 @@ const Gallery: React.FC = () => {
           alt="Spearhead Missions Support"
           width={200}
           height={175}
-          className="rounded-lg shadow-lg"
+          className="rounded-lg shadow-lg w-full md:w-auto"
           priority
         />
       </motion.div>
 
-      {/* Caption */}
+      {/* 🏆 Caption with Link */}
       <motion.p
         initial={{ opacity: 0, y: 10 }}
         whileInView={{ opacity: 1, y: 0 }}
