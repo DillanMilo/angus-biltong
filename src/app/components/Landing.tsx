@@ -81,7 +81,7 @@ const Landing: React.FC = () => {
       </div>
 
       {/* 5 Stars Animation Below Mission Statement */}
-      <div className="mb-40 sm:mb-4 md:mt-6">
+      <div className="mb-20 sm:mb-4 md:mt-6">
         <Stars />
       </div>
 
