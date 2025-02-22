@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Star, ArrowRight, ArrowLeft } from "lucide-react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 // Dummy product placeholders
 const featuredProducts = [
@@ -23,7 +23,11 @@ const mostPopularProducts = [
 
 const Featured: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const isMobile = typeof window !== "undefined" && window.innerWidth < 768; // Mobile check
+  const [isMobile, setIsMobile] = useState(false); // ✅ Prevents SSR hydration errors
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+  }, []);
 
   const handleNext = () => {
     setCurrentIndex((prev) => (prev < (isMobile ? 1 : 1) ? prev + 1 : prev)); // Adjusted for mobile scroll
