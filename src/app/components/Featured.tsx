@@ -23,14 +23,14 @@ const mostPopularProducts = [
 
 const Featured: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isMobile, setIsMobile] = useState(false); // ✅ Prevents SSR hydration errors
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     setIsMobile(window.innerWidth < 768);
   }, []);
 
   const handleNext = () => {
-    setCurrentIndex((prev) => (prev < (isMobile ? 1 : 1) ? prev + 1 : prev)); // Adjusted for mobile scroll
+    setCurrentIndex((prev) => (prev < (isMobile ? 1 : 1) ? prev + 1 : prev));
   };
 
   const handlePrev = () => {
@@ -52,70 +52,48 @@ const Featured: React.FC = () => {
           Featured Products
         </h2>
         <div className="relative">
-          <div
-            className="grid grid-cols-2 md:grid-cols-5 gap-6 transition-transform duration-500 ease-in-out"
-            style={{
-              transform: `translateX(-${currentIndex * 100}%)`,
-            }}
+          <motion.div
+            className="grid grid-cols-2 md:grid-cols-5 gap-6"
+            initial="hidden"
+            whileInView="visible"
+            transition={{ staggerChildren: 0.2 }} // ✅ Staggered animation
+            viewport={{ once: true }}
           >
-            {featuredProducts.slice(0, isMobile ? 4 : 5).map((product) => (
-              <motion.div
-                key={product.id}
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 1.5, ease: "easeOut" }}
-                viewport={{ once: true }}
-                className="bg-white rounded-lg shadow-lg p-4"
-              >
-                {/* Placeholder for Image */}
-                <div className="w-full h-32 md:h-40 bg-gray-200 rounded-md flex items-center justify-center text-gray-500 text-sm">
-                  Image Placeholder
-                </div>
+            {featuredProducts
+              .slice(0, isMobile ? 4 : 5)
+              .map((product, index) => (
+                <motion.div
+                  key={product.id}
+                  variants={{
+                    hidden: { opacity: 0, y: 20 },
+                    visible: {
+                      opacity: 1,
+                      y: 0,
+                      transition: { duration: 0.6, delay: index * 0.2 },
+                    },
+                  }}
+                  className="bg-white rounded-lg shadow-lg p-4"
+                >
+                  {/* Placeholder for Image */}
+                  <div className="w-full h-32 md:h-40 bg-gray-200 rounded-md flex items-center justify-center text-gray-500 text-sm">
+                    Image Placeholder
+                  </div>
 
-                <h3 className="text-lg font-semibold mt-4">{product.name}</h3>
-                <p className="text-gray-600">{product.price}</p>
-                <div className="flex justify-center mt-2">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      size={18}
-                      strokeWidth={2}
-                      className="text-yellow-500 fill-current"
-                    />
-                  ))}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Scroll Arrows - ONLY on Desktop */}
-          <div className="hidden md:block">
-            {currentIndex > 0 && (
-              <button
-                onClick={handlePrev}
-                className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-lg hover:scale-110 transition"
-              >
-                <ArrowLeft
-                  size={30}
-                  strokeWidth={2}
-                  className="text-gray-600"
-                />
-              </button>
-            )}
-
-            {currentIndex < 1 && (
-              <button
-                onClick={handleNext}
-                className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-lg hover:scale-110 transition"
-              >
-                <ArrowRight
-                  size={30}
-                  strokeWidth={2}
-                  className="text-gray-600"
-                />
-              </button>
-            )}
-          </div>
+                  <h3 className="text-lg font-semibold mt-4">{product.name}</h3>
+                  <p className="text-gray-600">{product.price}</p>
+                  <div className="flex justify-center mt-2">
+                    {[...Array(5)].map((_, i) => (
+                      <Star
+                        key={i}
+                        size={18}
+                        strokeWidth={2}
+                        className="text-yellow-500 fill-current"
+                      />
+                    ))}
+                  </div>
+                </motion.div>
+              ))}
+          </motion.div>
 
           {/* Scroll Dots - Visible on ALL Screens */}
           <div className="flex justify-center mt-4">
@@ -137,41 +115,48 @@ const Featured: React.FC = () => {
           Most Popular
         </h2>
         <div className="relative">
-          <div
-            className="grid grid-cols-2 md:grid-cols-5 gap-6 transition-transform duration-500 ease-in-out"
-            style={{
-              transform: `translateX(-${currentIndex * 100}%)`,
-            }}
+          <motion.div
+            className="grid grid-cols-2 md:grid-cols-5 gap-6"
+            initial="hidden"
+            whileInView="visible"
+            transition={{ staggerChildren: 0.2 }} // ✅ Staggered animation
+            viewport={{ once: true }}
           >
-            {mostPopularProducts.slice(0, isMobile ? 4 : 5).map((product) => (
-              <motion.div
-                key={product.id}
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
-                viewport={{ once: true }}
-                className="bg-white rounded-lg shadow-lg p-4"
-              >
-                {/* Placeholder for Image */}
-                <div className="w-full h-32 md:h-40 bg-gray-200 rounded-md flex items-center justify-center text-gray-500 text-sm">
-                  Image Placeholder
-                </div>
+            {mostPopularProducts
+              .slice(0, isMobile ? 4 : 5)
+              .map((product, index) => (
+                <motion.div
+                  key={product.id}
+                  variants={{
+                    hidden: { opacity: 0, y: 20 },
+                    visible: {
+                      opacity: 1,
+                      y: 0,
+                      transition: { duration: 0.6, delay: index * 0.2 },
+                    },
+                  }}
+                  className="bg-white rounded-lg shadow-lg p-4"
+                >
+                  {/* Placeholder for Image */}
+                  <div className="w-full h-32 md:h-40 bg-gray-200 rounded-md flex items-center justify-center text-gray-500 text-sm">
+                    Image Placeholder
+                  </div>
 
-                <h3 className="text-lg font-semibold mt-4">{product.name}</h3>
-                <p className="text-gray-600">{product.price}</p>
-                <div className="flex justify-center mt-2">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      size={18}
-                      strokeWidth={2}
-                      className="text-yellow-500 fill-current"
-                    />
-                  ))}
-                </div>
-              </motion.div>
-            ))}
-          </div>
+                  <h3 className="text-lg font-semibold mt-4">{product.name}</h3>
+                  <p className="text-gray-600">{product.price}</p>
+                  <div className="flex justify-center mt-2">
+                    {[...Array(5)].map((_, i) => (
+                      <Star
+                        key={i}
+                        size={18}
+                        strokeWidth={2}
+                        className="text-yellow-500 fill-current"
+                      />
+                    ))}
+                  </div>
+                </motion.div>
+              ))}
+          </motion.div>
 
           {/* Scroll Dots - Visible on ALL Screens */}
           <div className="flex justify-center mt-4">
