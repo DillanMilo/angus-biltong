@@ -79,10 +79,11 @@ const Landing: React.FC = () => {
           </p>
         ))}
       </div>
-      <br />
 
       {/* 5 Stars Animation Below Mission Statement */}
-      <Stars />
+      <div className="mb-40 sm:mb-4 md:mt-6">
+        <Stars />
+      </div>
 
       {/* Social Icons with Exit Animation */}
       <motion.div
