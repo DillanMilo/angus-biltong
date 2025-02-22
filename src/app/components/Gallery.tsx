@@ -102,7 +102,7 @@ const Gallery: React.FC = () => {
       </motion.div>
 
       {/* 🏆 Review Cards - Load in from Left to Right */}
-      <div className="mt-16 px-6 max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+      <div className="mt-16 px-6 max-w-6xl mx-auto grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4  gap-6">
         {reviews.map((review, index) => (
           <motion.div
             key={review.id}
