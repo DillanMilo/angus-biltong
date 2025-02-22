@@ -63,7 +63,7 @@ const Featured: React.FC = () => {
                 key={product.id}
                 initial={{ opacity: 0, x: -50 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
+                transition={{ duration: 1.5, ease: "easeOut" }}
                 viewport={{ once: true }}
                 className="bg-white rounded-lg shadow-lg p-4"
               >
