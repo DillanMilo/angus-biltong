@@ -56,7 +56,7 @@ const Landing: React.FC = () => {
         initial={{ opacity: 0, scale: 0.5 }} // Starts smaller & invisible
         animate={{ opacity: 1, scale: [0.5, 1.05, 1] }} // Slowly fades in & grows to full size
         transition={{ duration: 1.5, ease: "easeInOut" }} // Slow fade-in, smooth scaling
-        className="relative z-10" // Ensure logo stays visible
+        className="relative z-10 mt-8 sm:mt-0" // Ensure logo stays visible
       >
         <Image
           src="/AB-Logo-300dpi-Alpha-Only-2.png"
@@ -71,7 +71,7 @@ const Landing: React.FC = () => {
       {/* Mission Statement - Each Line Pulled Up Together */}
       <div
         ref={missionRef}
-        className="mt-6 sm:mt-4 md:mt-2 text-xl text-[#fdfbd4] max-w-lg leading-relaxed font-bold relative z-10"
+        className=" mt-1 sm:mt-4 md:mt-2 text-xl text-[#fdfbd4] max-w-lg leading-relaxed font-bold relative z-10"
       >
         {missionStatementLines.map((line, i) => (
           <p key={i} className="animate-pullText">
