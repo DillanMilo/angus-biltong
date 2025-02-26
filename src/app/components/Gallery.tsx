@@ -83,7 +83,7 @@ const Gallery: React.FC = () => {
         </motion.div>
       </motion.div>
 
-      {/* Storefront Image */}
+      {/* Storefront Image (Unchanged) */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -102,7 +102,7 @@ const Gallery: React.FC = () => {
       </motion.div>
 
       {/* 🏆 Review Cards - Load in from Left to Right */}
-      <div className="mt-16 px-6 max-w-6xl mx-auto grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4  gap-6">
+      <div className="mt-16 px-6 max-w-6xl mx-auto grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-6">
         {reviews.map((review, index) => (
           <motion.div
             key={review.id}
@@ -132,7 +132,7 @@ const Gallery: React.FC = () => {
         ))}
       </div>
 
-      {/* Second Image Below */}
+      {/* Google Maps Embed (Replacing Previous Image) */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -140,17 +140,20 @@ const Gallery: React.FC = () => {
         viewport={{ once: true }}
         className="mt-12 flex justify-center"
       >
-        <Image
-          src="/IMG_621009C8E038-1.jpeg"
-          alt="Spearhead Missions Support"
-          width={200}
-          height={175}
-          className="rounded-lg shadow-lg"
-          priority
-        />
+        <div className="w-full max-w-4xl h-96 rounded-lg overflow-hidden shadow-lg">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3450.9221842861866!2d-95.444892!3d30.1250401!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8647350e8cc26001%3A0x2b866a67d149a31a!2sAngus%20Biltong!5e0!3m2!1sen!2sus!4v1740588759101!5m2!1sen!2sus"
+            width="100%"
+            height="100%"
+            style={{ border: 0 }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
       </motion.div>
 
-      {/* Caption */}
+      {/* Caption (Unchanged) */}
       <motion.p
         initial={{ opacity: 0, y: 10 }}
         whileInView={{ opacity: 1, y: 0 }}
