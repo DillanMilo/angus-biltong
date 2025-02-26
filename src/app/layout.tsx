@@ -4,6 +4,7 @@ import {
   Geist_Mono,
   Zen_Kaku_Gothic_New,
   Roboto_Condensed,
+  Playfair_Display,
 } from "next/font/google";
 import "./globals.css";
 
@@ -24,11 +25,16 @@ const zenKaku = Zen_Kaku_Gothic_New({
   weight: "400",
 });
 
-// ✅ Import Roboto Condensed (Semi-Bold 600)
 const robotoCondensed = Roboto_Condensed({
   variable: "--font-roboto-condensed",
   subsets: ["latin"],
   weight: "600", // Semi-Bold
+});
+
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
+  subsets: ["latin"],
+  weight: "400", "900" // Regular
 });
 
 export const metadata: Metadata = {
