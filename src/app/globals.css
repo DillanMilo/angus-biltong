@@ -19,6 +19,12 @@ body {
   font-family: var(--font-zen-kaku), sans-serif;
 }
 
+/* Use Playfair Display where needed */
+.playfair {
+  font-family: 'Playfair Display', serif;
+}
+
+
 /* 🔹 Text Pull-Up Animation (Per Line) */
 @keyframes pullUpText {
   from {

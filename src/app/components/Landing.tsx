@@ -68,10 +68,10 @@ const Landing: React.FC = () => {
         />
       </motion.div>
 
-      {/* Mission Statement - Each Line Pulled Up Together */}
+      {/* Mission Statement - Now Uses Playfair Display */}
       <div
         ref={missionRef}
-        className=" mt-1 sm:mt-4 md:mt-2 text-xl text-[#fdfbd4] max-w-lg leading-relaxed font-bold relative z-10"
+        className="mt-1 sm:mt-4 md:mt-2 text-xl text-[#fdfbd4] max-w-lg leading-relaxed font-bold relative z-10 playfair"
       >
         {missionStatementLines.map((line, i) => (
           <p key={i} className="animate-pullText">
