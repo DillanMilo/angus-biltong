@@ -34,7 +34,7 @@ const robotoCondensed = Roboto_Condensed({
 const playfair = Playfair_Display({
   variable: "--font-playfair",
   subsets: ["latin"],
-  weight: "400", "900" // Regular
+  weight: ["400", "900"], // ✅ Correct syntax
 });
 
 export const metadata: Metadata = {
