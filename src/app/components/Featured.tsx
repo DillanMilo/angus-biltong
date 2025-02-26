@@ -29,14 +29,6 @@ const Featured: React.FC = () => {
     setIsMobile(window.innerWidth < 768);
   }, []);
 
-  const handleNext = () => {
-    setCurrentIndex((prev) => (prev < (isMobile ? 1 : 1) ? prev + 1 : prev));
-  };
-
-  const handlePrev = () => {
-    setCurrentIndex((prev) => (prev > 0 ? prev - 1 : prev));
-  };
-
   return (
     <motion.section
       id="featured"
@@ -181,6 +173,15 @@ const Featured: React.FC = () => {
         className="mt-12"
       >
         <button className="bg-[#4B7B3F] text-white text-lg font-semibold py-3 px-8 rounded-md shadow-lg hover:bg-[#3a612f] transition">
+          Shop All
+        </button>
+      </motion.div>
+    </motion.section>
+  );
+};
+
+export default Featured;
+text-white text-lg font-semibold py-3 px-8 rounded-md shadow-lg hover:bg-[#3a612f] transition">
           Shop All
         </button>
       </motion.div>

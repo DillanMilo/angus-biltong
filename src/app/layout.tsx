@@ -61,7 +61,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${zenKaku.variable} ${robotoCondensed.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${zenKaku.variable} ${robotoCondensed.variable} ${playfair.variable} antialiased`}
       >
         {children}
       </body>
