@@ -22,7 +22,7 @@ const mostPopularProducts = [
 ];
 
 const Featured: React.FC = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
