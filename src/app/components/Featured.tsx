@@ -181,12 +181,3 @@ const Featured: React.FC = () => {
 };
 
 export default Featured;
-text-white text-lg font-semibold py-3 px-8 rounded-md shadow-lg hover:bg-[#3a612f] transition">
-          Shop All
-        </button>
-      </motion.div>
-    </motion.section>
-  );
-};
-
-export default Featured;
