@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Star, ArrowRight, ArrowLeft } from "lucide-react";
+import { Star } from "lucide-react";
 import React, { useState, useEffect } from "react";
 
 // Dummy product placeholders
