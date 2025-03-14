@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@bigcommerce/storefront-data-hooks": "^1.8.0",
     "framer-motion": "^12.5.0",
     "lucide-react": "^0.475.0",
     "next": "^15.1.7",
