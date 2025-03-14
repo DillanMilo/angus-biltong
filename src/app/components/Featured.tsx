@@ -3,28 +3,30 @@
 import { motion } from "framer-motion";
 import { Star } from "lucide-react";
 import React, { useState, useEffect } from "react";
-import { fetchProducts } from "@/app/lib/bigcommerce"; // Updated to absolute path
+import { fetchProducts } from "@/app/lib/bigcommerce";
+
+// Define a type for the product
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+}
 
 const Featured: React.FC = () => {
-  const [products, setProducts] = useState<
-    { id: number; name: string; price: string }[]
-  >([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [currentIndex] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    setIsMobile(window.innerWidth < 768);
-
-    // ✅ Fetch BigCommerce products when component mounts
+    // Fetch BigCommerce products when component mounts
     async function loadProducts() {
       try {
         const bcProducts = await fetchProducts();
         if (bcProducts) {
           setProducts(
-            bcProducts.slice(0, 5).map((product: any) => ({
+            bcProducts.slice(0, 5).map((product: Product) => ({
               id: product.id,
               name: product.name,
-              price: `$${product.price.toFixed(2)}`,
+              price: `$${Number(product.price).toFixed(2)}`,
             }))
           );
         }
