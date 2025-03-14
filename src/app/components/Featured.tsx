@@ -1,32 +1,38 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Star } from "lucide-react";
+import { Star, ArrowRight, ArrowLeft } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import { fetchProducts } from "@/app/lib/bigcommerce";
 
-// Define a type for the product
+// Define the product type
 interface Product {
   id: number;
   name: string;
-  price: number;
+  price: string;
+  imageUrl?: string; // Optional in case images are not available
 }
 
 const Featured: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
-  const [currentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    // Fetch BigCommerce products when component mounts
+    setIsMobile(window.innerWidth < 768);
+  }, []);
+
+  useEffect(() => {
     async function loadProducts() {
       try {
         const bcProducts = await fetchProducts();
-        if (bcProducts) {
+        if (bcProducts && bcProducts.length > 0) {
           setProducts(
-            bcProducts.slice(0, 5).map((product: Product) => ({
+            bcProducts.slice(0, 5).map((product: any) => ({
               id: product.id,
               name: product.name,
               price: `$${Number(product.price).toFixed(2)}`,
+              imageUrl: product?.images?.[0]?.url_standard || "", // Use the first image or fallback
             }))
           );
         }
@@ -37,6 +43,14 @@ const Featured: React.FC = () => {
 
     loadProducts();
   }, []);
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev < (isMobile ? 1 : 1) ? prev + 1 : prev));
+  };
+
+  const handlePrev = () => {
+    setCurrentIndex((prev) => (prev > 0 ? prev - 1 : prev));
+  };
 
   return (
     <motion.section
@@ -73,9 +87,17 @@ const Featured: React.FC = () => {
                 }}
                 className="bg-white rounded-lg shadow-lg p-4"
               >
-                {/* Placeholder for Image (Can be updated later to show real product images) */}
+                {/* Product Image or Placeholder */}
                 <div className="w-full h-32 md:h-40 bg-gray-200 rounded-md flex items-center justify-center text-gray-500 text-sm">
-                  Image Placeholder
+                  {product.imageUrl ? (
+                    <img
+                      src={product.imageUrl}
+                      alt={product.name}
+                      className="h-full w-full object-cover rounded-md"
+                    />
+                  ) : (
+                    "Image Placeholder"
+                  )}
                 </div>
 
                 <h3 className="text-lg font-semibold mt-4">{product.name}</h3>
@@ -94,7 +116,7 @@ const Featured: React.FC = () => {
             ))}
           </motion.div>
 
-          {/* Scroll Dots - Visible on ALL Screens */}
+          {/* Scroll Dots */}
           <div className="flex justify-center mt-4">
             {[...Array(2)].map((_, i) => (
               <span
