@@ -50,3 +50,13 @@ body {
   animation: pullUpText 1s ease-out forwards;
   animation-fill-mode: forwards; /* Ensures it stays visible */
 }
+
+/* Add these classes */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
