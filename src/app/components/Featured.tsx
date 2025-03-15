@@ -113,7 +113,12 @@ const Featured: React.FC = () => {
                       y: 0,
                       transition: { duration: 0.6, delay: index * 0.2 },
                     },
+                    hover: {
+                      scale: 1.05,
+                      transition: { duration: 0.2 },
+                    },
                   }}
+                  whileHover="hover"
                   className="bg-white rounded-lg shadow-lg p-4 w-[200px] flex-shrink-0"
                 >
                   {/* Product Image */}
@@ -191,7 +196,12 @@ const Featured: React.FC = () => {
                       y: 0,
                       transition: { duration: 0.6, delay: index * 0.2 },
                     },
+                    hover: {
+                      scale: 1.05,
+                      transition: { duration: 0.2 },
+                    },
                   }}
+                  whileHover="hover"
                   className="bg-white rounded-lg shadow-lg p-4 w-[200px] flex-shrink-0"
                 >
                   {/* Product Image */}
