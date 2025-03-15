@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 if (!process.env.BIGCOMMERCE_STORE_HASH) {
     throw new Error("BIGCOMMERCE_STORE_HASH is not defined");
@@ -11,7 +11,7 @@ const storeHash = process.env.BIGCOMMERCE_STORE_HASH;
 const accessToken = process.env.BIGCOMMERCE_ACCESS_TOKEN;
 
 export async function GET(
-  request: Request,
+  request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
