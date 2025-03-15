@@ -5,7 +5,7 @@ import { Star, ChevronLeft, ChevronRight } from "lucide-react";
 import React, { useState, useEffect, useRef } from "react";
 import { fetchProducts } from "@/app/lib/bigcommerce";
 
-// Define product type
+// Define product type for the UI
 interface Product {
   id: number;
   name: string;
@@ -13,10 +13,17 @@ interface Product {
   imageUrl?: string;
 }
 
+// Add type for the BigCommerce API response
+interface BigCommerceProduct {
+  id: number;
+  name: string;
+  price: number;
+  images?: Array<{ url_standard: string }>;
+}
+
 const Featured: React.FC = () => {
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
   const [mostPopularProducts, setMostPopularProducts] = useState<Product[]>([]);
-  const [isMobile, setIsMobile] = useState(false);
 
   // Refs for scroll containers
   const featuredRef = useRef<HTMLDivElement>(null);
@@ -34,17 +41,12 @@ const Featured: React.FC = () => {
   };
 
   useEffect(() => {
-    setIsMobile(window.innerWidth < 768);
-  }, []);
-
-  useEffect(() => {
     async function loadProducts() {
       try {
         const bcProducts = await fetchProducts();
         if (bcProducts && bcProducts.length > 0) {
-          // Load all products instead of just 5
           setFeaturedProducts(
-            bcProducts.slice(0, 10).map((product: any) => ({
+            bcProducts.slice(0, 10).map((product: BigCommerceProduct) => ({
               id: product.id,
               name: product.name,
               price: `$${Number(product.price).toFixed(2)}`,
@@ -52,7 +54,7 @@ const Featured: React.FC = () => {
             }))
           );
           setMostPopularProducts(
-            bcProducts.slice(10, 20).map((product: any) => ({
+            bcProducts.slice(10, 20).map((product: BigCommerceProduct) => ({
               id: product.id,
               name: product.name,
               price: `$${Number(product.price).toFixed(2)}`,
