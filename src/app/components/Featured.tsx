@@ -98,27 +98,26 @@ const Featured: React.FC = () => {
           >
             <motion.div
               className="flex gap-6 min-w-max p-4"
-              initial="hidden"
-              whileInView="visible"
-              transition={{ staggerChildren: 0.2 }}
               viewport={{ once: true }}
             >
               {featuredProducts.map((product, index) => (
                 <motion.div
                   key={product.id}
+                  initial={{ opacity: 0, x: -50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{
+                    delay: index * 0.1,
+                    duration: 0.5,
+                    ease: "easeOut",
+                  }}
+                  viewport={{ once: true }}
+                  whileHover="hover"
                   variants={{
-                    hidden: { opacity: 0, y: 20 },
-                    visible: {
-                      opacity: 1,
-                      y: 0,
-                      transition: { duration: 0.6, delay: index * 0.2 },
-                    },
                     hover: {
                       scale: 1.05,
                       transition: { duration: 0.2 },
                     },
                   }}
-                  whileHover="hover"
                   className="bg-white rounded-lg shadow-lg p-4 w-[200px] flex-shrink-0"
                 >
                   {/* Product Image */}
@@ -181,27 +180,26 @@ const Featured: React.FC = () => {
           >
             <motion.div
               className="flex gap-6 min-w-max p-4"
-              initial="hidden"
-              whileInView="visible"
-              transition={{ staggerChildren: 0.2 }}
               viewport={{ once: true }}
             >
               {mostPopularProducts.map((product, index) => (
                 <motion.div
                   key={product.id}
+                  initial={{ opacity: 0, x: -50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{
+                    delay: index * 0.1,
+                    duration: 0.5,
+                    ease: "easeOut",
+                  }}
+                  viewport={{ once: true }}
+                  whileHover="hover"
                   variants={{
-                    hidden: { opacity: 0, y: 20 },
-                    visible: {
-                      opacity: 1,
-                      y: 0,
-                      transition: { duration: 0.6, delay: index * 0.2 },
-                    },
                     hover: {
                       scale: 1.05,
                       transition: { duration: 0.2 },
                     },
                   }}
-                  whileHover="hover"
                   className="bg-white rounded-lg shadow-lg p-4 w-[200px] flex-shrink-0"
                 >
                   {/* Product Image */}
