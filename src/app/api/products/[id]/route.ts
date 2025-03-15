@@ -10,13 +10,13 @@ if (!process.env.BIGCOMMERCE_ACCESS_TOKEN) {
 const storeHash = process.env.BIGCOMMERCE_STORE_HASH;
 const accessToken = process.env.BIGCOMMERCE_ACCESS_TOKEN;
 
-// ✅ Correct way to get route params in Next.js 13+
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } } // ✅ Fix here: Using destructured `params`
+  context: { params: { id: string } } // ✅ Corrected Type
 ) {
   try {
-    const url = `https://api.bigcommerce.com/stores/${storeHash}/v3/catalog/products/${params.id}`;
+    const { id } = context.params; // ✅ Extract ID properly
+    const url = `https://api.bigcommerce.com/stores/${storeHash}/v3/catalog/products/${id}`;
 
     const res = await fetch(url, {
       headers: {
@@ -31,7 +31,7 @@ export async function GET(
     const data = await res.json();
     return NextResponse.json(data.data);
   } catch (error) {
-    console.error(`Error fetching product ${params.id}:`, error);
+    console.error(`Error fetching product ${context.params.id}:`, error);
     return NextResponse.json(
       { error: "Failed to fetch product" },
       { status: 500 }
