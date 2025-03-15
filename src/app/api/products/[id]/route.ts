@@ -10,12 +10,18 @@ if (!process.env.BIGCOMMERCE_ACCESS_TOKEN) {
 const storeHash = process.env.BIGCOMMERCE_STORE_HASH;
 const accessToken = process.env.BIGCOMMERCE_ACCESS_TOKEN;
 
+type Props = {
+  params: {
+    id: string
+  }
+}
+
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  props: Props
 ) {
   try {
-    const url = `https://api.bigcommerce.com/stores/${storeHash}/v3/catalog/products/${params.id}`;
+    const url = `https://api.bigcommerce.com/stores/${storeHash}/v3/catalog/products/${props.params.id}`;
 
     const res = await fetch(url, {
       headers: {
@@ -30,7 +36,7 @@ export async function GET(
     const data = await res.json();
     return NextResponse.json(data.data);
   } catch (error) {
-    console.error(`Error fetching product ${params.id}:`, error);
+    console.error(`Error fetching product ${props.params.id}:`, error);
     return NextResponse.json({ error: "Failed to fetch product" }, { status: 500 });
   }
 } 
