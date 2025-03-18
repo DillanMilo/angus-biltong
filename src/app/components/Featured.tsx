@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Star, ChevronLeft, ChevronRight } from "lucide-react";
 import React, { useState, useEffect, useRef } from "react";
 import { fetchProducts } from "@/app/lib/bigcommerce";
+import { useRouter } from "next/navigation";
 
 // Define product type for the UI
 interface Product {
@@ -28,6 +29,9 @@ const Featured: React.FC = () => {
   // Refs for scroll containers
   const featuredRef = useRef<HTMLDivElement>(null);
   const popularRef = useRef<HTMLDivElement>(null);
+
+  // Add this near the top of the component with other hooks
+  const router = useRouter();
 
   // Function to handle scrolling
   const scroll = (
@@ -251,7 +255,10 @@ const Featured: React.FC = () => {
         viewport={{ once: true }}
         className="mt-12"
       >
-        <button className="bg-[#4B7B3F] text-white text-lg font-semibold py-3 px-8 rounded-md shadow-lg hover:bg-[#3a612f] transition">
+        <button
+          className="bg-[#4B7B3F] text-white text-lg font-semibold py-3 px-8 rounded-md shadow-lg hover:bg-[#3a612f] transition"
+          onClick={() => router.push("/products")}
+        >
           Shop All
         </button>
       </motion.div>
