@@ -1,26 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 
-if (!process.env.BIGCOMMERCE_STORE_HASH) {
-  throw new Error("BIGCOMMERCE_STORE_HASH is not defined");
-}
-if (!process.env.BIGCOMMERCE_ACCESS_TOKEN) {
-  throw new Error("BIGCOMMERCE_ACCESS_TOKEN is not defined");
-}
-
 const storeHash = process.env.BIGCOMMERCE_STORE_HASH;
 const accessToken = process.env.BIGCOMMERCE_ACCESS_TOKEN;
 
-type RouteContext = {
-  params: {
-    id: string;
-  };
-  searchParams: { [key: string]: string | string[] | undefined };
-};
-
 export async function GET(
   request: NextRequest,
-  { params, searchParams }: RouteContext
+  { params }: { params: { id: string } }
 ) {
+  if (!storeHash || !accessToken) {
+    return NextResponse.json({ error: "Missing API credentials" }, { status: 500 });
+  }
+
   try {
     const url = `https://api.bigcommerce.com/stores/${storeHash}/v3/catalog/products/${params.id}`;
 
@@ -32,15 +22,14 @@ export async function GET(
       cache: "no-store",
     });
 
-    if (!res.ok) throw new Error(`Failed to fetch product: ${res.statusText}`);
+    if (!res.ok) {
+      throw new Error(`Failed to fetch product: ${res.statusText}`);
+    }
 
     const data = await res.json();
     return NextResponse.json(data.data);
   } catch (error) {
     console.error(`Error fetching product ${params.id}:`, error);
-    return NextResponse.json(
-      { error: "Failed to fetch product" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Failed to fetch product" }, { status: 500 });
   }
 }
