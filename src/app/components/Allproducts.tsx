@@ -5,6 +5,16 @@ import { motion, AnimatePresence } from "framer-motion";
 import { fetchProducts } from "@/app/lib/bigcommerce";
 import { ChevronDown } from "lucide-react";
 
+// Define interface for product type
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  images?: Array<{ url_standard: string }>;
+  date_created?: string;
+  rating?: number;
+}
+
 const sortOptions = [
   { value: "featured", label: "Featured" },
   { value: "newest", label: "Newest" },
@@ -17,7 +27,7 @@ const sortOptions = [
 ];
 
 const AllProducts = () => {
-  const [products, setProducts] = useState<any[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [sortOption, setSortOption] = useState("featured");
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -52,20 +62,16 @@ const AllProducts = () => {
   }, []);
 
   // Sorting Function
-  const sortProducts = (productsList: any[]) => {
+  const sortProducts = (productsList: Product[]) => {
     switch (sortOption) {
       case "a-z":
         return [...productsList].sort((a, b) => a.name.localeCompare(b.name));
       case "z-a":
         return [...productsList].sort((a, b) => b.name.localeCompare(a.name));
       case "price-asc":
-        return [...productsList].sort(
-          (a, b) => Number(a.price) - Number(b.price)
-        );
+        return [...productsList].sort((a, b) => a.price - b.price);
       case "price-desc":
-        return [...productsList].sort(
-          (a, b) => Number(b.price) - Number(a.price)
-        );
+        return [...productsList].sort((a, b) => b.price - a.price);
       default:
         return productsList;
     }
