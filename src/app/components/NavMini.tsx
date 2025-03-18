@@ -8,23 +8,13 @@ import { Menu } from "lucide-react";
 const NavMini: React.FC = () => {
   const [showBanner, setShowBanner] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [scrolling, setScrolling] = useState(false);
 
   useEffect(() => {
     const bannerTimeout = setTimeout(() => {
       setShowBanner(true);
     }, 1000);
 
-    const handleScroll = () => {
-      setScrolling(window.scrollY > 50); // Navbar gets solid color after scrolling 50px
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      clearTimeout(bannerTimeout);
-      window.removeEventListener("scroll", handleScroll);
-    };
+    return () => clearTimeout(bannerTimeout);
   }, []);
 
   return (
@@ -44,12 +34,8 @@ const NavMini: React.FC = () => {
         )}
       </AnimatePresence>
 
-      {/* 🔹 Transparent Navbar */}
-      <nav
-        className={`w-full flex justify-between items-center px-6 py-3 transition-all duration-300 ${
-          scrolling ? "bg-white shadow-md" : "bg-transparent"
-        }`}
-      >
+      {/* 🔹 Fully Transparent Navbar */}
+      <nav className="w-full flex justify-between items-center px-6 py-3 bg-transparent relative">
         {/* Left - Angus Logo */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
