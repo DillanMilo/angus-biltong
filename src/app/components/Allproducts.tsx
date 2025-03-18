@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { fetchProducts } from "@/app/lib/bigcommerce";
+import { ChevronDown } from "lucide-react";
 
 const sortOptions = [
   { value: "featured", label: "Featured" },
@@ -19,6 +20,8 @@ const AllProducts = () => {
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [sortOption, setSortOption] = useState("featured");
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     async function loadProducts() {
@@ -32,6 +35,20 @@ const AllProducts = () => {
       }
     }
     loadProducts();
+  }, []);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   // Sorting Function
@@ -60,20 +77,53 @@ const AllProducts = () => {
 
   return (
     <section className="max-w-6xl mx-auto px-4 py-12">
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex justify-between items-center mb-6 relative">
         <h2 className="text-3xl font-bold text-gray-900">All Products</h2>
+
         {/* Sorting Dropdown */}
-        <select
-          value={sortOption}
-          onChange={(e) => setSortOption(e.target.value)}
-          className="border border-gray-300 rounded px-3 py-2"
-        >
-          {sortOptions.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
+        <div className="relative z-50" ref={dropdownRef}>
+          <button
+            onClick={() => setDropdownOpen((prev) => !prev)}
+            className="bg-white border border-gray-300 rounded px-4 py-2 flex items-center gap-2 hover:bg-gray-50 focus:outline-none"
+          >
+            <span>
+              Sort by:{" "}
+              {sortOptions.find((opt) => opt.value === sortOption)?.label}
+            </span>
+            <ChevronDown
+              className={`w-5 h-5 transition-transform duration-200 ${
+                dropdownOpen ? "rotate-180" : ""
+              }`}
+            />
+          </button>
+
+          <AnimatePresence>
+            {dropdownOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2 }}
+                className="absolute right-0 mt-2 w-56 bg-white border border-gray-300 rounded-lg shadow-lg overflow-hidden"
+              >
+                {sortOptions.map((option) => (
+                  <button
+                    key={option.value}
+                    onClick={() => {
+                      setSortOption(option.value);
+                      setDropdownOpen(false);
+                    }}
+                    className={`block w-full text-left px-4 py-2 hover:bg-gray-100 transition-colors ${
+                      sortOption === option.value ? "bg-gray-100" : ""
+                    }`}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
 
       <motion.div
