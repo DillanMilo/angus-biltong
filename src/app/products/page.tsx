@@ -1,10 +1,10 @@
-import Navbar from "@/app/components/Navbar"; // ✅ Import Navbar
+import NavMini from "@/app/components/NavMini";
 import AllProducts from "@/app/components/Allproducts";
 
 export default function ProductsPage() {
   return (
     <main>
-      <Navbar /> {/* ✅ Add Navbar here */}
+      <NavMini />
       <AllProducts />
     </main>
   );
