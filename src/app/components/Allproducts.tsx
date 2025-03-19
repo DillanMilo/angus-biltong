@@ -83,23 +83,26 @@ const AllProducts = () => {
 
   return (
     <section className="max-w-6xl mx-auto px-3 sm:px-4 py-8 sm:py-12">
-      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6 relative">
+      <div className="flex flex-col items-center sm:flex-row sm:justify-between sm:items-center gap-4 mb-6 relative">
         <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">
           All Products
         </h2>
 
         {/* Sorting Dropdown */}
-        <div className="relative z-50 w-full sm:w-auto" ref={dropdownRef}>
+        <div
+          className="relative z-50 w-[160px] sm:w-auto self-center sm:self-auto"
+          ref={dropdownRef}
+        >
           <button
             onClick={() => setDropdownOpen((prev) => !prev)}
-            className="w-full sm:w-auto bg-white border border-gray-300 rounded px-3 sm:px-4 py-2 flex items-center justify-between sm:justify-start gap-2 hover:bg-gray-50 focus:outline-none text-sm sm:text-base"
+            className="w-full sm:w-auto bg-white border border-gray-300 rounded px-2.5 sm:px-4 py-2 flex items-center justify-between sm:justify-start gap-2 hover:bg-gray-50 focus:outline-none text-xs sm:text-base"
           >
             <span className="truncate">
               Sort by:{" "}
               {sortOptions.find((opt) => opt.value === sortOption)?.label}
             </span>
             <ChevronDown
-              className={`w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-200 flex-shrink-0 ${
+              className={`w-3 h-3 sm:w-5 sm:h-5 transition-transform duration-200 flex-shrink-0 ${
                 dropdownOpen ? "rotate-180" : ""
               }`}
             />
@@ -112,7 +115,7 @@ const AllProducts = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.2 }}
-                className="absolute right-0 mt-2 w-full sm:w-56 bg-white border border-gray-300 rounded-lg shadow-lg overflow-hidden"
+                className="absolute right-0 mt-2 w-[200px] sm:w-56 bg-white border border-gray-300 rounded-lg shadow-lg overflow-hidden"
               >
                 {sortOptions.map((option) => (
                   <button
@@ -121,7 +124,7 @@ const AllProducts = () => {
                       setSortOption(option.value);
                       setDropdownOpen(false);
                     }}
-                    className={`block w-full text-left px-4 py-2.5 hover:bg-gray-100 transition-colors text-sm sm:text-base ${
+                    className={`block w-full text-left px-3 sm:px-4 py-2 hover:bg-gray-100 transition-colors text-sm sm:text-base ${
                       sortOption === option.value ? "bg-gray-100" : ""
                     }`}
                   >
