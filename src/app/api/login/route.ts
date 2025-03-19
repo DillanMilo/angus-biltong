@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const data = await res.json();
+    await res.json(); // Just validate the response
 
     // Get customer details after successful validation
     const customerRes = await fetch(
@@ -68,10 +68,10 @@ export async function POST(request: NextRequest) {
         lastName: customer.last_name,
       },
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Login error:", error);
     return NextResponse.json(
-      { error: error.message || "Login failed" },
+      { error: error instanceof Error ? error.message : "Login failed" },
       { status: 400 }
     );
   }
