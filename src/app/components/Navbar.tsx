@@ -8,9 +8,7 @@ import Link from "next/link";
 
 const Navbar: React.FC = () => {
   const [showStickyLogo, setShowStickyLogo] = useState(false);
-  const [showIcons, setShowIcons] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [hideIcons, setHideIcons] = useState(false);
   const [showBanner, setShowBanner] = useState(false);
 
   const menuItems = [
@@ -44,10 +42,8 @@ const Navbar: React.FC = () => {
 
       if (window.scrollY > window.innerHeight * 0.6) {
         setShowStickyLogo(true);
-        setHideIcons(true);
       } else {
         setShowStickyLogo(false);
-        setHideIcons(false);
       }
     };
 
@@ -56,13 +52,6 @@ const Navbar: React.FC = () => {
       clearTimeout(bannerTimeout);
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setShowIcons(true);
-    }, 1000);
-    return () => clearTimeout(timeout);
   }, []);
 
   return (
