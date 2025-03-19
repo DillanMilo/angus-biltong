@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { Search, User, ShoppingCart, Gift, Menu } from "lucide-react";
+import Link from "next/link";
 
 const Navbar: React.FC = () => {
   const [showStickyLogo, setShowStickyLogo] = useState(false);
@@ -11,6 +12,18 @@ const Navbar: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [hideIcons, setHideIcons] = useState(false);
   const [showBanner, setShowBanner] = useState(false);
+
+  const menuItems = [
+    { label: "Search", href: "/search" },
+    { label: "Sign In", href: "/login" },
+    { label: "Shop All", href: "/shop" },
+    { label: "Dried Meats", href: "/category/dried-meats" },
+    { label: "Sausage", href: "/category/sausage" },
+    { label: "Groceries", href: "/category/groceries" },
+    { label: "Gift", href: "/gift" },
+    { label: "Cart", href: "/cart" },
+    { label: "Logout", href: "#" }, // We'll handle this differently later
+  ];
 
   useEffect(() => {
     const bannerTimeout = setTimeout(() => {
@@ -124,29 +137,25 @@ const Navbar: React.FC = () => {
           )}
         </motion.div>
 
-        {/* Right Side - Navbar Icons (Aligned in a Row on Desktop) */}
+        {/* Right Side - Navbar Icons */}
         <div className="hidden md:flex items-center space-x-6 text-gray-800 relative">
-          {[
-            { Icon: Search, delay: 1.3 },
-            { Icon: User, delay: 1.5 },
-            { Icon: Gift, delay: 1.7 },
-            { Icon: ShoppingCart, delay: 1.9 },
-          ].map(({ Icon, delay }, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: -10 }}
-              animate={
-                showIcons && !hideIcons
-                  ? { opacity: 1, y: 0 }
-                  : { opacity: 0, y: -10 }
-              }
-              transition={{ delay, duration: 0.6, ease: "easeOut" }}
-            >
-              <Icon size={28} className="cursor-pointer hover:text-gray-600" />
-            </motion.div>
-          ))}
+          <Link href="/search">
+            <Search size={28} className="cursor-pointer hover:text-gray-600" />
+          </Link>
+          <Link href="/login">
+            <User size={28} className="cursor-pointer hover:text-gray-600" />
+          </Link>
+          <Link href="/gift">
+            <Gift size={28} className="cursor-pointer hover:text-gray-600" />
+          </Link>
+          <Link href="/cart">
+            <ShoppingCart
+              size={28}
+              className="cursor-pointer hover:text-gray-600"
+            />
+          </Link>
 
-          {/* Menu Icon (Now in Line with Other Icons on Desktop) */}
+          {/* Menu Icon */}
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -168,23 +177,15 @@ const Navbar: React.FC = () => {
               transition={{ duration: 0.3, ease: "easeOut" }}
               className="absolute top-full left-4 md:right-4 md:left-auto w-48 bg-white shadow-lg rounded-lg py-2 mt-2"
             >
-              {[
-                "Search",
-                "Sign In",
-                "Shop All",
-                "Dried Meats",
-                "Sausage",
-                "Groceries",
-                "Gift",
-                "Cart",
-                "Logout",
-              ].map((item, index) => (
-                <button
+              {menuItems.map((item, index) => (
+                <Link
                   key={index}
+                  href={item.href}
                   className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-200 transition"
+                  onClick={() => setMenuOpen(false)}
                 >
-                  {item}
-                </button>
+                  {item.label}
+                </Link>
               ))}
             </motion.div>
           )}

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { Menu } from "lucide-react";
+import Link from "next/link";
 
 const NavMini: React.FC = () => {
   const [showBanner, setShowBanner] = useState(false);
@@ -16,6 +17,13 @@ const NavMini: React.FC = () => {
 
     return () => clearTimeout(bannerTimeout);
   }, []);
+
+  const menuItems = [
+    { label: "Shop All", href: "/shop" },
+    { label: "Cart", href: "/cart" },
+    { label: "Sign In", href: "/login" },
+    { label: "Logout", href: "#" }, // We'll handle this differently later
+  ];
 
   return (
     <header className="fixed top-0 w-full z-50">
@@ -78,13 +86,15 @@ const NavMini: React.FC = () => {
               transition={{ duration: 0.3, ease: "easeOut" }}
               className="absolute top-full right-2 sm:right-6 w-56 bg-white shadow-lg rounded-lg py-2 mt-2"
             >
-              {["Shop All", "Cart", "Sign In", "Logout"].map((item, index) => (
-                <button
+              {menuItems.map((item, index) => (
+                <Link
                   key={index}
+                  href={item.href}
                   className="block w-full text-left px-4 py-3 text-gray-800 hover:bg-gray-200 transition text-sm sm:text-base"
+                  onClick={() => setMenuOpen(false)}
                 >
-                  {item}
-                </button>
+                  {item.label}
+                </Link>
               ))}
             </motion.div>
           )}
