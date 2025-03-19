@@ -3,8 +3,33 @@
 import { motion } from "framer-motion";
 import { Facebook, Instagram, Mail, Phone } from "lucide-react"; // ✅ Added Mail & Phone icons
 import React from "react";
+import Link from "next/link";
 
 const Footer: React.FC = () => {
+  const navigationLinks = [
+    { label: "Shop All Products", href: "/shop" },
+    { label: "Recipes", href: "/recipes" },
+    { label: "Shipping & Returns", href: "/shipping" },
+    { label: "Contact Us", href: "/contact" },
+    { label: "Terms of Service", href: "/terms" },
+    { label: "Privacy Policy", href: "/privacy" },
+    { label: "About Us", href: "/about" },
+    { label: "Sign In or Register", href: "/login" },
+    { label: "Sitemap", href: "/sitemap" },
+  ];
+
+  const categoryLinks = [
+    { label: "Shop All", href: "/shop" },
+    { label: "Dried Meats", href: "/category/dried-meats" },
+    { label: "Sausage", href: "/category/sausage" },
+    { label: "Groceries", href: "/category/groceries" },
+  ];
+
+  const brandLinks = [
+    { label: "Angus Biltong", href: "/brand/angus-biltong" },
+    { label: "View All", href: "/brands" },
+  ];
+
   return (
     <footer
       id="footer" // Added ID here
@@ -38,25 +63,15 @@ const Footer: React.FC = () => {
         {[
           {
             title: "NAVIGATE",
-            links: [
-              "Shop All Products",
-              "Recipes",
-              "Shipping & Returns",
-              "Contact Us",
-              "Terms of Service",
-              "Privacy Policy",
-              "About Us",
-              "Sign In or Register",
-              "Sitemap",
-            ],
+            links: navigationLinks,
           },
           {
             title: "CATEGORIES",
-            links: ["Shop All", "Dried Meats", "Sausage", "Groceries"],
+            links: categoryLinks,
           },
           {
             title: "POPULAR BRANDS",
-            links: ["Angus Biltong", "View All"],
+            links: brandLinks,
           },
           {
             title: "CONNECT WITH US",
@@ -83,7 +98,9 @@ const Footer: React.FC = () => {
                     key={idx}
                     className="hover:text-gray-400 transition cursor-pointer"
                   >
-                    {item}
+                    <Link href={item.href} className="block w-full">
+                      {item.label}
+                    </Link>
                   </li>
                 ))}
               </ul>
