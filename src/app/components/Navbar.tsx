@@ -137,31 +137,33 @@ const Navbar: React.FC = () => {
               hideIcons ? "opacity-0" : "opacity-100"
             }`}
           >
-            <Link href="/search">
-              <Search
-                size={28}
-                className="cursor-pointer hover:text-gray-600"
-              />
-            </Link>
-            <Link href="/login">
-              <User size={28} className="cursor-pointer hover:text-gray-600" />
-            </Link>
-            <Link href="/gift">
-              <Gift size={28} className="cursor-pointer hover:text-gray-600" />
-            </Link>
-            <Link href="/cart">
-              <ShoppingCart
-                size={28}
-                className="cursor-pointer hover:text-gray-600"
-              />
-            </Link>
+            {[
+              { icon: Search, href: "/search" },
+              { icon: User, href: "/login" },
+              { icon: Gift, href: "/gift" },
+              { icon: ShoppingCart, href: "/cart" },
+            ].map((item, index) => (
+              <motion.div
+                key={item.href}
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.2, duration: 0.5 }}
+              >
+                <Link href={item.href}>
+                  <item.icon
+                    size={28}
+                    className="cursor-pointer hover:text-gray-600"
+                  />
+                </Link>
+              </motion.div>
+            ))}
           </div>
 
           {/* Menu Icon - Always visible */}
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
+            transition={{ delay: 0.8, duration: 0.6, ease: "easeOut" }}
             className="cursor-pointer hover:text-gray-600 relative"
             onClick={() => setMenuOpen(!menuOpen)}
           >
