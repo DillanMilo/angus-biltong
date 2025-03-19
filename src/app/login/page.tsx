@@ -5,6 +5,11 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
+// First, define a custom error type
+interface LoginError extends Error {
+  message: string;
+}
+
 export default function Login() {
   const router = useRouter();
   const [email, setEmail] = useState("");
@@ -33,8 +38,9 @@ export default function Login() {
 
       // Show success message before redirect
       router.push("/account");
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      const error = err as LoginError;
+      setError(error.message);
     } finally {
       setLoading(false);
     }
@@ -131,7 +137,7 @@ export default function Login() {
               href="/register"
               className="text-[#4B7B3F] hover:text-[#3a612f] text-sm"
             >
-              Don't have an account? Create one here
+              Don&apos;t have an account? Create one here
             </Link>
           </div>
         </form>
