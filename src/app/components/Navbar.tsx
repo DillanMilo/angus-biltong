@@ -9,6 +9,7 @@ import Link from "next/link";
 const Navbar: React.FC = () => {
   const [showStickyLogo, setShowStickyLogo] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [hideIcons, setHideIcons] = useState(false);
   const [showBanner, setShowBanner] = useState(false);
 
   const menuItems = [
@@ -42,8 +43,10 @@ const Navbar: React.FC = () => {
 
       if (window.scrollY > window.innerHeight * 0.6) {
         setShowStickyLogo(true);
+        setHideIcons(true);
       } else {
         setShowStickyLogo(false);
+        setHideIcons(false);
       }
     };
 
@@ -128,23 +131,33 @@ const Navbar: React.FC = () => {
 
         {/* Right Side - Navbar Icons */}
         <div className="hidden md:flex items-center space-x-6 text-gray-800 relative">
-          <Link href="/search">
-            <Search size={28} className="cursor-pointer hover:text-gray-600" />
-          </Link>
-          <Link href="/login">
-            <User size={28} className="cursor-pointer hover:text-gray-600" />
-          </Link>
-          <Link href="/gift">
-            <Gift size={28} className="cursor-pointer hover:text-gray-600" />
-          </Link>
-          <Link href="/cart">
-            <ShoppingCart
-              size={28}
-              className="cursor-pointer hover:text-gray-600"
-            />
-          </Link>
+          {/* Icons that hide on scroll */}
+          <div
+            className={`flex items-center space-x-6 transition-opacity duration-300 ${
+              hideIcons ? "opacity-0" : "opacity-100"
+            }`}
+          >
+            <Link href="/search">
+              <Search
+                size={28}
+                className="cursor-pointer hover:text-gray-600"
+              />
+            </Link>
+            <Link href="/login">
+              <User size={28} className="cursor-pointer hover:text-gray-600" />
+            </Link>
+            <Link href="/gift">
+              <Gift size={28} className="cursor-pointer hover:text-gray-600" />
+            </Link>
+            <Link href="/cart">
+              <ShoppingCart
+                size={28}
+                className="cursor-pointer hover:text-gray-600"
+              />
+            </Link>
+          </div>
 
-          {/* Menu Icon */}
+          {/* Menu Icon - Always visible */}
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
