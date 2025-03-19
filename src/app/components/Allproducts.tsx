@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { fetchProducts } from "@/app/lib/bigcommerce";
 import { ChevronDown } from "lucide-react";
+import Image from "next/image";
 
 // Define interface for product type
 interface Product {
@@ -158,10 +159,13 @@ const AllProducts = () => {
             className="bg-white rounded-lg shadow-lg p-3 sm:p-4"
           >
             <div className="relative pt-[100%]">
-              <img
+              <Image
                 src={product.images?.[0]?.url_standard || ""}
                 alt={product.name}
-                className="absolute top-0 left-0 w-full h-full object-cover rounded-md"
+                fill
+                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                className="object-cover rounded-md"
+                priority={index < 4}
               />
             </div>
             <h3 className="text-sm sm:text-lg font-semibold mt-3 line-clamp-2">
