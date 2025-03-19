@@ -38,7 +38,7 @@ const NavMini: React.FC = () => {
       </AnimatePresence>
 
       {/* 🔹 Navbar */}
-      <nav className="w-full flex justify-between items-center px-4 sm:px-6 py-2 sm:py-3 bg-white/80 backdrop-blur-sm">
+      <nav className="w-full flex justify-between items-center px-4 sm:px-6 py-2 sm:py-3 bg-white/80 backdrop-blur-sm sm:bg-transparent sm:backdrop-blur-none">
         {/* Left - Angus Logo */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
