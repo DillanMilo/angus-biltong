@@ -82,22 +82,24 @@ const AllProducts = () => {
   if (loading) return <p className="text-center">Loading products...</p>;
 
   return (
-    <section className="max-w-6xl mx-auto px-4 py-12">
-      <div className="flex justify-between items-center mb-6 relative">
-        <h2 className="text-3xl font-bold text-gray-900">All Products</h2>
+    <section className="max-w-6xl mx-auto px-3 sm:px-4 py-8 sm:py-12">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6 relative">
+        <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">
+          All Products
+        </h2>
 
         {/* Sorting Dropdown */}
-        <div className="relative z-50" ref={dropdownRef}>
+        <div className="relative z-50 w-full sm:w-auto" ref={dropdownRef}>
           <button
             onClick={() => setDropdownOpen((prev) => !prev)}
-            className="bg-white border border-gray-300 rounded px-4 py-2 flex items-center gap-2 hover:bg-gray-50 focus:outline-none"
+            className="w-full sm:w-auto bg-white border border-gray-300 rounded px-3 sm:px-4 py-2 flex items-center justify-between sm:justify-start gap-2 hover:bg-gray-50 focus:outline-none text-sm sm:text-base"
           >
-            <span>
+            <span className="truncate">
               Sort by:{" "}
               {sortOptions.find((opt) => opt.value === sortOption)?.label}
             </span>
             <ChevronDown
-              className={`w-5 h-5 transition-transform duration-200 ${
+              className={`w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-200 flex-shrink-0 ${
                 dropdownOpen ? "rotate-180" : ""
               }`}
             />
@@ -110,7 +112,7 @@ const AllProducts = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.2 }}
-                className="absolute right-0 mt-2 w-56 bg-white border border-gray-300 rounded-lg shadow-lg overflow-hidden"
+                className="absolute right-0 mt-2 w-full sm:w-56 bg-white border border-gray-300 rounded-lg shadow-lg overflow-hidden"
               >
                 {sortOptions.map((option) => (
                   <button
@@ -119,7 +121,7 @@ const AllProducts = () => {
                       setSortOption(option.value);
                       setDropdownOpen(false);
                     }}
-                    className={`block w-full text-left px-4 py-2 hover:bg-gray-100 transition-colors ${
+                    className={`block w-full text-left px-4 py-2.5 hover:bg-gray-100 transition-colors text-sm sm:text-base ${
                       sortOption === option.value ? "bg-gray-100" : ""
                     }`}
                   >
@@ -133,7 +135,7 @@ const AllProducts = () => {
       </div>
 
       <motion.div
-        className="grid grid-cols-2 md:grid-cols-4 gap-6"
+        className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6"
         initial="hidden"
         whileInView="visible"
         transition={{ staggerChildren: 0.2 }}
@@ -143,22 +145,28 @@ const AllProducts = () => {
           <motion.div
             key={product.id}
             variants={{
-              hidden: { opacity: 0, x: -50 },
+              hidden: { opacity: 0, y: 20 },
               visible: {
                 opacity: 1,
-                x: 0,
-                transition: { duration: 0.6, delay: index * 0.2 },
+                y: 0,
+                transition: { duration: 0.6, delay: index * 0.1 },
               },
             }}
-            className="bg-white rounded-lg shadow-lg p-4"
+            className="bg-white rounded-lg shadow-lg p-3 sm:p-4"
           >
-            <img
-              src={product.images?.[0]?.url_standard || ""}
-              alt={product.name}
-              className="h-40 w-full object-cover rounded-md"
-            />
-            <h3 className="text-lg font-semibold mt-4">{product.name}</h3>
-            <p className="text-gray-600">${Number(product.price).toFixed(2)}</p>
+            <div className="relative pt-[100%]">
+              <img
+                src={product.images?.[0]?.url_standard || ""}
+                alt={product.name}
+                className="absolute top-0 left-0 w-full h-full object-cover rounded-md"
+              />
+            </div>
+            <h3 className="text-sm sm:text-lg font-semibold mt-3 line-clamp-2">
+              {product.name}
+            </h3>
+            <p className="text-gray-600 text-sm sm:text-base mt-1">
+              ${Number(product.price).toFixed(2)}
+            </p>
           </motion.div>
         ))}
       </motion.div>
