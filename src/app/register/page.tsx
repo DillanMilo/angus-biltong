@@ -2,9 +2,17 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { fallbackCountries } from "@/utils/fallbackCountries";
+
+interface Country {
+  id: number;
+  code: string;
+  name: string;
+}
 
 export default function Register() {
   const router = useRouter();
+  const [countries] = useState(fallbackCountries);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -189,11 +197,14 @@ export default function Register() {
           required
           className="border p-2"
           onChange={handleChange}
+          value={formData.country}
         >
-          <option value="">Choose a Country</option>
-          <option value="US">United States</option>
-          <option value="CA">Canada</option>
-          {/* Add more country options */}
+          <option value="">Select a Country</option>
+          {countries.map((country) => (
+            <option key={country.code} value={country.code}>
+              {country.name}
+            </option>
+          ))}
         </select>
 
         <button
