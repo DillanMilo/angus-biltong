@@ -106,9 +106,17 @@ export default function Register() {
         className="grid grid-cols-1 md:grid-cols-2 gap-4"
       >
         <input
-          name="email"
-          type="email"
-          placeholder="Email Address"
+          name="firstName"
+          type="text"
+          placeholder="First Name"
+          required
+          className="border p-2"
+          onChange={handleChange}
+        />
+        <input
+          name="lastName"
+          type="text"
+          placeholder="Last Name"
           required
           className="border p-2"
           onChange={handleChange}
@@ -130,21 +138,14 @@ export default function Register() {
           onChange={handleChange}
         />
         <input
-          name="firstName"
-          type="text"
-          placeholder="First Name"
+          name="email"
+          type="email"
+          placeholder="Email Address"
           required
           className="border p-2"
           onChange={handleChange}
         />
-        <input
-          name="lastName"
-          type="text"
-          placeholder="Last Name"
-          required
-          className="border p-2"
-          onChange={handleChange}
-        />
+
         <input
           name="phone"
           type="tel"
