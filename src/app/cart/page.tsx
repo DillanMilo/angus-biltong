@@ -1,16 +1,19 @@
 "use client";
 
 import { useCart } from "@/app/cart/cartContext";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import Link from "next/link";
 import NavMini from "@/app/components/NavMini";
+import { Truck, PartyPopper } from "lucide-react";
 
 const CartPage = () => {
   const { cart, removeFromCart, updateQuantity } = useCart();
   const [isUpdating, setIsUpdating] = useState<number | null>(null);
+  const FREE_SHIPPING_THRESHOLD = 79;
 
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const amountToFreeShipping = FREE_SHIPPING_THRESHOLD - total;
 
   const handleQuantityChange = async (id: number, quantity: number) => {
     if (quantity < 1) return;
@@ -19,11 +22,52 @@ const CartPage = () => {
     setIsUpdating(null);
   };
 
+  // Notification components
+  const FreeShippingAlert = () => (
+    <motion.div
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      className="bg-green-100 border-l-4 border-green-500 p-4 mb-4 rounded-r"
+    >
+      <div className="flex items-center gap-2">
+        <PartyPopper className="text-green-500" size={24} />
+        <p className="text-green-700">
+          Congratulations! Your order qualifies for FREE shipping!
+        </p>
+      </div>
+    </motion.div>
+  );
+
+  const NearFreeShippingAlert = () => (
+    <motion.div
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      className="bg-blue-100 border-l-4 border-blue-500 p-4 mb-4 rounded-r"
+    >
+      <div className="flex items-center gap-2">
+        <Truck className="text-blue-500" size={24} />
+        <p className="text-blue-700">
+          Add just ${amountToFreeShipping.toFixed(2)} more to get FREE shipping!
+        </p>
+      </div>
+    </motion.div>
+  );
+
   return (
     <>
       <NavMini />
       <section className="max-w-6xl mx-auto px-4 py-12 mt-20">
         <h2 className="text-3xl font-bold mb-6">Shopping Cart</h2>
+
+        {/* Shipping Alerts */}
+        <AnimatePresence>
+          {total >= FREE_SHIPPING_THRESHOLD && <FreeShippingAlert />}
+          {total > 0 &&
+            total < FREE_SHIPPING_THRESHOLD &&
+            amountToFreeShipping <= 10 && <NearFreeShippingAlert />}
+        </AnimatePresence>
 
         {cart.length === 0 ? (
           <div className="text-center py-8">
