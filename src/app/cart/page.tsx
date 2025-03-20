@@ -5,13 +5,16 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import Link from "next/link";
 import NavMini from "@/app/components/NavMini";
-import { Truck, PartyPopper } from "lucide-react";
+import { Truck, PartyPopper, ChevronDown, ChevronUp } from "lucide-react";
 
 const CartPage = () => {
   const { cart, removeFromCart, updateQuantity } = useCart();
   const [isUpdating, setIsUpdating] = useState<number | null>(null);
   const FREE_SHIPPING_THRESHOLD = 79;
   const SHIPPING_RATE = 9.99;
+  const [couponCode, setCouponCode] = useState("");
+  const [isCouponOpen, setIsCouponOpen] = useState(false);
+  const [appliedCoupon, setAppliedCoupon] = useState<string | null>(null);
 
   const subtotal = cart.reduce(
     (sum, item) => sum + item.price * item.quantity,
@@ -26,6 +29,15 @@ const CartPage = () => {
     setIsUpdating(id);
     await updateQuantity(id, quantity);
     setIsUpdating(null);
+  };
+
+  const handleApplyCoupon = () => {
+    if (couponCode.trim()) {
+      // TODO: Validate coupon with backend
+      setAppliedCoupon(couponCode);
+      setCouponCode("");
+      setIsCouponOpen(false);
+    }
   };
 
   // Notification components
@@ -180,6 +192,60 @@ const CartPage = () => {
                         ? "FREE"
                         : `$${SHIPPING_RATE.toFixed(2)}`}
                     </span>
+                  </div>
+
+                  <div className="border-t pt-2">
+                    <button
+                      onClick={() => setIsCouponOpen(!isCouponOpen)}
+                      className="flex items-center justify-between w-full text-left text-gray-600 hover:text-gray-800"
+                    >
+                      <span>Add Coupon Code</span>
+                      {isCouponOpen ? (
+                        <ChevronUp size={20} />
+                      ) : (
+                        <ChevronDown size={20} />
+                      )}
+                    </button>
+
+                    {isCouponOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        className="mt-2"
+                      >
+                        <div className="flex gap-2">
+                          <input
+                            type="text"
+                            value={couponCode}
+                            onChange={(e) =>
+                              setCouponCode(e.target.value.toUpperCase())
+                            }
+                            placeholder="Enter code"
+                            className="flex-1 px-3 py-1 border rounded-md text-sm uppercase"
+                          />
+                          <button
+                            onClick={handleApplyCoupon}
+                            disabled={!couponCode.trim()}
+                            className="bg-blue-600 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                          >
+                            Apply
+                          </button>
+                        </div>
+                      </motion.div>
+                    )}
+
+                    {appliedCoupon && (
+                      <div className="flex items-center justify-between mt-2 text-green-600 text-sm">
+                        <span>Coupon {appliedCoupon} applied!</span>
+                        <button
+                          onClick={() => setAppliedCoupon(null)}
+                          className="text-red-500 hover:text-red-700"
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
                 <div className="border-t pt-4">
