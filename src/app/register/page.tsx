@@ -34,8 +34,21 @@ export default function Register() {
     setError(null);
     setLoading(true);
 
+    if (formData.password.length < 8) {
+      setError("Password must be at least 8 characters long");
+      setLoading(false);
+      return;
+    }
+
     if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match");
+      setLoading(false);
+      return;
+    }
+
+    const phoneRegex = /^\+?[\d\s-]+$/;
+    if (!phoneRegex.test(formData.phone)) {
+      setError("Please enter a valid phone number");
       setLoading(false);
       return;
     }
@@ -47,11 +60,13 @@ export default function Register() {
         body: JSON.stringify(formData),
       });
 
+      const data = await res.json();
+
       if (!res.ok) {
-        throw new Error("Failed to create account");
+        throw new Error(data.error || "Failed to create account");
       }
 
-      router.push("/login"); // Redirect to login page after successful registration
+      router.push("/login?registered=true");
     } catch (error: any) {
       setError(error.message);
     } finally {
@@ -62,6 +77,19 @@ export default function Register() {
   return (
     <section className="max-w-4xl mx-auto py-12 px-6">
       <h2 className="text-3xl font-bold text-gray-900 mb-6">Create Account</h2>
+
+      <div className="bg-gray-50 p-6 rounded-lg mb-8 border border-gray-200">
+        <h3 className="text-lg font-semibold mb-3">
+          Create an account with us and you'll be able to:
+        </h3>
+        <ul className="list-disc list-inside space-y-2 text-gray-700">
+          <li>Check out faster</li>
+          <li>Save multiple shipping addresses</li>
+          <li>Access your order history</li>
+          <li>Track new orders</li>
+          <li>Save items to your Wish List</li>
+        </ul>
+      </div>
 
       {error && <p className="text-red-500">{error}</p>}
 
