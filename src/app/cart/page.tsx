@@ -7,6 +7,11 @@ import Link from "next/link";
 import NavMini from "@/app/components/NavMini";
 import { Truck, PartyPopper, ChevronDown, ChevronUp } from "lucide-react";
 
+// Add this interface near the top of the file
+interface CouponError {
+  message: string;
+}
+
 const CartPage = () => {
   const { cart, removeFromCart, updateQuantity } = useCart();
   const [isUpdating, setIsUpdating] = useState<number | null>(null);
@@ -39,7 +44,6 @@ const CartPage = () => {
       // Reset any previous errors
       setCouponError(null);
 
-      // Call BigCommerce's API to validate and apply the coupon
       const response = await fetch(`/api/cart/coupon`, {
         method: "POST",
         headers: {
@@ -56,15 +60,16 @@ const CartPage = () => {
         throw new Error(data.message || "Failed to apply coupon");
       }
 
-      // If successful, update the UI
       setAppliedCoupon(couponCode);
       setCouponCode("");
       setIsCouponOpen(false);
-
-      // You might want to refresh the cart here to show updated totals
-      // await refreshCart();  // If you have this function in your cart context
-    } catch (error: any) {
-      setCouponError(error.message || "Invalid coupon code");
+    } catch (error: unknown) {
+      // Type error as unknown
+      if (error instanceof Error) {
+        setCouponError(error.message || "Invalid coupon code");
+      } else {
+        setCouponError("Invalid coupon code");
+      }
     }
   };
 
