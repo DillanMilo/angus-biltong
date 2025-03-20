@@ -19,6 +19,7 @@ const NavMini: React.FC = () => {
   }, []);
 
   const menuItems = [
+    { label: "Home", href: "/" },
     { label: "Shop All", href: "/shop" },
     { label: "Cart", href: "/cart" },
     { label: "Sign In", href: "/login" },
@@ -47,22 +48,24 @@ const NavMini: React.FC = () => {
 
       {/* 🔹 Navbar */}
       <nav className="w-full flex justify-between items-center px-4 sm:px-6 py-2 sm:py-3 bg-white/80 backdrop-blur-sm sm:bg-transparent sm:backdrop-blur-none">
-        {/* Left - Angus Logo */}
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="w-20 sm:w-28"
-        >
-          <Image
-            src="/AB-Logo-300dpi-Alpha-Only-2.png"
-            alt="Angus Biltong Logo"
-            width={100}
-            height={40}
-            className="w-full h-auto"
-            priority
-          />
-        </motion.div>
+        {/* Left - Angus Logo with Link */}
+        <Link href="/">
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="w-20 sm:w-28"
+          >
+            <Image
+              src="/AB-Logo-300dpi-Alpha-Only-2.png"
+              alt="Angus Biltong Logo"
+              width={100}
+              height={40}
+              className="w-full h-auto"
+              priority
+            />
+          </motion.div>
+        </Link>
 
         {/* Right - Menu Icon */}
         <motion.button
