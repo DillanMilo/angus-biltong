@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { fetchProducts } from "@/app/lib/bigcommerce";
 import { ChevronDown } from "lucide-react";
 import Image from "next/image";
+import { useCart } from "@/app/cart/cartContext";
+import { ShoppingCart } from "lucide-react";
 
 // Define interface for product type
 interface Product {
@@ -28,11 +30,13 @@ const sortOptions = [
 ];
 
 const AllProducts = () => {
+  const { addToCart } = useCart();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [sortOption, setSortOption] = useState("featured");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const [addedProducts, setAddedProducts] = useState<Set<number>>(new Set());
 
   useEffect(() => {
     async function loadProducts() {
@@ -79,6 +83,26 @@ const AllProducts = () => {
   };
 
   const sortedProducts = sortProducts(products);
+
+  const handleAddToCart = (product: Product) => {
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      imageUrl: product.images?.[0]?.url_standard || "",
+      quantity: 1,
+    });
+
+    // Show "Added to cart" temporarily
+    setAddedProducts((prev) => new Set(prev).add(product.id));
+    setTimeout(() => {
+      setAddedProducts((prev) => {
+        const next = new Set(prev);
+        next.delete(product.id);
+        return next;
+      });
+    }, 2000);
+  };
 
   if (loading) return <p className="text-center">Loading products...</p>;
 
@@ -168,12 +192,33 @@ const AllProducts = () => {
                 priority={index < 4}
               />
             </div>
-            <h3 className="text-sm sm:text-lg font-semibold mt-3 line-clamp-2">
-              {product.name}
-            </h3>
-            <p className="text-gray-600 text-sm sm:text-base mt-1">
-              ${Number(product.price).toFixed(2)}
-            </p>
+            <div className="mt-3 space-y-2">
+              <h3 className="text-sm sm:text-lg font-semibold line-clamp-2">
+                {product.name}
+              </h3>
+              <p className="text-gray-600 text-sm sm:text-base">
+                ${Number(product.price).toFixed(2)}
+              </p>
+              <button
+                onClick={() => handleAddToCart(product)}
+                className={`w-full py-2 px-4 rounded-md transition-colors flex items-center justify-center gap-2 
+                  ${
+                    addedProducts.has(product.id)
+                      ? "bg-gray-600 hover:bg-gray-700"
+                      : "bg-green-600 hover:bg-green-700"
+                  } text-white`}
+                disabled={addedProducts.has(product.id)}
+              >
+                {addedProducts.has(product.id) ? (
+                  "Added to Cart!"
+                ) : (
+                  <>
+                    <ShoppingCart size={18} />
+                    Add to Cart
+                  </>
+                )}
+              </button>
+            </div>
           </motion.div>
         ))}
       </motion.div>

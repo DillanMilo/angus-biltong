@@ -7,6 +7,7 @@ import {
   Playfair_Display,
 } from "next/font/google";
 import "./globals.css";
+import { CartProvider } from "./cart/cartContext";
 
 // Existing fonts
 const geistSans = Geist({
@@ -63,7 +64,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${zenKaku.variable} ${robotoCondensed.variable} ${playfair.variable} antialiased`}
       >
-        {children}
+        <CartProvider>{children}</CartProvider>
       </body>
     </html>
   );
