@@ -36,6 +36,7 @@ const AllProducts = () => {
   const [sortOption, setSortOption] = useState("featured");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const [addedProducts, setAddedProducts] = useState<Set<number>>(new Set());
 
   useEffect(() => {
     async function loadProducts() {
@@ -91,6 +92,16 @@ const AllProducts = () => {
       imageUrl: product.images?.[0]?.url_standard || "",
       quantity: 1,
     });
+
+    // Show "Added to cart" temporarily
+    setAddedProducts((prev) => new Set(prev).add(product.id));
+    setTimeout(() => {
+      setAddedProducts((prev) => {
+        const next = new Set(prev);
+        next.delete(product.id);
+        return next;
+      });
+    }, 2000);
   };
 
   if (loading) return <p className="text-center">Loading products...</p>;
@@ -190,10 +201,22 @@ const AllProducts = () => {
               </p>
               <button
                 onClick={() => handleAddToCart(product)}
-                className="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition-colors flex items-center justify-center gap-2"
+                className={`w-full py-2 px-4 rounded-md transition-colors flex items-center justify-center gap-2 
+                  ${
+                    addedProducts.has(product.id)
+                      ? "bg-gray-600 hover:bg-gray-700"
+                      : "bg-green-600 hover:bg-green-700"
+                  } text-white`}
+                disabled={addedProducts.has(product.id)}
               >
-                <ShoppingCart size={18} />
-                Add to Cart
+                {addedProducts.has(product.id) ? (
+                  "Added to Cart!"
+                ) : (
+                  <>
+                    <ShoppingCart size={18} />
+                    Add to Cart
+                  </>
+                )}
               </button>
             </div>
           </motion.div>

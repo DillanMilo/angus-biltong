@@ -28,6 +28,7 @@ const Featured: React.FC = () => {
   const { addToCart } = useCart();
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
   const [mostPopularProducts, setMostPopularProducts] = useState<Product[]>([]);
+  const [addedProducts, setAddedProducts] = useState<Set<number>>(new Set());
 
   // Refs for scroll containers
   const featuredRef = useRef<HTMLDivElement>(null);
@@ -55,6 +56,16 @@ const Featured: React.FC = () => {
       imageUrl: product.imageUrl || "",
       quantity: 1,
     });
+
+    // Show "Added to cart" temporarily
+    setAddedProducts((prev) => new Set(prev).add(product.id));
+    setTimeout(() => {
+      setAddedProducts((prev) => {
+        const next = new Set(prev);
+        next.delete(product.id);
+        return next;
+      });
+    }, 2000);
   };
 
   useEffect(() => {
@@ -154,33 +165,41 @@ const Featured: React.FC = () => {
                     )}
                   </div>
 
-                  <div className="flex flex-col justify-between h-full">
-                    <div>
-                      <h3 className="text-lg font-semibold mt-4">
-                        {product.name}
-                      </h3>
-                      <p className="text-gray-600">{product.price}</p>
-                    </div>
-
-                    <div className="mt-4">
-                      <button
-                        onClick={() => handleAddToCart(product)}
-                        className="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition-colors flex items-center justify-center gap-2 mb-2"
-                      >
-                        <ShoppingCart size={18} />
-                        Add to Cart
-                      </button>
-
-                      <div className="flex justify-center">
-                        {[...Array(5)].map((_, i) => (
-                          <Star
-                            key={i}
-                            size={18}
-                            strokeWidth={2}
-                            className="text-yellow-500 fill-current"
-                          />
-                        ))}
-                      </div>
+                  <div className="mt-3 space-y-2">
+                    <h3 className="text-sm sm:text-lg font-semibold line-clamp-2">
+                      {product.name}
+                    </h3>
+                    <p className="text-gray-600 text-sm sm:text-base">
+                      {product.price}
+                    </p>
+                    <button
+                      onClick={() => handleAddToCart(product)}
+                      className={`w-full py-2 px-4 rounded-md transition-colors flex items-center justify-center gap-2 
+                        ${
+                          addedProducts.has(product.id)
+                            ? "bg-gray-600 hover:bg-gray-700"
+                            : "bg-green-600 hover:bg-green-700"
+                        } text-white`}
+                      disabled={addedProducts.has(product.id)}
+                    >
+                      {addedProducts.has(product.id) ? (
+                        "Added to Cart!"
+                      ) : (
+                        <>
+                          <ShoppingCart size={18} />
+                          Add to Cart
+                        </>
+                      )}
+                    </button>
+                    <div className="flex justify-center">
+                      {[...Array(5)].map((_, i) => (
+                        <Star
+                          key={i}
+                          size={18}
+                          strokeWidth={2}
+                          className="text-yellow-500 fill-current"
+                        />
+                      ))}
                     </div>
                   </div>
                 </motion.div>
@@ -253,33 +272,41 @@ const Featured: React.FC = () => {
                     )}
                   </div>
 
-                  <div className="flex flex-col justify-between h-full">
-                    <div>
-                      <h3 className="text-lg font-semibold mt-4">
-                        {product.name}
-                      </h3>
-                      <p className="text-gray-600">{product.price}</p>
-                    </div>
-
-                    <div className="mt-4">
-                      <button
-                        onClick={() => handleAddToCart(product)}
-                        className="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition-colors flex items-center justify-center gap-2 mb-2"
-                      >
-                        <ShoppingCart size={18} />
-                        Add to Cart
-                      </button>
-
-                      <div className="flex justify-center">
-                        {[...Array(5)].map((_, i) => (
-                          <Star
-                            key={i}
-                            size={18}
-                            strokeWidth={2}
-                            className="text-yellow-500 fill-current"
-                          />
-                        ))}
-                      </div>
+                  <div className="mt-3 space-y-2">
+                    <h3 className="text-sm sm:text-lg font-semibold line-clamp-2">
+                      {product.name}
+                    </h3>
+                    <p className="text-gray-600 text-sm sm:text-base">
+                      {product.price}
+                    </p>
+                    <button
+                      onClick={() => handleAddToCart(product)}
+                      className={`w-full py-2 px-4 rounded-md transition-colors flex items-center justify-center gap-2 
+                        ${
+                          addedProducts.has(product.id)
+                            ? "bg-gray-600 hover:bg-gray-700"
+                            : "bg-green-600 hover:bg-green-700"
+                        } text-white`}
+                      disabled={addedProducts.has(product.id)}
+                    >
+                      {addedProducts.has(product.id) ? (
+                        "Added to Cart!"
+                      ) : (
+                        <>
+                          <ShoppingCart size={18} />
+                          Add to Cart
+                        </>
+                      )}
+                    </button>
+                    <div className="flex justify-center">
+                      {[...Array(5)].map((_, i) => (
+                        <Star
+                          key={i}
+                          size={18}
+                          strokeWidth={2}
+                          className="text-yellow-500 fill-current"
+                        />
+                      ))}
                     </div>
                   </div>
                 </motion.div>
