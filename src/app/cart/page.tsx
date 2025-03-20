@@ -15,6 +15,7 @@ const CartPage = () => {
   const [couponCode, setCouponCode] = useState("");
   const [isCouponOpen, setIsCouponOpen] = useState(false);
   const [appliedCoupon, setAppliedCoupon] = useState<string | null>(null);
+  const [couponError, setCouponError] = useState<string | null>(null);
 
   const subtotal = cart.reduce(
     (sum, item) => sum + item.price * item.quantity,
@@ -31,12 +32,39 @@ const CartPage = () => {
     setIsUpdating(null);
   };
 
-  const handleApplyCoupon = () => {
-    if (couponCode.trim()) {
-      // TODO: Validate coupon with backend
+  const handleApplyCoupon = async () => {
+    if (!couponCode.trim()) return;
+
+    try {
+      // Reset any previous errors
+      setCouponError(null);
+
+      // Call BigCommerce's API to validate and apply the coupon
+      const response = await fetch(`/api/cart/coupon`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          couponCode: couponCode.trim(),
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to apply coupon");
+      }
+
+      // If successful, update the UI
       setAppliedCoupon(couponCode);
       setCouponCode("");
       setIsCouponOpen(false);
+
+      // You might want to refresh the cart here to show updated totals
+      // await refreshCart();  // If you have this function in your cart context
+    } catch (error: any) {
+      setCouponError(error.message || "Invalid coupon code");
     }
   };
 
@@ -214,23 +242,30 @@ const CartPage = () => {
                         exit={{ height: 0, opacity: 0 }}
                         className="mt-2"
                       >
-                        <div className="flex gap-2">
-                          <input
-                            type="text"
-                            value={couponCode}
-                            onChange={(e) =>
-                              setCouponCode(e.target.value.toUpperCase())
-                            }
-                            placeholder="Enter code"
-                            className="flex-1 px-3 py-1 border rounded-md text-sm uppercase"
-                          />
-                          <button
-                            onClick={handleApplyCoupon}
-                            disabled={!couponCode.trim()}
-                            className="bg-blue-600 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
-                          >
-                            Apply
-                          </button>
+                        <div className="flex flex-col gap-2">
+                          <div className="flex gap-2">
+                            <input
+                              type="text"
+                              value={couponCode}
+                              onChange={(e) =>
+                                setCouponCode(e.target.value.toUpperCase())
+                              }
+                              placeholder="Enter code"
+                              className="flex-1 px-3 py-1 border rounded-md text-sm uppercase"
+                            />
+                            <button
+                              onClick={handleApplyCoupon}
+                              disabled={!couponCode.trim()}
+                              className="bg-blue-600 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                            >
+                              Apply
+                            </button>
+                          </div>
+                          {couponError && (
+                            <p className="text-red-500 text-sm">
+                              {couponError}
+                            </p>
+                          )}
                         </div>
                       </motion.div>
                     )}
