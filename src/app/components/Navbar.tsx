@@ -5,12 +5,17 @@ import { motion, AnimatePresence } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { Search, User, ShoppingCart, Gift, Menu } from "lucide-react";
 import Link from "next/link";
+import { useCart } from "@/app/cart/cartContext";
 
 const Navbar: React.FC = () => {
+  const { cart } = useCart();
   const [showStickyLogo, setShowStickyLogo] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [hideIcons, setHideIcons] = useState(false);
   const [showBanner, setShowBanner] = useState(false);
+
+  // Calculate total items in cart
+  const cartItemCount = cart.reduce((total, item) => total + item.quantity, 0);
 
   const menuItems = [
     { label: "Search", href: "/search" },
@@ -20,8 +25,32 @@ const Navbar: React.FC = () => {
     { label: "Sausage", href: "/category/sausage" },
     { label: "Groceries", href: "/category/groceries" },
     { label: "Gift", href: "/gift" },
-    { label: "Cart", href: "/cart" },
-    { label: "Logout", href: "#" }, // We'll handle this differently later
+    {
+      label: (
+        <div className="flex items-center gap-2">
+          Cart
+          {cartItemCount > 0 && (
+            <span className="bg-green-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+              {cartItemCount}
+            </span>
+          )}
+        </div>
+      ),
+      href: "/cart",
+    },
+    { label: "Logout", href: "#" },
+  ];
+
+  // Update the icons section
+  const navIcons = [
+    { icon: Search, href: "/search" },
+    { icon: User, href: "/login" },
+    { icon: Gift, href: "/gift" },
+    {
+      icon: ShoppingCart,
+      href: "/cart",
+      badge: cartItemCount > 0 ? cartItemCount : null,
+    },
   ];
 
   useEffect(() => {
@@ -137,23 +166,24 @@ const Navbar: React.FC = () => {
               hideIcons ? "opacity-0" : "opacity-100"
             }`}
           >
-            {[
-              { icon: Search, href: "/search" },
-              { icon: User, href: "/login" },
-              { icon: Gift, href: "/gift" },
-              { icon: ShoppingCart, href: "/cart" },
-            ].map((item, index) => (
+            {navIcons.map((item, index) => (
               <motion.div
                 key={item.href}
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.2, duration: 0.5 }}
+                className="relative"
               >
                 <Link href={item.href}>
                   <item.icon
                     size={28}
                     className="cursor-pointer hover:text-gray-600"
                   />
+                  {item.badge && (
+                    <span className="absolute -top-2 -right-2 bg-green-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                      {item.badge}
+                    </span>
+                  )}
                 </Link>
               </motion.div>
             ))}

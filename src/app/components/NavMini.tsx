@@ -5,8 +5,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { Menu } from "lucide-react";
 import Link from "next/link";
+import { useCart } from "@/app/cart/cartContext";
 
 const NavMini: React.FC = () => {
+  const { cart } = useCart();
   const [showBanner, setShowBanner] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -18,12 +20,27 @@ const NavMini: React.FC = () => {
     return () => clearTimeout(bannerTimeout);
   }, []);
 
+  // Calculate total items in cart
+  const cartItemCount = cart.reduce((total, item) => total + item.quantity, 0);
+
   const menuItems = [
     { label: "Home", href: "/" },
     { label: "Shop All", href: "/shop" },
-    { label: "Cart", href: "/cart" },
+    {
+      label: (
+        <div className="flex items-center gap-2">
+          Cart
+          {cartItemCount > 0 && (
+            <span className="bg-green-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+              {cartItemCount}
+            </span>
+          )}
+        </div>
+      ),
+      href: "/cart",
+    },
     { label: "Sign In", href: "/login" },
-    { label: "Logout", href: "#" }, // We'll handle this differently later
+    { label: "Logout", href: "#" },
   ];
 
   return (

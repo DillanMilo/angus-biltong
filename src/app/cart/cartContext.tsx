@@ -42,42 +42,81 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   // Load cart from localStorage on mount
   useEffect(() => {
-    const storedCart = localStorage.getItem("cart");
-    if (storedCart) setCart(JSON.parse(storedCart));
+    try {
+      setIsLoading(true);
+      const storedCart = localStorage.getItem("cart");
+      if (storedCart) setCart(JSON.parse(storedCart));
+    } catch (err) {
+      setError(err as Error);
+    } finally {
+      setIsLoading(false);
+    }
   }, []);
 
   // Save cart to localStorage when it changes
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
+    try {
+      localStorage.setItem("cart", JSON.stringify(cart));
+    } catch (err) {
+      setError(err as Error);
+    }
   }, [cart]);
 
   // Update functions to return Promises
   const addToCart = async (product: CartItem) => {
-    setCart((prev) => {
-      const existingItem = prev.find((item) => item.id === product.id);
-      if (existingItem) {
-        return prev.map((item) =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
-      }
-      return [...prev, { ...product, quantity: 1 }];
-    });
+    try {
+      setIsLoading(true);
+      setCart((prev) => {
+        const existingItem = prev.find((item) => item.id === product.id);
+        if (existingItem) {
+          return prev.map((item) =>
+            item.id === product.id
+              ? { ...item, quantity: item.quantity + 1 }
+              : item
+          );
+        }
+        return [...prev, { ...product, quantity: 1 }];
+      });
+    } catch (err) {
+      setError(err as Error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const removeFromCart = async (id: number) => {
-    setCart((prev) => prev.filter((item) => item.id !== id));
+    try {
+      setIsLoading(true);
+      setCart((prev) => prev.filter((item) => item.id !== id));
+    } catch (err) {
+      setError(err as Error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const updateQuantity = async (id: number, quantity: number) => {
-    setCart((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, quantity } : item))
-    );
+    try {
+      setIsLoading(true);
+      setCart((prev) =>
+        prev.map((item) => (item.id === id ? { ...item, quantity } : item))
+      );
+    } catch (err) {
+      setError(err as Error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const clearCart = async () => {
-    setCart([]);
+    try {
+      setIsLoading(true);
+      setCart([]);
+    } catch (err) {
+      setError(err as Error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
