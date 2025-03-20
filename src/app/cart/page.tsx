@@ -11,9 +11,15 @@ const CartPage = () => {
   const { cart, removeFromCart, updateQuantity } = useCart();
   const [isUpdating, setIsUpdating] = useState<number | null>(null);
   const FREE_SHIPPING_THRESHOLD = 79;
+  const SHIPPING_RATE = 9.99;
 
-  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const amountToFreeShipping = FREE_SHIPPING_THRESHOLD - total;
+  const subtotal = cart.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
+  const amountToFreeShipping = FREE_SHIPPING_THRESHOLD - subtotal;
+  const shippingCost = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_RATE;
+  const total = subtotal + shippingCost;
 
   const handleQuantityChange = async (id: number, quantity: number) => {
     if (quantity < 1) return;
@@ -63,9 +69,9 @@ const CartPage = () => {
 
         {/* Shipping Alerts */}
         <AnimatePresence>
-          {total >= FREE_SHIPPING_THRESHOLD && <FreeShippingAlert />}
-          {total > 0 &&
-            total < FREE_SHIPPING_THRESHOLD &&
+          {subtotal >= FREE_SHIPPING_THRESHOLD && <FreeShippingAlert />}
+          {subtotal > 0 &&
+            subtotal < FREE_SHIPPING_THRESHOLD &&
             amountToFreeShipping <= 10 && <NearFreeShippingAlert />}
         </AnimatePresence>
 
@@ -165,9 +171,16 @@ const CartPage = () => {
                 <div className="space-y-2 mb-4">
                   <div className="flex justify-between">
                     <span>Subtotal</span>
-                    <span>${total.toFixed(2)}</span>
+                    <span>${subtotal.toFixed(2)}</span>
                   </div>
-                  {/* Add other costs like shipping, tax etc. here */}
+                  <div className="flex justify-between border-t pt-2">
+                    <span>Shipping (US ONLY)</span>
+                    <span>
+                      {subtotal >= FREE_SHIPPING_THRESHOLD
+                        ? "FREE"
+                        : `$${SHIPPING_RATE.toFixed(2)}`}
+                    </span>
+                  </div>
                 </div>
                 <div className="border-t pt-4">
                   <div className="flex justify-between font-semibold mb-4">
