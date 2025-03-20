@@ -7,11 +7,6 @@ import Link from "next/link";
 import NavMini from "@/app/components/NavMini";
 import { Truck, PartyPopper, ChevronDown, ChevronUp } from "lucide-react";
 
-// Add this interface near the top of the file
-interface CouponError {
-  message: string;
-}
-
 const CartPage = () => {
   const { cart, removeFromCart, updateQuantity } = useCart();
   const [isUpdating, setIsUpdating] = useState<number | null>(null);
