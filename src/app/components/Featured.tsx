@@ -1,10 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Star, ChevronLeft, ChevronRight } from "lucide-react";
+import { Star, ChevronLeft, ChevronRight, ShoppingCart } from "lucide-react";
 import React, { useState, useEffect, useRef } from "react";
 import { fetchProducts } from "@/app/lib/bigcommerce";
 import { useRouter } from "next/navigation";
+import { useCart } from "@/app/cart/cartContext";
 
 // Define product type for the UI
 interface Product {
@@ -12,6 +13,7 @@ interface Product {
   name: string;
   price: string;
   imageUrl?: string;
+  raw_price: number;
 }
 
 // Add type for the BigCommerce API response
@@ -23,6 +25,7 @@ interface BigCommerceProduct {
 }
 
 const Featured: React.FC = () => {
+  const { addToCart } = useCart();
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
   const [mostPopularProducts, setMostPopularProducts] = useState<Product[]>([]);
 
@@ -44,6 +47,16 @@ const Featured: React.FC = () => {
     }
   };
 
+  const handleAddToCart = (product: Product) => {
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: product.raw_price,
+      imageUrl: product.imageUrl || "",
+      quantity: 1,
+    });
+  };
+
   useEffect(() => {
     async function loadProducts() {
       try {
@@ -54,6 +67,7 @@ const Featured: React.FC = () => {
               id: product.id,
               name: product.name,
               price: `$${Number(product.price).toFixed(2)}`,
+              raw_price: Number(product.price),
               imageUrl: product?.images?.[0]?.url_standard || "",
             }))
           );
@@ -62,6 +76,7 @@ const Featured: React.FC = () => {
               id: product.id,
               name: product.name,
               price: `$${Number(product.price).toFixed(2)}`,
+              raw_price: Number(product.price),
               imageUrl: product?.images?.[0]?.url_standard || "",
             }))
           );
@@ -139,17 +154,34 @@ const Featured: React.FC = () => {
                     )}
                   </div>
 
-                  <h3 className="text-lg font-semibold mt-4">{product.name}</h3>
-                  <p className="text-gray-600">{product.price}</p>
-                  <div className="flex justify-center mt-2">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        size={18}
-                        strokeWidth={2}
-                        className="text-yellow-500 fill-current"
-                      />
-                    ))}
+                  <div className="flex flex-col justify-between h-full">
+                    <div>
+                      <h3 className="text-lg font-semibold mt-4">
+                        {product.name}
+                      </h3>
+                      <p className="text-gray-600">{product.price}</p>
+                    </div>
+
+                    <div className="mt-4">
+                      <button
+                        onClick={() => handleAddToCart(product)}
+                        className="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition-colors flex items-center justify-center gap-2 mb-2"
+                      >
+                        <ShoppingCart size={18} />
+                        Add to Cart
+                      </button>
+
+                      <div className="flex justify-center">
+                        {[...Array(5)].map((_, i) => (
+                          <Star
+                            key={i}
+                            size={18}
+                            strokeWidth={2}
+                            className="text-yellow-500 fill-current"
+                          />
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </motion.div>
               ))}
@@ -221,17 +253,34 @@ const Featured: React.FC = () => {
                     )}
                   </div>
 
-                  <h3 className="text-lg font-semibold mt-4">{product.name}</h3>
-                  <p className="text-gray-600">{product.price}</p>
-                  <div className="flex justify-center mt-2">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        size={18}
-                        strokeWidth={2}
-                        className="text-yellow-500 fill-current"
-                      />
-                    ))}
+                  <div className="flex flex-col justify-between h-full">
+                    <div>
+                      <h3 className="text-lg font-semibold mt-4">
+                        {product.name}
+                      </h3>
+                      <p className="text-gray-600">{product.price}</p>
+                    </div>
+
+                    <div className="mt-4">
+                      <button
+                        onClick={() => handleAddToCart(product)}
+                        className="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition-colors flex items-center justify-center gap-2 mb-2"
+                      >
+                        <ShoppingCart size={18} />
+                        Add to Cart
+                      </button>
+
+                      <div className="flex justify-center">
+                        {[...Array(5)].map((_, i) => (
+                          <Star
+                            key={i}
+                            size={18}
+                            strokeWidth={2}
+                            className="text-yellow-500 fill-current"
+                          />
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </motion.div>
               ))}
