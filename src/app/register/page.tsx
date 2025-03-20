@@ -4,12 +4,6 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { fallbackCountries } from "@/utils/fallbackCountries";
 
-interface Country {
-  id: number;
-  code: string;
-  name: string;
-}
-
 export default function Register() {
   const router = useRouter();
   const [countries] = useState(fallbackCountries);
@@ -75,8 +69,8 @@ export default function Register() {
       }
 
       router.push("/login?registered=true");
-    } catch (error: any) {
-      setError(error.message);
+    } catch (error: unknown) {
+      setError(error instanceof Error ? error.message : "An error occurred");
     } finally {
       setLoading(false);
     }
@@ -88,7 +82,7 @@ export default function Register() {
 
       <div className="bg-gray-50 p-6 rounded-lg mb-8 border border-gray-200">
         <h3 className="text-lg font-semibold mb-3">
-          Create an account with us and you'll be able to:
+          Create an account with us and you&apos;ll be able to:
         </h3>
         <ul className="list-disc list-inside space-y-2 text-gray-700">
           <li>Check out faster</li>
