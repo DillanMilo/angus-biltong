@@ -3,7 +3,8 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { fetchProducts } from "@/app/lib/bigcommerce";
-import { X } from "lucide-react";
+import { X, ShoppingCart } from "lucide-react";
+import { useCart } from "@/app/cart/cartContext";
 
 interface SearchOverlayProps {
   isOpen: boolean;
@@ -11,9 +12,11 @@ interface SearchOverlayProps {
 }
 
 const SearchOverlay: React.FC<SearchOverlayProps> = ({ isOpen, onClose }) => {
+  const { addToCart } = useCart();
   const [query, setQuery] = useState("");
   const [products, setProducts] = useState<any[]>([]);
   const [filtered, setFiltered] = useState<any[]>([]);
+  const [addedProducts, setAddedProducts] = useState<Set<number>>(new Set());
 
   useEffect(() => {
     async function loadProducts() {
@@ -37,6 +40,26 @@ const SearchOverlay: React.FC<SearchOverlayProps> = ({ isOpen, onClose }) => {
     );
     setFiltered(results);
   }, [query, products]);
+
+  const handleAddToCart = (product: any) => {
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      imageUrl: product.images?.[0]?.url_standard || "",
+      quantity: 1,
+    });
+
+    // Show "Added to cart" temporarily
+    setAddedProducts((prev) => new Set(prev).add(product.id));
+    setTimeout(() => {
+      setAddedProducts((prev) => {
+        const next = new Set(prev);
+        next.delete(product.id);
+        return next;
+      });
+    }, 2000);
+  };
 
   return (
     <AnimatePresence>
@@ -76,9 +99,28 @@ const SearchOverlay: React.FC<SearchOverlayProps> = ({ isOpen, onClose }) => {
                     className="h-40 w-full object-cover rounded"
                   />
                   <h3 className="mt-2 text-lg font-semibold">{product.name}</h3>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-gray-600 mb-3">
                     ${Number(product.price).toFixed(2)}
                   </p>
+                  <button
+                    onClick={() => handleAddToCart(product)}
+                    className={`w-full py-2 px-4 rounded-md transition-colors flex items-center justify-center gap-2 
+                      ${
+                        addedProducts.has(product.id)
+                          ? "bg-gray-600 hover:bg-gray-700"
+                          : "bg-green-600 hover:bg-green-700"
+                      } text-white`}
+                    disabled={addedProducts.has(product.id)}
+                  >
+                    {addedProducts.has(product.id) ? (
+                      "Added to Cart!"
+                    ) : (
+                      <>
+                        <ShoppingCart size={18} />
+                        Add to Cart
+                      </>
+                    )}
+                  </button>
                 </div>
               ))}
             </div>
