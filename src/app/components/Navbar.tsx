@@ -60,7 +60,11 @@ const Navbar: React.FC = () => {
       },
       href: undefined,
     },
-    { icon: User, href: "/login" },
+    {
+      icon: User,
+      href: "/login",
+      onClick: undefined,
+    },
     { icon: Gift, href: "/gift" },
     {
       icon: ShoppingCart,
@@ -239,7 +243,11 @@ const Navbar: React.FC = () => {
                     }}
                     className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-200 transition cursor-pointer"
                   >
-                    {item.label}
+                    {item.href ? (
+                      <Link href={item.href}>{item.label}</Link>
+                    ) : (
+                      item.label
+                    )}
                   </div>
                 ))}
               </motion.div>
