@@ -29,7 +29,7 @@ const Navbar: React.FC = () => {
       href: undefined,
     },
     { label: "Sign In", href: "/login" },
-    { label: "Shop All", href: "/shop" },
+    { label: "Shop All", href: "/products" },
     { label: "Dried Meats", href: "/category/dried-meats" },
     { label: "Sausage", href: "/category/sausage" },
     { label: "Groceries", href: "/category/groceries" },

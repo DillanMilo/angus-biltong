@@ -25,7 +25,7 @@ const NavMini: React.FC = () => {
 
   const menuItems = [
     { label: "Home", href: "/" },
-    { label: "Shop All", href: "/shop" },
+    { label: "Shop All", href: "/products" },
     {
       label: (
         <div className="flex items-center gap-2">
