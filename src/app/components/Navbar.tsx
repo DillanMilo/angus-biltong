@@ -29,7 +29,7 @@ const Navbar: React.FC = () => {
       href: undefined,
     },
     { label: "Sign In", href: "/login" },
-    { label: "Shop All", href: "/shop" },
+    { label: "Shop All", href: "/products" },
     { label: "Dried Meats", href: "/category/dried-meats" },
     { label: "Sausage", href: "/category/sausage" },
     { label: "Groceries", href: "/category/groceries" },
@@ -195,17 +195,30 @@ const Navbar: React.FC = () => {
                   transition={{ delay: index * 0.2, duration: 0.5 }}
                   className="relative"
                 >
-                  <div
-                    onClick={item.onClick}
-                    className="cursor-pointer hover:text-gray-600"
-                  >
-                    <item.icon size={28} />
-                    {item.badge && (
-                      <span className="absolute -top-2 -right-2 bg-green-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                        {item.badge}
-                      </span>
-                    )}
-                  </div>
+                  {item.href ? (
+                    <Link href={item.href}>
+                      <div className="cursor-pointer hover:text-gray-600">
+                        <item.icon size={28} />
+                        {item.badge && (
+                          <span className="absolute -top-2 -right-2 bg-green-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                            {item.badge}
+                          </span>
+                        )}
+                      </div>
+                    </Link>
+                  ) : (
+                    <div
+                      onClick={item.onClick}
+                      className="cursor-pointer hover:text-gray-600"
+                    >
+                      <item.icon size={28} />
+                      {item.badge && (
+                        <span className="absolute -top-2 -right-2 bg-green-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                          {item.badge}
+                        </span>
+                      )}
+                    </div>
+                  )}
                 </motion.div>
               ))}
             </div>
