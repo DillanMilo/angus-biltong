@@ -6,6 +6,15 @@ import { fetchProducts } from "@/app/lib/bigcommerce";
 import { X, ShoppingCart } from "lucide-react";
 import { useCart } from "@/app/cart/cartContext";
 
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  images?: Array<{
+    url_standard: string;
+  }>;
+}
+
 interface SearchOverlayProps {
   isOpen: boolean;
   onClose: () => void;
@@ -14,8 +23,8 @@ interface SearchOverlayProps {
 const SearchOverlay: React.FC<SearchOverlayProps> = ({ isOpen, onClose }) => {
   const { addToCart } = useCart();
   const [query, setQuery] = useState("");
-  const [products, setProducts] = useState<any[]>([]);
-  const [filtered, setFiltered] = useState<any[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [filtered, setFiltered] = useState<Product[]>([]);
   const [addedProducts, setAddedProducts] = useState<Set<number>>(new Set());
 
   useEffect(() => {
@@ -41,7 +50,7 @@ const SearchOverlay: React.FC<SearchOverlayProps> = ({ isOpen, onClose }) => {
     setFiltered(results);
   }, [query, products]);
 
-  const handleAddToCart = (product: any) => {
+  const handleAddToCart = (product: Product) => {
     addToCart({
       id: product.id,
       name: product.name,
