@@ -20,6 +20,16 @@ interface CartItem {
   product_id?: number;
 }
 
+// Add Product interface
+export interface Product {
+  id: number;
+  name: string;
+  price: number;
+  imageUrl: string;
+  description?: string;
+  category?: string;
+}
+
 // Define Context Type
 interface CartContextType {
   cart: CartItem[];
@@ -29,6 +39,7 @@ interface CartContextType {
   removeFromCart: (id: number) => Promise<void>;
   updateQuantity: (id: number, quantity: number) => Promise<void>;
   clearCart: () => Promise<void>;
+  products: Product[];
 }
 
 // Create Context
@@ -39,6 +50,37 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
+  const [products] = useState<Product[]>([
+    {
+      id: 1,
+      name: "Traditional Biltong",
+      price: 15.99,
+      imageUrl: "/products/biltong-traditional.jpg",
+      category: "dried-meats",
+    },
+    {
+      id: 2,
+      name: "Peri-Peri Biltong",
+      price: 16.99,
+      imageUrl: "/products/biltong-peri.jpg",
+      category: "dried-meats",
+    },
+    {
+      id: 3,
+      name: "Droewors",
+      price: 14.99,
+      imageUrl: "/products/droewors.jpg",
+      category: "sausage",
+    },
+    {
+      id: 4,
+      name: "Boerewors",
+      price: 18.99,
+      imageUrl: "/products/boerewors.jpg",
+      category: "sausage",
+    },
+    // Add more products as needed
+  ]);
 
   // Load cart from localStorage on mount
   useEffect(() => {
@@ -119,21 +161,18 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  return (
-    <CartContext.Provider
-      value={{
-        cart,
-        isLoading,
-        error,
-        addToCart,
-        removeFromCart,
-        updateQuantity,
-        clearCart,
-      }}
-    >
-      {children}
-    </CartContext.Provider>
-  );
+  const value = {
+    cart,
+    isLoading,
+    error,
+    addToCart,
+    removeFromCart,
+    updateQuantity,
+    clearCart,
+    products,
+  };
+
+  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };
 
 // Custom Hook to Use Cart

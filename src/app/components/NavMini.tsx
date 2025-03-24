@@ -39,7 +39,10 @@ const NavMini: React.FC = () => {
       ),
       href: "/cart",
     },
-    { label: "Sign In", href: "/login" },
+    {
+      label: "Sign In",
+      href: "/login",
+    },
     { label: "Logout", href: "#" },
   ];
 
