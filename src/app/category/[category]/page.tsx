@@ -6,19 +6,29 @@ import { fetchProducts } from "@/app/lib/bigcommerce";
 import { motion } from "framer-motion";
 import NavMini from "@/app/components/NavMini";
 
+// Add interface for product type
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  images?: {
+    url_standard: string;
+  }[];
+}
+
 const Page = () => {
   const params = useParams();
   const category =
     typeof params.category === "string"
       ? params.category
       : params.category?.[0];
-  const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     async function load() {
       const allProducts = await fetchProducts();
 
-      const filtered = allProducts.filter((product: any) => {
+      const filtered = allProducts.filter((product: Product) => {
         const name = product.name.toLowerCase();
         if (category === "dried-meats") return name.includes("biltong");
         if (category === "sausage") return name.includes("boerewors");
