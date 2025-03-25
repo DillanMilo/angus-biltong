@@ -36,6 +36,9 @@ const NavMini: React.FC = () => {
       href: undefined,
     },
     { label: "Shop All", href: "/products" },
+    { label: "Dried Meats", href: "/dried-meats" },
+    { label: "Sausage", href: "/sausage" },
+    { label: "Groceries", href: "/groceries" },
     {
       label: (
         <div className="flex items-center gap-2">
@@ -49,10 +52,7 @@ const NavMini: React.FC = () => {
       ),
       href: "/cart",
     },
-    {
-      label: "Sign In",
-      href: "/login",
-    },
+    { label: "Sign In", href: "/login" },
     { label: "Logout", href: "#" },
   ];
 

@@ -1,12 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
 import { fetchProducts } from "@/app/lib/bigcommerce";
 import { motion } from "framer-motion";
 import NavMini from "@/app/components/NavMini";
 
-// Add interface for product type
 interface Product {
   id: number;
   name: string;
@@ -16,39 +14,42 @@ interface Product {
   }[];
 }
 
-const Page = () => {
-  const params = useParams();
-  const category =
-    typeof params.category === "string"
-      ? params.category
-      : params.category?.[0];
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+const SausagePage = () => {
+  const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     async function load() {
-      const allProducts = await fetchProducts();
+      try {
+        const allProducts = await fetchProducts();
 
-      const filtered = allProducts.filter((product: Product) => {
-        const name = product.name.toLowerCase();
-        if (category === "dried-meats") return name.includes("biltong");
-        if (category === "sausage") return name.includes("boerewors");
-        if (category === "groceries")
-          return !name.includes("boerewors") && !name.includes("biltong");
-        return false;
-      });
+        if (!allProducts || allProducts.length === 0) {
+          console.log("No products returned from API");
+          return;
+        }
 
-      setFilteredProducts(filtered);
+        const sausages = allProducts.filter((product: Product) => {
+          const name = product.name.toLowerCase();
+          const keywords = ["boerewors", "sausage", "wors"];
+          return keywords.some((keyword) =>
+            name.includes(keyword.toLowerCase())
+          );
+        });
+
+        setProducts(sausages);
+      } catch (error) {
+        console.error("Error loading products:", error);
+      }
     }
 
     load();
-  }, [category]);
+  }, []);
 
   return (
-    <>
+    <div className="min-h-screen pt-20">
       <NavMini />
       <section className="max-w-6xl mx-auto px-4 py-12">
         <h2 className="text-3xl font-bold mb-6 capitalize text-center">
-          {category?.replace("-", " ")}
+          Sausage ({products.length} items)
         </h2>
 
         <motion.div
@@ -58,7 +59,7 @@ const Page = () => {
           transition={{ staggerChildren: 0.2 }}
           viewport={{ once: true }}
         >
-          {filteredProducts.map((product, index) => (
+          {products.map((product, index) => (
             <motion.div
               key={product.id}
               variants={{
@@ -84,8 +85,8 @@ const Page = () => {
           ))}
         </motion.div>
       </section>
-    </>
+    </div>
   );
 };
 
-export default Page;
+export default SausagePage;
