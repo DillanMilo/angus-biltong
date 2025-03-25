@@ -30,9 +30,9 @@ const Navbar: React.FC = () => {
     },
     { label: "Sign In", href: "/login" },
     { label: "Shop All", href: "/products" },
-    { label: "Dried Meats", href: "/category/dried-meats" },
-    { label: "Sausage", href: "/category/sausage" },
-    { label: "Groceries", href: "/category/groceries" },
+    { label: "Dried Meats", href: "/dried-meats" },
+    { label: "Sausage", href: "/sausage" },
+    { label: "Groceries", href: "/groceries" },
     { label: "Gift", href: "/gift" },
     {
       label: (
