@@ -30,8 +30,8 @@ const PrivacyPage = () => {
             At Angus Biltong, we are committed to protecting your privacy. This
             Privacy Policy outlines how we collect, use, disclose, and safeguard
             your personal information when you visit our website
-            www.angusbiltong.com (the "Site"). By accessing or using the Site,
-            you agree to the terms of this Privacy Policy.
+            www.angusbiltong.com (the &quot;Site&quot;). By accessing or using
+            the Site, you agree to the terms of this Privacy Policy.
           </p>
 
           <div className="space-y-8">
@@ -179,7 +179,7 @@ const PrivacyPage = () => {
 
             <section>
               <h2 className="text-2xl font-bold mb-4 playfair">
-                8. Children's Privacy
+                8. Children&apos;s Privacy
               </h2>
               <p className="text-gray-700">
                 Our Site is not intended for children under the age of 13, and
@@ -197,9 +197,9 @@ const PrivacyPage = () => {
               <p className="text-gray-700">
                 We may update this Privacy Policy from time to time. When we
                 make significant changes, we will notify you by posting an
-                updated version on this page. The "Last Updated" date at the top
-                of this Privacy Policy indicates the most recent revision. We
-                encourage you to review this policy periodically.
+                updated version on this page. The &quot;Last Updated&quot; date
+                at the top of this Privacy Policy indicates the most recent
+                revision. We encourage you to review this policy periodically.
               </p>
             </section>
 
