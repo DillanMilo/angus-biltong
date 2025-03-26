@@ -139,9 +139,9 @@ const TermsPage = () => {
                 8. Disclaimer of Warranties
               </h2>
               <p className="text-gray-700">
-                The Website and its content are provided "as is" without
-                warranties of any kind, either express or implied. We do not
-                guarantee the accuracy, reliability, or availability of the
+                The Website and its content are provided &quot;as is&quot;
+                without warranties of any kind, either express or implied. We do
+                not guarantee the accuracy, reliability, or availability of the
                 Website at all times.
               </p>
             </section>

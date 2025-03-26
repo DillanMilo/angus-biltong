@@ -48,8 +48,8 @@ const ContactPage = () => {
             Contact Us
           </h1>
           <p className="text-gray-700 mb-4">
-            We're happy to answer questions or help you with returns. Please
-            fill out the form below if you need assistance.
+            We&apos;re happy to answer questions or help you with returns.
+            Please fill out the form below if you need assistance.
           </p>
           <p className="text-gray-700">
             If you are local, our store is located at{" "}
