@@ -7,7 +7,7 @@ import Link from "next/link";
 
 const Footer: React.FC = () => {
   const navigationLinks = [
-    { label: "Shop All Products", href: "/shop" },
+    { label: "Shop All Products", href: "/products" },
     { label: "Recipes", href: "/recipes" },
     { label: "Shipping & Returns", href: "/shipping" },
     { label: "Contact Us", href: "/contact" },
