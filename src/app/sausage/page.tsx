@@ -36,19 +36,20 @@ const SausagePage = () => {
 
         const sausages = allProducts.filter((product: Product) => {
           const name = product.name.toLowerCase();
-          const keywords = [
-            "boerewors",
-            "sausage",
-            "wors",
-            "braai",
-            "farmers sausage",
-          ];
+          const keywords = ["sausage", "boerewors"];
+
+          if (
+            keywords.some((keyword) => name.includes(keyword.toLowerCase()))
+          ) {
+            console.log("Found sausage product:", product.name);
+          }
 
           return keywords.some((keyword) =>
             name.includes(keyword.toLowerCase())
           );
         });
 
+        console.log("All products:", allProducts);
         console.log("Filtered sausages:", sausages);
         setProducts(sausages);
       } catch (error) {
