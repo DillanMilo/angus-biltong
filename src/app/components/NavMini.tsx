@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import React, { useEffect, useState } from "react";
-import { Menu, Search } from "lucide-react";
+import { Menu } from "lucide-react";
 import Link from "next/link";
 import { useCart } from "@/app/cart/cartContext";
 import SearchOverlay from "./SearchOverlay";
@@ -97,18 +97,6 @@ const NavMini: React.FC = () => {
               />
             </motion.div>
           </Link>
-
-          {/* Center - Search Icon */}
-          <motion.button
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="cursor-pointer hover:text-gray-600 p-2"
-            onClick={() => setIsSearchOpen(true)}
-            aria-label="Search"
-          >
-            <Search size={24} />
-          </motion.button>
 
           {/* Right - Menu Icon */}
           <motion.button
