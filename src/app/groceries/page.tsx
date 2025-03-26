@@ -92,7 +92,7 @@ const GroceriesPage = () => {
     <div className="min-h-screen pt-20">
       <NavMini />
       <section className="max-w-6xl mx-auto px-4 py-12">
-        <h2 className="text-3xl font-bold mb-6 capitalize text-center playfair">
+        <h2 className="text-3xl font-bold mb-6 capitalize text-center playfair underline">
           Groceries ({products.length} items)
         </h2>
 
