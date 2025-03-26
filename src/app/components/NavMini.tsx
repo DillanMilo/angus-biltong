@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import React, { useEffect, useState } from "react";
-import { Menu, Search } from "lucide-react";
+import { Menu } from "lucide-react";
 import Link from "next/link";
 import { useCart } from "@/app/cart/cartContext";
 import SearchOverlay from "./SearchOverlay";
