@@ -107,13 +107,11 @@ const AllProducts = () => {
   if (loading) return <p className="text-center">Loading products...</p>;
 
   return (
-    <section className="max-w-6xl mx-auto px-3 sm:px-4 py-8 sm:py-12">
+    <section className="max-w-6xl mx-auto px-4 py-12">
+      <h2 className="text-3xl font-bold mb-6 capitalize text-center playfair underline">
+        All Products ({products.length} items)
+      </h2>
       <div className="flex flex-col items-center sm:flex-row sm:justify-between sm:items-center gap-4 mb-6 relative">
-        <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">
-          All Products
-        </h2>
-
-        {/* Sorting Dropdown */}
         <div
           className="relative z-50 w-[160px] sm:w-auto self-center sm:self-auto"
           ref={dropdownRef}

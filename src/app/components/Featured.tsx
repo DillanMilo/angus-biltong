@@ -111,7 +111,7 @@ const Featured: React.FC = () => {
     >
       {/* Featured Products Section */}
       <div className="max-w-6xl mx-auto px-4 relative">
-        <h2 className="text-3xl font-bold text-gray-900 mb-6 underline">
+        <h2 className="text-3xl font-bold text-gray-900 mb-6 underline playfair">
           Featured Products
         </h2>
         <div className="relative group">
@@ -219,7 +219,7 @@ const Featured: React.FC = () => {
 
       {/* Most Popular Section */}
       <div className="max-w-6xl mx-auto px-4 mt-12 relative">
-        <h2 className="text-3xl font-bold text-gray-900 mb-6 underline">
+        <h2 className="text-3xl font-bold text-gray-900 mb-6 underline playfair">
           Most Popular
         </h2>
         <div className="relative group">

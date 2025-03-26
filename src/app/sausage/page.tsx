@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { fetchProducts } from "@/app/lib/bigcommerce";
 import { motion } from "framer-motion";
 import NavMini from "@/app/components/NavMini";
+import { ShoppingCart } from "lucide-react";
+import { useCart } from "@/app/cart/cartContext";
 
 interface Product {
   id: number;
@@ -18,6 +20,8 @@ const SausagePage = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { addToCart } = useCart();
+  const [addedProducts, setAddedProducts] = useState<Set<number>>(new Set());
 
   useEffect(() => {
     async function load() {
@@ -63,6 +67,25 @@ const SausagePage = () => {
     load();
   }, []);
 
+  const handleAddToCart = (product: Product) => {
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      imageUrl: product.images?.[0]?.url_standard || "",
+      quantity: 1,
+    });
+
+    setAddedProducts((prev) => new Set(prev).add(product.id));
+    setTimeout(() => {
+      setAddedProducts((prev) => {
+        const next = new Set(prev);
+        next.delete(product.id);
+        return next;
+      });
+    }, 2000);
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen pt-20">
@@ -89,7 +112,7 @@ const SausagePage = () => {
     <div className="min-h-screen pt-20">
       <NavMini />
       <section className="max-w-6xl mx-auto px-4 py-12">
-        <h2 className="text-3xl font-bold mb-6 capitalize text-center">
+        <h2 className="text-3xl font-bold mb-6 capitalize text-center playfair underline">
           Sausages ({products.length} items)
         </h2>
 
@@ -129,10 +152,31 @@ const SausagePage = () => {
                     No image
                   </div>
                 )}
-                <h3 className="text-lg font-semibold mt-4">{product.name}</h3>
-                <p className="text-gray-600">
-                  ${Number(product.price).toFixed(2)}
-                </p>
+                <div className="mt-3 space-y-2">
+                  <h3 className="text-lg font-semibold mt-4">{product.name}</h3>
+                  <p className="text-gray-600">
+                    ${Number(product.price).toFixed(2)}
+                  </p>
+                  <button
+                    onClick={() => handleAddToCart(product)}
+                    className={`w-full py-2 px-4 rounded-md transition-colors flex items-center justify-center gap-2 
+                      ${
+                        addedProducts.has(product.id)
+                          ? "bg-gray-600 hover:bg-gray-700"
+                          : "bg-green-600 hover:bg-green-700"
+                      } text-white`}
+                    disabled={addedProducts.has(product.id)}
+                  >
+                    {addedProducts.has(product.id) ? (
+                      "Added to Cart!"
+                    ) : (
+                      <>
+                        <ShoppingCart size={18} />
+                        Add to Cart
+                      </>
+                    )}
+                  </button>
+                </div>
               </motion.div>
             ))}
           </motion.div>
