@@ -43,14 +43,14 @@ const RecipesPage = () => {
           <h2 className="text-3xl font-bold mb-6 playfair">Boerewors</h2>
           <div className="space-y-6">
             <p className="text-gray-700">
-              Never poke holes in the boerewors while grilling it. You will lose
-              a lot of flavor and it will end up being dry.
+              Never poke holes in the boerewors while grilling it. You&apos;ll
+              lose a lot of flavor and it will end up being dry.
             </p>
             <p className="text-gray-700">
-              Boerewors does not like to be grilled or cooked frozen, you are
-              setting yourself up for heartache. Always thaw it first. Also,
-              never show up at someone else's braai with frozen boerewors. Show
-              some respect.
+              Boerewors does not like to be grilled or cooked frozen,
+              you&apos;re setting yourself up for heartache. Always thaw it
+              first. Also, never show up at someone else&apos;s braai with
+              frozen boerewors. Show some respect.
             </p>
           </div>
         </motion.section>
