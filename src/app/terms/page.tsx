@@ -55,8 +55,8 @@ const TermsPage = () => {
               <p className="text-gray-700">
                 We may modify or update these Terms at any time without prior
                 notice. Any changes will be posted on this page with an updated
-                "Effective Date." It is your responsibility to review these
-                Terms regularly.
+                &quot;Effective Date.&quot; It is your responsibility to review
+                these Terms regularly.
               </p>
             </section>
 
