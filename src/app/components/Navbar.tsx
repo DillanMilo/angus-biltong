@@ -34,6 +34,7 @@ const Navbar: React.FC = () => {
     { label: "Sausage", href: "/sausage" },
     { label: "Groceries", href: "/groceries" },
     { label: "Gift", href: "/gift" },
+    { label: "Recipes", href: "/recipes" },
     {
       label: (
         <div className="flex items-center gap-2">
