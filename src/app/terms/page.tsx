@@ -27,11 +27,12 @@ const TermsPage = () => {
           <p className="text-gray-600">Effective Date: 05/02/2022</p>
 
           <p className="text-gray-700">
-            Welcome to Angus Biltong www.angusbiltong.com (referred to as "we",
-            "us", "our"). By accessing or using our website at angusbiltong.com
-            (the "Website"), you agree to be bound by these Terms of Service
-            ("Terms") and our Privacy Policy. Please read them carefully. If you
-            do not agree to these Terms, do not use the Website.
+            Welcome to Angus Biltong www.angusbiltong.com (referred to as
+            &quot;we&quot;, &quot;us&quot;, &quot;our&quot;). By accessing or
+            using our website at angusbiltong.com (the &quot;Website&quot;), you
+            agree to be bound by these Terms of Service (&quot;Terms&quot;) and
+            our Privacy Policy. Please read them carefully. If you do not agree
+            to these Terms, do not use the Website.
           </p>
 
           <div className="space-y-8">
