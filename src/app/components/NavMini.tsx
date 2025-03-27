@@ -39,7 +39,7 @@ const NavMini: React.FC = () => {
     { label: "Dried Meats", href: "/dried-meats" },
     { label: "Sausage", href: "/sausage" },
     { label: "Groceries", href: "/groceries" },
-    { label: "Gift", href: "/gift" },
+    { label: "Gift Certificates", href: "/gift-certificates" },
     { label: "Recipes", href: "/recipes" },
     {
       label: (

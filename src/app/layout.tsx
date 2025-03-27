@@ -47,7 +47,10 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      className={`${geistSans.variable} ${geistMono.variable} ${zenKaku.variable} ${robotoCondensed.variable} ${playfair.variable} antialiased`}
+    >
       <head>
         {/* ✅ Add Google Fonts for Playfair Display */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -61,9 +64,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} ${zenKaku.variable} ${robotoCondensed.variable} ${playfair.variable} antialiased`}
-      >
+      <body>
         <CartProvider>{children}</CartProvider>
       </body>
     </html>
