@@ -18,10 +18,10 @@ const Footer: React.FC = () => {
   ];
 
   const categoryLinks = [
-    { label: "Shop All", href: "/shop" },
-    { label: "Dried Meats", href: "/category/dried-meats" },
-    { label: "Sausage", href: "/category/sausage" },
-    { label: "Groceries", href: "/category/groceries" },
+    { label: "Shop All", href: "/products" },
+    { label: "Dried Meats", href: "/dried-meats" },
+    { label: "Sausage", href: "/sausage" },
+    { label: "Groceries", href: "/groceries" },
   ];
 
   const brandLinks = [
