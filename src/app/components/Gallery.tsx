@@ -8,30 +8,30 @@ import React from "react";
 const reviews = [
   {
     id: 1,
-    name: "John D.",
+    name: "Jonathan K.",
     review:
-      "Absolutely love this place! The best biltong I’ve ever had. Great service and quality!",
+      "Warm & Welcoming with a wide variety of fresh & exceptional quality products to choose from, including Malva Poeding, Melktert, Biltong, Droëwors etc. Bonus: you get to practice your Afrikaans if you want to 😀 🇿🇦🏆",
     rating: 5,
   },
   {
     id: 2,
-    name: "Sarah L.",
+    name: "Dirk D.",
     review:
-      "Incredible flavors! The quality and authenticity are top-notch. Will be back for more!",
+      "Love this place!! Lots of South African goodies and since we were from out of town, we loaded up on biltong & dried sausage. Products were high quality and good selection.",
     rating: 5,
   },
   {
     id: 3,
-    name: "Michael R.",
+    name: "Steven K.",
     review:
-      "If you’re looking for real South African biltong, this is the place. Highly recommend!",
+      "All the flavors are amazing the staff is super nice and helpful I've never had meat or jerky as good as this my wife's and I favorite so far is the Chutney biltong it's amazing flavor",
     rating: 5,
   },
   {
     id: 4,
-    name: "Emily T.",
+    name: "Jenna S.",
     review:
-      "Friendly staff and amazing products. The droëwors is my absolute favorite!",
+      "Best place to shop for all your favorite South African treats. Now selling SA wine too...",
     rating: 5,
   },
 ];
