@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
 import NavMini from "@/app/components/NavMini";
 
 type FormMode = "purchase" | "redeem" | "check";
@@ -166,7 +165,7 @@ export default function GiftCertificates() {
               {/* Recipient Details */}
               <div>
                 <label className="block mb-2">
-                  Recipient's Name <span className="text-red-500">*</span>
+                  Recipient&apos;s Name <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -180,7 +179,7 @@ export default function GiftCertificates() {
               </div>
               <div>
                 <label className="block mb-2">
-                  Recipient's Email <span className="text-red-500">*</span>
+                  Recipient&apos;s Email <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="email"
