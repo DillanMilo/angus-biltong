@@ -15,7 +15,6 @@ const Footer: React.FC = () => {
     { label: "Privacy Policy", href: "/privacy" },
     { label: "About Us", href: "/about" },
     { label: "Sign In or Register", href: "/login" },
-    { label: "Sitemap", href: "/sitemap" },
   ];
 
   const categoryLinks = [
