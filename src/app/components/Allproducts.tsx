@@ -107,7 +107,7 @@ const AllProducts = () => {
   if (loading) return <p className="text-center">Loading products...</p>;
 
   return (
-    <section className="max-w-6xl mx-auto px-4 py-12">
+    <section className="max-w-6xl mx-auto px-4 py-12 mt-24 sm:mt-28">
       <h2 className="text-3xl font-bold mb-6 capitalize text-center playfair underline">
         All Products ({products.length} items)
       </h2>
