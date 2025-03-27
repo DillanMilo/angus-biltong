@@ -113,7 +113,7 @@ const AllProducts = () => {
       </h2>
       <div className="flex flex-col items-center sm:flex-row sm:justify-between sm:items-center gap-4 mb-6 relative">
         <div
-          className="relative z-50 w-[160px] sm:w-auto self-center sm:self-auto"
+          className="relative z-30 w-[160px] sm:w-auto self-center sm:self-auto"
           ref={dropdownRef}
         >
           <button
