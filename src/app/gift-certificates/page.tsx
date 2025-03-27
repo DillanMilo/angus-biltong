@@ -87,7 +87,7 @@ export default function GiftCertificates() {
 
         <div className="flex justify-center space-x-8 mb-12">
           <button
-            className={`font-semibold ${
+            className={`font-semibold font-playfair ${
               mode === "purchase"
                 ? "border-b-2 border-black"
                 : "text-gray-500 hover:text-black"
@@ -97,7 +97,7 @@ export default function GiftCertificates() {
             Purchase Gift Certificate
           </button>
           <button
-            className={`${
+            className={`font-playfair ${
               mode === "redeem"
                 ? "border-b-2 border-black font-semibold"
                 : "text-gray-500 hover:text-black"
@@ -107,7 +107,7 @@ export default function GiftCertificates() {
             Redeem Gift Certificate
           </button>
           <button
-            className={`${
+            className={`font-playfair ${
               mode === "check"
                 ? "border-b-2 border-black font-semibold"
                 : "text-gray-500 hover:text-black"
