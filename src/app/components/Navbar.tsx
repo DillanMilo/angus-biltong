@@ -33,7 +33,7 @@ const Navbar: React.FC = () => {
     { label: "Dried Meats", href: "/dried-meats" },
     { label: "Sausage", href: "/sausage" },
     { label: "Groceries", href: "/groceries" },
-    { label: "Gift", href: "/gift" },
+    { label: "Gift Certificates", href: "/gift-certificates" },
     { label: "Recipes", href: "/recipes" },
     {
       label: (
@@ -66,7 +66,7 @@ const Navbar: React.FC = () => {
       href: "/login",
       onClick: undefined,
     },
-    { icon: Gift, href: "/gift" },
+    { icon: Gift, href: "/gift-certificates" },
     {
       icon: ShoppingCart,
       href: "/cart",

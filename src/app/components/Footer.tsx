@@ -15,19 +15,13 @@ const Footer: React.FC = () => {
     { label: "Privacy Policy", href: "/privacy" },
     { label: "About Us", href: "/about" },
     { label: "Sign In or Register", href: "/login" },
-    { label: "Sitemap", href: "/sitemap" },
   ];
 
   const categoryLinks = [
-    { label: "Shop All", href: "/shop" },
-    { label: "Dried Meats", href: "/category/dried-meats" },
-    { label: "Sausage", href: "/category/sausage" },
-    { label: "Groceries", href: "/category/groceries" },
-  ];
-
-  const brandLinks = [
-    { label: "Angus Biltong", href: "/brand/angus-biltong" },
-    { label: "View All", href: "/brands" },
+    { label: "Shop All", href: "/products" },
+    { label: "Dried Meats", href: "/dried-meats" },
+    { label: "Sausage", href: "/sausage" },
+    { label: "Groceries", href: "/groceries" },
   ];
 
   return (
@@ -58,8 +52,8 @@ const Footer: React.FC = () => {
         </div>
       </motion.div>
 
-      {/* Footer Links Section - Staggered Animations */}
-      <div className="container mx-auto px-6 mt-12 grid grid-cols-1 md:grid-cols-4 gap-8 text-sm">
+      {/* Footer Links Section - Modified to remove Popular Brands */}
+      <div className="container mx-auto px-6 mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 text-sm">
         {[
           {
             title: "NAVIGATE",
@@ -70,16 +64,15 @@ const Footer: React.FC = () => {
             links: categoryLinks,
           },
           {
-            title: "POPULAR BRANDS",
-            links: brandLinks,
-          },
-          {
             title: "CONNECT WITH US",
             socialIcons: [
-              { Icon: Facebook, link: "#" },
-              { Icon: Instagram, link: "#" },
-              { Icon: Mail, link: "mailto:info@angusbiltong.com" }, // ✅ Mail icon with mailto
-              { Icon: Phone, link: "tel:+12817198577" }, // ✅ Phone icon with tel
+              { Icon: Facebook, link: "https://www.facebook.com/angusbiltong" },
+              {
+                Icon: Instagram,
+                link: "https://www.instagram.com/angusbiltong",
+              },
+              { Icon: Mail, link: "mailto:info@angusbiltong.com" },
+              { Icon: Phone, link: "tel:+12817198577" },
             ],
           },
         ].map((section, index) => (

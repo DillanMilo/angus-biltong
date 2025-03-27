@@ -48,8 +48,8 @@ const SocialIcons: React.FC = () => {
       initial={{ opacity: 1 }}
       animate={{ opacity: hideSocials ? 0 : 1 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      className={`fixed top-9 left-6 flex-col space-y-5 transition-opacity hidden sm:flex ${
-        hideSocials ? "hidden" : "flex"
+      className={`fixed top-9 left-6 flex-col space-y-5 transition-opacity hidden sm:flex z-50 ${
+        hideSocials ? "pointer-events-none" : "pointer-events-auto"
       }`}
     >
       {socialLinks.map((item, index) => (
