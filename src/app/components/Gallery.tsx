@@ -52,18 +52,33 @@ const Gallery: React.FC = () => {
         <div
           className="flex whitespace-nowrap"
           style={{
-            animation: "marquee 2.4s linear infinite",
+            animation: "marquee 20s linear infinite",
           }}
         >
-          {Array.from({ length: 40 }, () => values).flat().map((word, i) => (
-            <span
-              key={i}
-              className="font-display text-[60px] md:text-[100px] lg:text-[120px] text-white/90 mx-8 md:mx-16 tracking-wider"
-            >
-              {word}
-              <span className="mx-8 md:mx-16 text-[#D4A853]">|</span>
-            </span>
-          ))}
+          {/* First set of content */}
+          {Array.from({ length: 12 }, () => values)
+            .flat()
+            .map((word, i) => (
+              <span
+                key={`a-${i}`}
+                className="font-display text-[60px] md:text-[100px] lg:text-[120px] text-white/90 mx-8 md:mx-16 tracking-wider"
+              >
+                {word}
+                <span className="mx-8 md:mx-16 text-[#D4A853]">|</span>
+              </span>
+            ))}
+          {/* Duplicate set for seamless loop */}
+          {Array.from({ length: 12 }, () => values)
+            .flat()
+            .map((word, i) => (
+              <span
+                key={`b-${i}`}
+                className="font-display text-[60px] md:text-[100px] lg:text-[120px] text-white/90 mx-8 md:mx-16 tracking-wider"
+              >
+                {word}
+                <span className="mx-8 md:mx-16 text-[#D4A853]">|</span>
+              </span>
+            ))}
         </div>
       </motion.div>
 
@@ -133,7 +148,9 @@ const Gallery: React.FC = () => {
                     <p className="font-condensed text-sm uppercase tracking-wider text-[#F8F3E8]/60 mb-1">
                       Location
                     </p>
-                    <p className="font-body">255 Sawdust Rd, Spring, TX 77380</p>
+                    <p className="font-body">
+                      255 Sawdust Rd, Spring, TX 77380
+                    </p>
                   </div>
                 </div>
 
