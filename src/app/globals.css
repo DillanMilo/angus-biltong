@@ -216,7 +216,8 @@ body::before {
 
 .card-product {
   background: var(--color-cream);
-  border: 1px solid rgba(44, 36, 32, 0.08);
+  border: 2px solid var(--color-espresso);
+  border-radius: 8px;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;

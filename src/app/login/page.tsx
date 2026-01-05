@@ -4,8 +4,9 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import NavMini from "@/app/components/NavMini";
+import Footer from "@/app/components/Footer";
 
-// First, define a custom error type
 interface LoginError extends Error {
   message: string;
 }
@@ -33,10 +34,7 @@ export default function Login() {
 
       if (!res.ok) throw new Error(data.error || "Login failed");
 
-      // Store customer data in localStorage or state management solution
       localStorage.setItem("customer", JSON.stringify(data.customer));
-
-      // Show success message before redirect
       router.push("/account");
     } catch (err) {
       const error = err as LoginError;
@@ -47,101 +45,114 @@ export default function Login() {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="flex justify-center items-center min-h-screen bg-gray-50 px-4"
-    >
-      <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
-        <h2 className="text-3xl font-bold text-center mb-6">Welcome Back</h2>
-        <p className="text-gray-600 text-center mb-8">
-          Please sign in to your account
-        </p>
-
-        {error && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="bg-red-50 text-red-500 p-3 rounded-lg text-sm mb-6"
-          >
-            {error}
-          </motion.div>
-        )}
-
-        <form onSubmit={handleLogin} className="space-y-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Email Address
-            </label>
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4B7B3F] focus:border-transparent transition"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
+    <div className="min-h-screen bg-sand">
+      <NavMini />
+      <div className="flex justify-center items-center min-h-[calc(100vh-200px)] pt-32 pb-20 px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="bg-cream p-8 md:p-10 border border-[#2C2420]/8 max-w-md w-full"
+        >
+          {/* Logo or Icon */}
+          <div className="flex justify-center mb-6">
+            <div className="w-16 h-16 bg-terracotta rounded-full flex items-center justify-center">
+              <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+            </div>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Password
-            </label>
-            <input
-              type="password"
-              placeholder="Enter your password"
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4B7B3F] focus:border-transparent transition"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
+          <h2 className="heading-lg text-espresso text-center mb-2">Welcome Back</h2>
+          <p className="font-body text-espresso/70 text-center mb-8">
+            Please sign in to your account
+          </p>
 
-          <button
-            type="submit"
-            className="w-full bg-[#4B7B3F] text-white py-3 rounded-lg hover:bg-[#3a612f] transition-colors duration-200 flex items-center justify-center"
-            disabled={loading}
-          >
-            {loading ? (
-              <>
-                <svg
-                  className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  ></circle>
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                  ></path>
-                </svg>
-                Signing in...
-              </>
-            ) : (
-              "Sign In"
-            )}
-          </button>
-
-          <div className="text-center mt-6">
-            <Link
-              href="/register"
-              className="text-[#4B7B3F] hover:text-[#3a612f] text-sm"
+          {error && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-terracotta/10 border border-terracotta/30 text-terracotta p-3 text-sm mb-6 font-body"
             >
-              Don&apos;t have an account? Create one here
-            </Link>
-          </div>
-        </form>
+              {error}
+            </motion.div>
+          )}
+
+          <form onSubmit={handleLogin} className="space-y-6">
+            <div>
+              <label className="block font-condensed uppercase tracking-wider text-sm text-espresso/70 mb-2">
+                Email Address
+              </label>
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="w-full p-3 bg-sand border border-espresso/20 focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta transition font-body"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block font-condensed uppercase tracking-wider text-sm text-espresso/70 mb-2">
+                Password
+              </label>
+              <input
+                type="password"
+                placeholder="Enter your password"
+                className="w-full p-3 bg-sand border border-espresso/20 focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta transition font-body"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="btn-primary w-full flex items-center justify-center"
+              disabled={loading}
+            >
+              {loading ? (
+                <>
+                  <svg
+                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                  Signing in...
+                </>
+              ) : (
+                "Sign In"
+              )}
+            </button>
+
+            <div className="text-center pt-4 border-t border-espresso/10">
+              <Link
+                href="/register"
+                className="font-body text-terracotta hover:text-terracotta-dark transition-colors text-sm"
+              >
+                Don&apos;t have an account? <span className="font-semibold">Create one here</span>
+              </Link>
+            </div>
+          </form>
+        </motion.div>
       </div>
-    </motion.div>
+      <Footer />
+    </div>
   );
 }

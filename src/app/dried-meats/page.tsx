@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 import { fetchProducts } from "@/app/lib/bigcommerce";
 import { motion } from "framer-motion";
 import NavMini from "@/app/components/NavMini";
+import Footer from "@/app/components/Footer";
 import { ShoppingCart } from "lucide-react";
 import { useCart } from "@/app/cart/cartContext";
+import Image from "next/image";
 
 interface Product {
   id: number;
@@ -56,7 +58,6 @@ const DriedMeatsPage = () => {
           );
         });
 
-        console.log("Filtered dried meats:", driedMeats);
         setProducts(driedMeats);
       } catch (error) {
         console.error("Error loading products:", error);
@@ -90,39 +91,65 @@ const DriedMeatsPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen pt-20">
+      <div className="min-h-screen bg-sand">
         <NavMini />
-        <div className="max-w-6xl mx-auto px-4 py-12 text-center">
-          Loading products...
+        <div className="max-w-6xl mx-auto px-4 py-12 pt-32 text-center">
+          <div className="animate-pulse">
+            <div className="w-16 h-16 bg-terracotta/20 rounded-full mx-auto mb-4"></div>
+            <p className="font-body text-espresso/70">Loading products...</p>
+          </div>
         </div>
+        <Footer />
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="min-h-screen pt-20">
+      <div className="min-h-screen bg-sand">
         <NavMini />
-        <div className="max-w-6xl mx-auto px-4 py-12 text-center text-red-600">
-          {error}
+        <div className="max-w-6xl mx-auto px-4 py-12 pt-32 text-center">
+          <p className="font-body text-terracotta">{error}</p>
         </div>
+        <Footer />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen pt-20">
+    <div className="min-h-screen bg-sand">
       <NavMini />
-      <section className="max-w-6xl mx-auto px-4 py-12">
-        <h2 className="text-3xl font-bold mb-6 capitalize text-center playfair underline">
-          Dried Meats ({products.length} items)
-        </h2>
 
+      {/* Hero Section */}
+      <section className="relative h-[30vh] min-h-[240px] overflow-hidden">
+        <Image
+          src="/image-5.jpg"
+          alt="Dried Meats - Biltong & Droewors"
+          fill
+          className="object-cover"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#2C2420]/60 via-[#2C2420]/40 to-[#C25A3E]/30" />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center"
+          >
+            <h1 className="heading-xl text-white mb-2">Dried Meats</h1>
+            <p className="font-condensed text-white/80 tracking-wider">{products.length} items</p>
+            <div className="w-24 h-1 bg-amber mx-auto mt-4" />
+          </motion.div>
+        </div>
+      </section>
+
+      <section className="max-w-6xl mx-auto px-4 py-12">
         {products.length === 0 ? (
-          <p className="text-center text-gray-600">No products found</p>
+          <p className="text-center font-body text-espresso/70">No products found</p>
         ) : (
           <motion.div
-            className="grid grid-cols-2 md:grid-cols-4 gap-6"
+            className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6"
             initial="hidden"
             animate="visible"
             variants={{
@@ -138,42 +165,46 @@ const DriedMeatsPage = () => {
                   visible: {
                     opacity: 1,
                     y: 0,
-                    transition: { delay: index * 0.1 },
+                    transition: { delay: index * 0.05 },
                   },
                 }}
-                className="bg-white rounded-lg shadow-lg p-4"
+                className="card-product bg-cream p-4"
               >
                 {product.images?.[0]?.url_standard ? (
-                  <img
-                    src={product.images[0].url_standard}
-                    alt={product.name}
-                    className="h-40 w-full object-cover rounded-md"
-                  />
+                  <div className="relative pt-[100%] mb-4">
+                    <Image
+                      src={product.images[0].url_standard}
+                      alt={product.name}
+                      fill
+                      className="object-cover absolute inset-0"
+                      sizes="(max-width: 640px) 50vw, 25vw"
+                    />
+                  </div>
                 ) : (
-                  <div className="h-40 w-full bg-gray-200 rounded-md flex items-center justify-center">
-                    No image
+                  <div className="pt-[100%] relative bg-sand flex items-center justify-center mb-4">
+                    <span className="absolute inset-0 flex items-center justify-center font-body text-espresso/40">No image</span>
                   </div>
                 )}
-                <div className="mt-3 space-y-2">
-                  <h3 className="text-lg font-semibold mt-4">{product.name}</h3>
-                  <p className="text-gray-600">
+                <div className="space-y-2">
+                  <h3 className="font-display text-sm md:text-base text-espresso line-clamp-2 min-h-[2.5rem]">{product.name}</h3>
+                  <p className="font-body text-terracotta font-semibold">
                     ${Number(product.price).toFixed(2)}
                   </p>
                   <button
                     onClick={() => handleAddToCart(product)}
-                    className={`w-full py-2 px-4 rounded-md transition-colors flex items-center justify-center gap-2 
+                    className={`w-full py-2 px-4 transition-all flex items-center justify-center gap-2 font-condensed uppercase tracking-wider text-sm
                       ${
                         addedProducts.has(product.id)
-                          ? "bg-gray-600 hover:bg-gray-700"
-                          : "bg-green-600 hover:bg-green-700"
-                      } text-white`}
+                          ? "bg-olive text-white"
+                          : "btn-primary"
+                      }`}
                     disabled={addedProducts.has(product.id)}
                   >
                     {addedProducts.has(product.id) ? (
-                      "Added to Cart!"
+                      "Added!"
                     ) : (
                       <>
-                        <ShoppingCart size={18} />
+                        <ShoppingCart size={16} />
                         Add to Cart
                       </>
                     )}
@@ -184,6 +215,7 @@ const DriedMeatsPage = () => {
           </motion.div>
         )}
       </section>
+      <Footer />
     </div>
   );
 };

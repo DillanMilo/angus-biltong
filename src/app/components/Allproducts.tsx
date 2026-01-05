@@ -3,12 +3,11 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { fetchProducts } from "@/app/lib/bigcommerce";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import { useCart } from "@/app/cart/cartContext";
-import { ShoppingCart } from "lucide-react";
+import Footer from "@/app/components/Footer";
 
-// Define interface for product type
 interface Product {
   id: number;
   name: string;
@@ -52,7 +51,6 @@ const AllProducts = () => {
     loadProducts();
   }, []);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -66,7 +64,6 @@ const AllProducts = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Sorting Function
   const sortProducts = (productsList: Product[]) => {
     switch (sortOption) {
       case "a-z":
@@ -93,7 +90,6 @@ const AllProducts = () => {
       quantity: 1,
     });
 
-    // Show "Added to cart" temporarily
     setAddedProducts((prev) => new Set(prev).add(product.id));
     setTimeout(() => {
       setAddedProducts((prev) => {
@@ -104,123 +100,157 @@ const AllProducts = () => {
     }, 2000);
   };
 
-  if (loading) return <p className="text-center">Loading products...</p>;
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-sand">
+        <div className="max-w-6xl mx-auto px-4 py-12 pt-32 text-center">
+          <div className="animate-pulse">
+            <div className="w-16 h-16 bg-terracotta/20 rounded-full mx-auto mb-4"></div>
+            <p className="font-body text-espresso/70">Loading products...</p>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
-    <section className="max-w-6xl mx-auto px-4 py-12 mt-24 sm:mt-28">
-      <h2 className="text-3xl font-bold mb-6 capitalize text-center playfair underline">
-        All Products ({products.length} items)
-      </h2>
-      <div className="flex flex-col items-center sm:flex-row sm:justify-between sm:items-center gap-4 mb-6 relative">
-        <div
-          className="relative z-30 w-[160px] sm:w-auto self-center sm:self-auto"
-          ref={dropdownRef}
-        >
-          <button
-            onClick={() => setDropdownOpen((prev) => !prev)}
-            className="w-full sm:w-auto bg-white border border-gray-300 rounded px-2.5 sm:px-4 py-2 flex items-center justify-between sm:justify-start gap-2 hover:bg-gray-50 focus:outline-none text-xs sm:text-base"
-          >
-            <span className="truncate">
-              Sort by:{" "}
-              {sortOptions.find((opt) => opt.value === sortOption)?.label}
-            </span>
-            <ChevronDown
-              className={`w-3 h-3 sm:w-5 sm:h-5 transition-transform duration-200 flex-shrink-0 ${
-                dropdownOpen ? "rotate-180" : ""
-              }`}
-            />
-          </button>
-
-          <AnimatePresence>
-            {dropdownOpen && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.2 }}
-                className="absolute right-0 mt-2 w-[200px] sm:w-56 bg-white border border-gray-300 rounded-lg shadow-lg overflow-hidden"
-              >
-                {sortOptions.map((option) => (
-                  <button
-                    key={option.value}
-                    onClick={() => {
-                      setSortOption(option.value);
-                      setDropdownOpen(false);
-                    }}
-                    className={`block w-full text-left px-3 sm:px-4 py-2 hover:bg-gray-100 transition-colors text-sm sm:text-base ${
-                      sortOption === option.value ? "bg-gray-100" : ""
-                    }`}
-                  >
-                    {option.label}
-                  </button>
-                ))}
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      </div>
-
-      <motion.div
-        className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6"
-        initial="hidden"
-        whileInView="visible"
-        transition={{ staggerChildren: 0.2 }}
-        viewport={{ once: true }}
-      >
-        {sortedProducts.map((product, index) => (
+    <div className="min-h-screen bg-sand">
+      {/* Hero Section */}
+      <section className="relative h-[30vh] min-h-[240px] overflow-hidden">
+        <Image
+          src="/image-5.jpg"
+          alt="All Products"
+          fill
+          className="object-cover"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#2C2420]/60 via-[#2C2420]/40 to-[#C25A3E]/30" />
+        <div className="absolute inset-0 flex items-center justify-center">
           <motion.div
-            key={product.id}
-            variants={{
-              hidden: { opacity: 0, y: 20 },
-              visible: {
-                opacity: 1,
-                y: 0,
-                transition: { duration: 0.6, delay: index * 0.1 },
-              },
-            }}
-            className="bg-white rounded-lg shadow-lg p-3 sm:p-4"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center"
           >
-            <div className="relative pt-[100%]">
-              <Image
-                src={product.images?.[0]?.url_standard || ""}
-                alt={product.name}
-                fill
-                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                className="object-cover rounded-md"
-                priority={index < 4}
-              />
-            </div>
-            <div className="mt-3 space-y-2">
-              <h3 className="text-sm sm:text-lg font-semibold line-clamp-2">
-                {product.name}
-              </h3>
-              <p className="text-gray-600 text-sm sm:text-base">
-                ${Number(product.price).toFixed(2)}
-              </p>
-              <button
-                onClick={() => handleAddToCart(product)}
-                className={`w-full py-2 px-4 rounded-md transition-colors flex items-center justify-center gap-2 
-                  ${
-                    addedProducts.has(product.id)
-                      ? "bg-gray-600 hover:bg-gray-700"
-                      : "bg-green-600 hover:bg-green-700"
-                  } text-white`}
-                disabled={addedProducts.has(product.id)}
-              >
-                {addedProducts.has(product.id) ? (
-                  "Added to Cart!"
-                ) : (
-                  <>
-                    <ShoppingCart size={18} />
-                    Add to Cart
-                  </>
-                )}
-              </button>
-            </div>
+            <h1 className="heading-xl text-white mb-2">All Products</h1>
+            <p className="font-condensed text-white/80 tracking-wider">{products.length} items</p>
+            <div className="w-24 h-1 bg-amber mx-auto mt-4" />
           </motion.div>
-        ))}
-      </motion.div>
-    </section>
+        </div>
+      </section>
+
+      <section className="max-w-6xl mx-auto px-4 py-12">
+        {/* Sort Dropdown */}
+        <div className="flex justify-end mb-8">
+          <div className="relative z-30" ref={dropdownRef}>
+            <button
+              onClick={() => setDropdownOpen((prev) => !prev)}
+              className="bg-cream border border-espresso/10 px-4 py-2 flex items-center gap-2 hover:bg-sand transition-colors font-condensed uppercase tracking-wider text-sm text-espresso"
+            >
+              <span>
+                Sort: {sortOptions.find((opt) => opt.value === sortOption)?.label}
+              </span>
+              <ChevronDown
+                className={`w-4 h-4 transition-transform duration-200 ${
+                  dropdownOpen ? "rotate-180" : ""
+                }`}
+              />
+            </button>
+
+            <AnimatePresence>
+              {dropdownOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute right-0 mt-2 w-56 bg-cream border border-espresso/10 shadow-lg overflow-hidden"
+                >
+                  {sortOptions.map((option) => (
+                    <button
+                      key={option.value}
+                      onClick={() => {
+                        setSortOption(option.value);
+                        setDropdownOpen(false);
+                      }}
+                      className={`block w-full text-left px-4 py-2 hover:bg-sand transition-colors font-body text-sm text-espresso/80 ${
+                        sortOption === option.value ? "bg-sand text-espresso" : ""
+                      }`}
+                    >
+                      {option.label}
+                    </button>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </div>
+
+        {/* Products Grid */}
+        <motion.div
+          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6"
+          initial="hidden"
+          whileInView="visible"
+          transition={{ staggerChildren: 0.05 }}
+          viewport={{ once: true }}
+        >
+          {sortedProducts.map((product, index) => (
+            <motion.div
+              key={product.id}
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  transition: { duration: 0.4, delay: index * 0.03 },
+                },
+              }}
+              className="card-product bg-cream p-4"
+            >
+              <div className="relative pt-[100%] mb-4">
+                <Image
+                  src={product.images?.[0]?.url_standard || ""}
+                  alt={product.name}
+                  fill
+                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                  className="object-cover absolute inset-0"
+                  priority={index < 4}
+                />
+              </div>
+              <div className="space-y-2">
+                <h3 className="font-display text-sm md:text-base text-espresso line-clamp-2 min-h-[2.5rem]">
+                  {product.name}
+                </h3>
+                <p className="font-body text-terracotta font-semibold">
+                  ${Number(product.price).toFixed(2)}
+                </p>
+                <button
+                  onClick={() => handleAddToCart(product)}
+                  className={`w-full py-2 px-4 transition-all flex items-center justify-center gap-2 font-condensed uppercase tracking-wider text-sm
+                    ${
+                      addedProducts.has(product.id)
+                        ? "bg-olive text-white"
+                        : "btn-primary"
+                    }`}
+                  disabled={addedProducts.has(product.id)}
+                >
+                  {addedProducts.has(product.id) ? (
+                    "Added!"
+                  ) : (
+                    <>
+                      <ShoppingCart size={16} />
+                      Add to Cart
+                    </>
+                  )}
+                </button>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+      </section>
+      <Footer />
+    </div>
   );
 };
 
