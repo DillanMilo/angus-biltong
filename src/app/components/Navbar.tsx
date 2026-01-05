@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import React, { useEffect, useState } from "react";
-import { Search, User, ShoppingCart, Menu, X, ArrowUp } from "lucide-react";
+import { Search, User, ShoppingCart, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useCart } from "@/app/cart/cartContext";
 import SearchOverlay from "./SearchOverlay";
@@ -26,11 +26,6 @@ const Navbar: React.FC = () => {
     { label: "About Us", href: "/about" },
     { label: "Contact", href: "/contact" },
   ];
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    setMenuOpen(false);
-  };
 
   useEffect(() => {
     const bannerTimeout = setTimeout(() => {
@@ -223,7 +218,7 @@ const Navbar: React.FC = () => {
 
             {/* Decorative Pattern */}
             <div
-              className="absolute inset-0 opacity-5"
+              className="absolute inset-0 opacity-5 pointer-events-none"
               style={{
                 backgroundImage: `repeating-linear-gradient(
                   45deg,
@@ -236,18 +231,6 @@ const Navbar: React.FC = () => {
             />
 
             <div className="relative h-full flex flex-col items-center justify-center px-6 py-20 overflow-y-auto">
-              {/* Go Back to Top Button */}
-              <motion.button
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.05, duration: 0.3 }}
-                onClick={scrollToTop}
-                className="flex items-center gap-2 mb-8 px-6 py-3 bg-[#D4A853] text-[#2C2420] font-condensed text-sm uppercase tracking-wider rounded-full hover:bg-[#C25A3E] hover:text-white transition-colors"
-              >
-                <ArrowUp size={18} />
-                Go Back to Top
-              </motion.button>
-
               {/* Menu Items */}
               <nav className="flex flex-col items-center gap-4 sm:gap-5 md:gap-6">
                 {menuItems.map((item, index) => (

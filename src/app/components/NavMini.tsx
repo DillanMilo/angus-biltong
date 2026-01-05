@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import React, { useEffect, useState } from "react";
-import { Menu } from "lucide-react";
+import { Menu, X, Search, User, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { useCart } from "@/app/cart/cartContext";
 import SearchOverlay from "./SearchOverlay";
@@ -26,36 +26,14 @@ const NavMini: React.FC = () => {
   const cartItemCount = cart.reduce((total, item) => total + item.quantity, 0);
 
   const menuItems = [
-    { label: "Home", href: "/" },
-    {
-      label: "Search",
-      onClick: () => {
-        setIsSearchOpen(true);
-        setMenuOpen(false);
-      },
-      href: undefined,
-    },
     { label: "Shop All", href: "/products" },
     { label: "Dried Meats", href: "/dried-meats" },
     { label: "Sausage", href: "/sausage" },
     { label: "Groceries", href: "/groceries" },
     { label: "Gift Certificates", href: "/gift-certificates" },
     { label: "Recipes", href: "/recipes" },
-    {
-      label: (
-        <div className="flex items-center gap-2">
-          Cart
-          {cartItemCount > 0 && (
-            <span className="bg-green-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-              {cartItemCount}
-            </span>
-          )}
-        </div>
-      ),
-      href: "/cart",
-    },
-    { label: "Sign In", href: "/login" },
-    { label: "Logout", href: "#" },
+    { label: "About Us", href: "/about" },
+    { label: "Contact", href: "/contact" },
   ];
 
   return (
@@ -65,22 +43,41 @@ const NavMini: React.FC = () => {
         <AnimatePresence>
           {showBanner && (
             <motion.div
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              exit={{ scaleX: 0 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-              className="bg-black text-white py-2 text-center text-xs sm:text-sm font-semibold uppercase px-4"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className="overflow-hidden bg-[#2C2420] text-[#F8F3E8]"
             >
-              <span className="hidden sm:inline">
-                FREE SHIPPING ON ALL ORDERS OVER $79
-              </span>
-              <span className="sm:hidden">FREE SHIPPING OVER $79</span>
+              <div className="py-2 overflow-hidden">
+                <div
+                  className="flex whitespace-nowrap"
+                  style={{
+                    animation: "marquee 30s linear infinite",
+                  }}
+                >
+                  {[...Array(20)].map((_, i) => (
+                    <span
+                      key={i}
+                      className="font-condensed text-sm tracking-[0.15em] uppercase mx-12"
+                    >
+                      <span className="text-[#D4A853]">Free Shipping</span>
+                      <span className="mx-3">on orders over $79</span>
+                      <span className="text-[#D4A853] mx-6">|</span>
+                      <span>Authentic South African Flavors</span>
+                      <span className="text-[#D4A853] mx-6">|</span>
+                      <span>20+ Years of Family Recipes</span>
+                      <span className="text-[#D4A853] mx-6">|</span>
+                    </span>
+                  ))}
+                </div>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
 
         {/* 🔹 Navbar */}
-        <nav className="w-full flex justify-between items-center px-4 sm:px-6 py-2 sm:py-3 bg-white/80 backdrop-blur-sm sm:bg-transparent sm:backdrop-blur-none">
+        <nav className="w-full flex justify-between items-center px-4 sm:px-6 py-2 sm:py-3 bg-[#F8F3E8]/95 backdrop-blur-sm">
           {/* Left - Angus Logo with Link */}
           <Link href="/">
             <motion.div
@@ -100,53 +97,145 @@ const NavMini: React.FC = () => {
             </motion.div>
           </Link>
 
-          {/* Right - Menu Icon */}
-          <motion.button
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="cursor-pointer hover:text-gray-600 p-2"
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Toggle menu"
-          >
-            <Menu size={28} />
-          </motion.button>
-
-          {/* 🌟 Dropdown Menu */}
-          <AnimatePresence>
-            {menuOpen && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
-                className="absolute top-full right-2 sm:right-6 w-56 bg-white shadow-lg rounded-lg py-2 mt-2"
-              >
-                {menuItems.map((item, index) =>
-                  item.href ? (
-                    <Link
-                      key={index}
-                      href={item.href}
-                      className="block w-full text-left px-4 py-3 text-gray-800 hover:bg-gray-200 transition text-sm sm:text-base"
-                      onClick={() => setMenuOpen(false)}
-                    >
-                      {item.label}
-                    </Link>
-                  ) : (
-                    <button
-                      key={index}
-                      className="block w-full text-left px-4 py-3 text-gray-800 hover:bg-gray-200 transition text-sm sm:text-base"
-                      onClick={item.onClick}
-                    >
-                      {item.label}
-                    </button>
-                  )
+          {/* Right - Icons */}
+          <div className="flex items-center gap-1 sm:gap-2">
+            {/* Cart Icon */}
+            <Link href="/cart" className="relative">
+              <div className="p-1.5 text-[#2C2420] hover:text-[#C25A3E] transition-colors">
+                <ShoppingCart size={22} strokeWidth={1.5} />
+                {cartItemCount > 0 && (
+                  <span className="absolute -top-0.5 -right-0.5 bg-[#C25A3E] text-white text-[10px] font-condensed rounded-full h-4 w-4 flex items-center justify-center">
+                    {cartItemCount}
+                  </span>
                 )}
-              </motion.div>
-            )}
-          </AnimatePresence>
+              </div>
+            </Link>
+
+            {/* Menu Toggle */}
+            <motion.button
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="p-1.5 sm:p-2 rounded-full transition-colors text-[#2C2420] hover:bg-[#2C2420]/10"
+              onClick={() => setMenuOpen(!menuOpen)}
+              aria-label="Toggle menu"
+            >
+              <Menu size={24} strokeWidth={1.5} className="sm:w-7 sm:h-7" />
+            </motion.button>
+          </div>
         </nav>
       </header>
+
+      {/* Full-Screen Menu Overlay */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 bg-[#2C2420] z-[100]"
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setMenuOpen(false)}
+              className="absolute top-4 right-4 w-12 h-12 bg-[#C25A3E] rounded-full flex items-center justify-center z-10 hover:bg-[#A34832] transition-colors"
+            >
+              <X size={24} className="text-white" strokeWidth={1.5} />
+            </button>
+
+            {/* Decorative Pattern */}
+            <div
+              className="absolute inset-0 opacity-5 pointer-events-none"
+              style={{
+                backgroundImage: `repeating-linear-gradient(
+                  45deg,
+                  transparent,
+                  transparent 20px,
+                  #D4A853 20px,
+                  #D4A853 21px
+                )`,
+              }}
+            />
+
+            <div className="relative h-full flex flex-col items-center justify-center px-6 py-20 overflow-y-auto">
+              {/* Menu Items */}
+              <nav className="flex flex-col items-center gap-4 sm:gap-5 md:gap-6">
+                {menuItems.map((item, index) => (
+                  <motion.div
+                    key={item.label}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    transition={{ delay: 0.1 + index * 0.03, duration: 0.3 }}
+                  >
+                    <Link
+                      href={item.href}
+                      onClick={() => setMenuOpen(false)}
+                      className="font-display text-[1.75rem] sm:text-[2rem] md:text-[2.5rem] text-[#F8F3E8] hover:text-[#D4A853] transition-colors relative group uppercase tracking-wide"
+                    >
+                      {item.label}
+                      <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#C25A3E] transition-all duration-300 group-hover:w-full" />
+                    </Link>
+                  </motion.div>
+                ))}
+              </nav>
+
+              {/* Bottom Icons */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4, duration: 0.3 }}
+                className="flex items-center gap-6 sm:gap-8 mt-8 sm:mt-10"
+              >
+                <button
+                  onClick={() => {
+                    setIsSearchOpen(true);
+                    setMenuOpen(false);
+                  }}
+                  className="text-[#F8F3E8] hover:text-[#D4A853] transition-colors"
+                >
+                  <Search size={24} strokeWidth={1.5} className="sm:w-7 sm:h-7" />
+                </button>
+                <Link
+                  href="/login"
+                  onClick={() => setMenuOpen(false)}
+                  className="text-[#F8F3E8] hover:text-[#D4A853] transition-colors"
+                >
+                  <User size={24} strokeWidth={1.5} className="sm:w-7 sm:h-7" />
+                </Link>
+                <Link
+                  href="/cart"
+                  onClick={() => setMenuOpen(false)}
+                  className="text-[#F8F3E8] hover:text-[#D4A853] transition-colors relative"
+                >
+                  <ShoppingCart size={24} strokeWidth={1.5} className="sm:w-7 sm:h-7" />
+                  {cartItemCount > 0 && (
+                    <span className="absolute -top-1.5 -right-1.5 bg-[#C25A3E] text-white text-[10px] font-condensed rounded-full h-4 w-4 flex items-center justify-center">
+                      {cartItemCount}
+                    </span>
+                  )}
+                </Link>
+              </motion.div>
+
+              {/* Contact Info */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5 }}
+                className="absolute bottom-6 sm:bottom-10 left-0 right-0 text-center px-4"
+              >
+                <p className="font-condensed text-xs sm:text-sm text-[#F8F3E8]/60 tracking-wider uppercase mb-1">
+                  255 Sawdust Rd, Spring, TX 77380
+                </p>
+                <p className="font-condensed text-xs sm:text-sm text-[#D4A853] tracking-wider">
+                  281-719-8577
+                </p>
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Add SearchOverlay */}
       <SearchOverlay
