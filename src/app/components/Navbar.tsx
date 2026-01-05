@@ -211,7 +211,7 @@ const Navbar: React.FC = () => {
             {/* Close Button */}
             <button
               onClick={() => setMenuOpen(false)}
-              className="absolute top-4 right-4 w-12 h-12 bg-[#C25A3E] rounded-full flex items-center justify-center"
+              className="absolute top-4 right-4 w-12 h-12 bg-[#C25A3E] rounded-full flex items-center justify-center z-10 hover:bg-[#A34832] transition-colors"
             >
               <X size={24} className="text-white" strokeWidth={1.5} />
             </button>
