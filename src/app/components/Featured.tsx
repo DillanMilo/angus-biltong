@@ -27,7 +27,8 @@ const ProductCard: React.FC<{
   index: number;
   onAddToCart: (product: Product) => void;
   isAdded: boolean;
-}> = ({ product, index, onAddToCart, isAdded }) => {
+  isMobileGrid?: boolean;
+}> = ({ product, index, onAddToCart, isAdded, isMobileGrid = false }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 40 }}
@@ -38,10 +39,14 @@ const ProductCard: React.FC<{
         ease: [0.25, 0.46, 0.45, 0.94],
       }}
       viewport={{ once: true }}
-      className="card-product rounded-none w-[260px] md:w-[280px] flex-shrink-0 group"
+      className={`card-product rounded-none group ${
+        isMobileGrid 
+          ? "w-[160px] flex-shrink-0" 
+          : "w-[260px] md:w-[280px] flex-shrink-0"
+      }`}
     >
       {/* Image Container */}
-      <div className="relative overflow-hidden aspect-[4/5] bg-[#EDE5D4]">
+      <div className={`relative overflow-hidden bg-[#EDE5D4] ${isMobileGrid ? "aspect-square" : "aspect-[4/5]"}`}>
         {product.imageUrl ? (
           <img
             src={product.imageUrl}
@@ -63,7 +68,9 @@ const ProductCard: React.FC<{
           <button
             onClick={() => onAddToCart(product)}
             disabled={isAdded}
-            className={`px-6 py-3 font-condensed text-sm tracking-wider uppercase transition-all duration-300 flex items-center gap-2 ${
+            className={`font-condensed tracking-wider uppercase transition-all duration-300 flex items-center gap-2 ${
+              isMobileGrid ? "px-3 py-2 text-xs" : "px-6 py-3 text-sm"
+            } ${
               isAdded
                 ? "bg-[#3D4A3A] text-white"
                 : "bg-[#F8F3E8] text-[#2C2420] hover:bg-[#D4A853] hover:text-white"
@@ -71,12 +78,12 @@ const ProductCard: React.FC<{
           >
             {isAdded ? (
               <>
-                <Check size={16} />
+                <Check size={isMobileGrid ? 12 : 16} />
                 Added
               </>
             ) : (
               <>
-                <ShoppingCart size={16} />
+                <ShoppingCart size={isMobileGrid ? 12 : 16} />
                 Quick Add
               </>
             )}
@@ -85,28 +92,32 @@ const ProductCard: React.FC<{
       </div>
 
       {/* Product Info */}
-      <div className="p-5 space-y-3">
-        <h3 className="font-body text-[#2C2420] font-semibold text-base leading-tight line-clamp-2 min-h-[2.5rem]">
+      <div className={isMobileGrid ? "p-3 space-y-1.5" : "p-5 space-y-3"}>
+        <h3 className={`font-body text-[#2C2420] font-semibold leading-tight line-clamp-2 ${
+          isMobileGrid ? "text-sm min-h-[2rem]" : "text-base min-h-[2.5rem]"
+        }`}>
           {product.name}
         </h3>
 
         <div className="flex items-center justify-between">
-          <p className="font-display text-2xl text-[#C25A3E]">
+          <p className={`font-display text-[#C25A3E] ${isMobileGrid ? "text-lg" : "text-2xl"}`}>
             {product.price}
           </p>
 
-          {/* Star Rating */}
-          <div className="flex items-center gap-0.5">
-            {[...Array(5)].map((_, i) => (
-              <svg
-                key={i}
-                className="w-4 h-4 text-[#D4A853] fill-current"
-                viewBox="0 0 24 24"
-              >
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-              </svg>
-            ))}
-          </div>
+          {/* Star Rating - Hide on mobile grid for space */}
+          {!isMobileGrid && (
+            <div className="flex items-center gap-0.5">
+              {[...Array(5)].map((_, i) => (
+                <svg
+                  key={i}
+                  className="w-4 h-4 text-[#D4A853] fill-current"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                </svg>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </motion.div>
@@ -238,10 +249,26 @@ const Featured: React.FC = () => {
             </div>
           </motion.div>
 
-          {/* Product Carousel */}
+          {/* Mobile Carousel - 2 rows */}
+          <div className="md:hidden overflow-x-auto scrollbar-hide pl-4">
+            <div className="grid grid-rows-2 grid-flow-col gap-3 pb-4 pr-4">
+              {featuredProducts.map((product, index) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  index={index}
+                  onAddToCart={handleAddToCart}
+                  isAdded={addedProducts.has(product.id)}
+                  isMobileGrid={true}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Desktop Carousel */}
           <div
             ref={featuredRef}
-            className="overflow-x-auto scrollbar-hide pl-6 md:pl-[calc((100vw-72rem)/2+1.5rem)]"
+            className="hidden md:block overflow-x-auto scrollbar-hide pl-6 md:pl-[calc((100vw-72rem)/2+1.5rem)]"
           >
             <div className="flex gap-6 pb-4 pr-6">
               {featuredProducts.map((product, index) => (
@@ -311,10 +338,26 @@ const Featured: React.FC = () => {
             </div>
           </motion.div>
 
-          {/* Product Carousel */}
+          {/* Mobile Carousel - 2 rows */}
+          <div className="md:hidden overflow-x-auto scrollbar-hide pl-4">
+            <div className="grid grid-rows-2 grid-flow-col gap-3 pb-4 pr-4">
+              {mostPopularProducts.map((product, index) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  index={index}
+                  onAddToCart={handleAddToCart}
+                  isAdded={addedProducts.has(product.id)}
+                  isMobileGrid={true}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Desktop Carousel */}
           <div
             ref={popularRef}
-            className="overflow-x-auto scrollbar-hide pl-6 md:pl-[calc((100vw-72rem)/2+1.5rem)]"
+            className="hidden md:block overflow-x-auto scrollbar-hide pl-6 md:pl-[calc((100vw-72rem)/2+1.5rem)]"
           >
             <div className="flex gap-6 pb-4 pr-6">
               {mostPopularProducts.map((product, index) => (
