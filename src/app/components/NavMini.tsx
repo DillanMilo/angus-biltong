@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import React, { useEffect, useState } from "react";
-import { Menu, X, Search, User, ShoppingCart } from "lucide-react";
+import { Menu, X, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { useCart } from "@/app/cart/cartContext";
 import SearchOverlay from "./SearchOverlay";
@@ -159,9 +159,9 @@ const NavMini: React.FC = () => {
               }}
             />
 
-            <div className="relative h-full flex flex-col items-center justify-center px-6 py-20 overflow-y-auto">
+            <div className="relative h-full flex flex-col items-center justify-center px-6 py-12 overflow-y-auto">
               {/* Menu Items */}
-              <nav className="flex flex-col items-center gap-4 sm:gap-5 md:gap-6">
+              <nav className="flex flex-col items-center gap-2 sm:gap-3 md:gap-4">
                 {menuItems.map((item, index) => (
                   <motion.div
                     key={item.label}
@@ -173,7 +173,7 @@ const NavMini: React.FC = () => {
                     <Link
                       href={item.href}
                       onClick={() => setMenuOpen(false)}
-                      className="font-display text-[1.75rem] sm:text-[2rem] md:text-[2.5rem] text-[#F8F3E8] hover:text-[#D4A853] transition-colors relative group uppercase tracking-wide"
+                      className="font-display text-[1.4rem] sm:text-[1.75rem] md:text-[2.25rem] text-[#F8F3E8] hover:text-[#D4A853] transition-colors relative group uppercase tracking-wide"
                     >
                       {item.label}
                       <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#C25A3E] transition-all duration-300 group-hover:w-full" />
@@ -181,43 +181,6 @@ const NavMini: React.FC = () => {
                   </motion.div>
                 ))}
               </nav>
-
-              {/* Bottom Icons */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.3 }}
-                className="flex items-center gap-6 sm:gap-8 mt-8 sm:mt-10"
-              >
-                <button
-                  onClick={() => {
-                    setIsSearchOpen(true);
-                    setMenuOpen(false);
-                  }}
-                  className="text-[#F8F3E8] hover:text-[#D4A853] transition-colors"
-                >
-                  <Search size={24} strokeWidth={1.5} className="sm:w-7 sm:h-7" />
-                </button>
-                <Link
-                  href="/login"
-                  onClick={() => setMenuOpen(false)}
-                  className="text-[#F8F3E8] hover:text-[#D4A853] transition-colors"
-                >
-                  <User size={24} strokeWidth={1.5} className="sm:w-7 sm:h-7" />
-                </Link>
-                <Link
-                  href="/cart"
-                  onClick={() => setMenuOpen(false)}
-                  className="text-[#F8F3E8] hover:text-[#D4A853] transition-colors relative"
-                >
-                  <ShoppingCart size={24} strokeWidth={1.5} className="sm:w-7 sm:h-7" />
-                  {cartItemCount > 0 && (
-                    <span className="absolute -top-1.5 -right-1.5 bg-[#C25A3E] text-white text-[10px] font-condensed rounded-full h-4 w-4 flex items-center justify-center">
-                      {cartItemCount}
-                    </span>
-                  )}
-                </Link>
-              </motion.div>
 
               {/* Contact Info */}
               <motion.div
