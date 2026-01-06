@@ -7,11 +7,11 @@ import Image from "next/image";
 
 const AboutPage = () => {
   return (
-    <div className="min-h-screen pt-20 bg-sand">
+    <div className="min-h-screen bg-sand">
       <NavMini />
 
       {/* Hero Section */}
-      <section className="relative h-[40vh] min-h-[300px] overflow-hidden">
+      <section className="relative h-[40vh] min-h-[300px] overflow-hidden mt-24 sm:mt-28">
         <Image
           src="/image-5.jpg"
           alt="South African Landscape"

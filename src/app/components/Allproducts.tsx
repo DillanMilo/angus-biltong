@@ -117,7 +117,7 @@ const AllProducts = () => {
   return (
     <div className="min-h-screen bg-sand">
       {/* Hero Section */}
-      <section className="relative h-[30vh] min-h-[240px] overflow-hidden">
+      <section className="relative h-[30vh] min-h-[240px] overflow-hidden mt-24 sm:mt-28">
         <Image
           src="/image-5.jpg"
           alt="All Products"
