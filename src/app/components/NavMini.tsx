@@ -26,6 +26,7 @@ const NavMini: React.FC = () => {
   const cartItemCount = cart.reduce((total, item) => total + item.quantity, 0);
 
   const menuItems = [
+    { label: "Home", href: "/" },
     { label: "Shop All", href: "/products" },
     { label: "Dried Meats", href: "/dried-meats" },
     { label: "Sausage", href: "/sausage" },
