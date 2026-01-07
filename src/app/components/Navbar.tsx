@@ -1,85 +1,44 @@
 "use client";
 
-import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import React, { useEffect, useState } from "react";
-import { Search, User, ShoppingCart, Gift, Menu } from "lucide-react";
+import { ShoppingCart, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useCart } from "@/app/cart/cartContext";
 import SearchOverlay from "./SearchOverlay";
 
 const Navbar: React.FC = () => {
   const { cart } = useCart();
-  const [showStickyLogo, setShowStickyLogo] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [hideIcons, setHideIcons] = useState(false);
   const [showBanner, setShowBanner] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [pastHero, setPastHero] = useState(false);
 
-  // Calculate total items in cart
   const cartItemCount = cart.reduce((total, item) => total + item.quantity, 0);
 
   const menuItems = [
-    {
-      label: "Search",
-      onClick: () => {
-        setIsSearchOpen(true);
-        setMenuOpen(false);
-      },
-      href: undefined,
-    },
-    { label: "Sign In", href: "/login" },
+    { label: "Home", href: "/" },
     { label: "Shop All", href: "/products" },
     { label: "Dried Meats", href: "/dried-meats" },
     { label: "Sausage", href: "/sausage" },
     { label: "Groceries", href: "/groceries" },
     { label: "Gift Certificates", href: "/gift-certificates" },
     { label: "Recipes", href: "/recipes" },
-    {
-      label: (
-        <div className="flex items-center gap-2">
-          Cart
-          {cartItemCount > 0 && (
-            <span className="bg-green-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-              {cartItemCount}
-            </span>
-          )}
-        </div>
-      ),
-      href: "/cart",
-    },
-    { label: "Logout", href: "#" },
-  ];
-
-  // Update the icons section
-  const navIcons = [
-    {
-      icon: Search,
-      onClick: () => {
-        setIsSearchOpen(true);
-        setMenuOpen(false);
-      },
-      href: undefined,
-    },
-    {
-      icon: User,
-      href: "/login",
-      onClick: undefined,
-    },
-    { icon: Gift, href: "/gift-certificates" },
-    {
-      icon: ShoppingCart,
-      href: "/cart",
-      badge: cartItemCount > 0 ? cartItemCount : null,
-    },
+    { label: "About Us", href: "/about" },
+    { label: "Contact", href: "/contact" },
   ];
 
   useEffect(() => {
     const bannerTimeout = setTimeout(() => {
       setShowBanner(true);
-    }, 1000);
+    }, 800);
 
     const handleScroll = () => {
+      // Check if scrolled past hero section (100vh)
+      const heroHeight = window.innerHeight;
+      setPastHero(window.scrollY > heroHeight * 0.9);
+
+      // Hide banner in gallery/footer
       const gallerySection = document.getElementById("gallery");
       const footerSection = document.getElementById("footer");
 
@@ -89,14 +48,6 @@ const Navbar: React.FC = () => {
           scrollPosition >= gallerySection.offsetTop ||
           scrollPosition >= footerSection.offsetTop;
         setShowBanner(!inGalleryOrFooter);
-      }
-
-      if (window.scrollY > window.innerHeight * 0.6) {
-        setShowStickyLogo(true);
-        setHideIcons(true);
-      } else {
-        setShowStickyLogo(false);
-        setHideIcons(false);
       }
     };
 
@@ -109,168 +60,219 @@ const Navbar: React.FC = () => {
 
   return (
     <>
-      <header className="fixed top-0 w-full z-50">
-        {/* 📢 Free Shipping Banner */}
-        <AnimatePresence>
-          {showBanner && (
-            <motion.div
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              exit={{ scaleX: 0 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-              className="origin-center overflow-hidden bg-black text-white py-3 text-lg font-semibold uppercase"
-              style={{
-                height: "25px",
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <motion.div
-                className="flex space-x-32 whitespace-nowrap w-max"
-                animate={{ x: ["0%", "-100%"] }}
-                transition={{
-                  repeat: Infinity,
-                  duration: 240,
-                  ease: "linear",
-                }}
-              >
-                {[...Array(80)].flatMap((_, i) => (
-                  <span key={`shipping-${i}`} className="text-white">
-                    FREE SHIPPING ON ALL ORDERS OVER $79
-                  </span>
-                ))}
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* 🔹 Navbar */}
-        <nav className="w-full flex justify-between items-center px-6 py-3 bg-transparent">
-          {/* Left Side - Menu Icon (Mobile & Tablet) */}
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="md:hidden flex"
+      {/* Full Navbar - Only shows in hero section */}
+      <AnimatePresence>
+        {!pastHero && (
+          <motion.header
+            initial={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="fixed top-0 w-full z-50"
           >
-            <Menu
-              size={32}
-              className="cursor-pointer hover:text-gray-600"
-              onClick={() => setMenuOpen(!menuOpen)}
-            />
-          </motion.div>
-
-          {/* Center - Logo (Appears After Scrolling, Only Desktop) */}
-          <motion.div
-            className="w-32 hidden md:block"
-            initial={{ opacity: 0, y: -20 }}
-            animate={
-              showStickyLogo ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }
-            }
-            transition={{ duration: 0.6, ease: "easeOut" }}
-          >
-            {showStickyLogo && (
-              <Image
-                src="/AB-Logo-300dpi-Alpha-Only-2.png"
-                alt="Angus Biltong Logo"
-                width={100}
-                height={110}
-                priority
-              />
-            )}
-          </motion.div>
-
-          {/* Right Side - Navbar Icons */}
-          <div className="hidden md:flex items-center space-x-6 text-gray-800 relative">
-            {/* Icons that hide on scroll */}
-            <div
-              className={`flex items-center space-x-6 transition-opacity duration-300 ${
-                hideIcons ? "opacity-0" : "opacity-100"
-              }`}
-            >
-              {navIcons.map((item, index) => (
+            {/* Promotional Banner */}
+            <AnimatePresence>
+              {showBanner && (
                 <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.2, duration: 0.5 }}
-                  className="relative"
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.4, ease: "easeOut" }}
+                  className="overflow-hidden bg-[#2C2420] text-[#F8F3E8]"
                 >
-                  {item.href ? (
-                    <Link href={item.href}>
-                      <div className="cursor-pointer hover:text-gray-600">
-                        <item.icon size={28} />
-                        {item.badge && (
-                          <span className="absolute -top-2 -right-2 bg-green-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                            {item.badge}
-                          </span>
-                        )}
-                      </div>
-                    </Link>
-                  ) : (
+                  <div className="py-2 overflow-hidden">
                     <div
-                      onClick={item.onClick}
-                      className="cursor-pointer hover:text-gray-600"
+                      className="flex whitespace-nowrap"
+                      style={{
+                        animation: "marquee 30s linear infinite",
+                      }}
                     >
-                      <item.icon size={28} />
-                      {item.badge && (
-                        <span className="absolute -top-2 -right-2 bg-green-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                          {item.badge}
+                      {[...Array(20)].map((_, i) => (
+                        <span
+                          key={i}
+                          className="font-condensed text-sm tracking-[0.15em] uppercase mx-12"
+                        >
+                          <span className="text-[#D4A853]">Free Shipping</span>
+                          <span className="mx-3">on orders over $79</span>
+                          <span className="text-[#D4A853] mx-6">|</span>
+                          <span>Authentic South African Flavors</span>
+                          <span className="text-[#D4A853] mx-6">|</span>
+                          <span>20+ Years of Family Recipes</span>
+                          <span className="text-[#D4A853] mx-6">|</span>
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Main Navbar in Hero */}
+            <nav className="w-full bg-transparent">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
+                {/* Left spacer */}
+                <div className="w-10" />
+
+                {/* Center - Desktop Navigation */}
+                <div className="hidden lg:flex items-center gap-6 xl:gap-8">
+                  {menuItems.slice(0, 5).map((item, index) => (
+                    <motion.div
+                      key={item.label}
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1, duration: 0.4 }}
+                    >
+                      <Link
+                        href={item.href}
+                        className="font-condensed text-xs xl:text-sm tracking-[0.08em] xl:tracking-[0.1em] uppercase transition-colors relative group whitespace-nowrap text-white hover:text-[#D4A853]"
+                      >
+                        {item.label}
+                        <span className="absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full bg-[#D4A853]" />
+                      </Link>
+                    </motion.div>
+                  ))}
+                </div>
+
+                {/* Right - Icons */}
+                <div className="flex items-center gap-1 sm:gap-2">
+                  {/* Mobile Cart Icon */}
+                  <Link href="/cart" className="relative">
+                    <div className="p-1.5 text-white">
+                      <ShoppingCart size={22} strokeWidth={1.5} />
+                      {cartItemCount > 0 && (
+                        <span className="absolute -top-0.5 -right-0.5 bg-[#C25A3E] text-white text-[10px] font-condensed rounded-full h-4 w-4 flex items-center justify-center">
+                          {cartItemCount}
                         </span>
                       )}
                     </div>
-                  )}
-                </motion.div>
-              ))}
-            </div>
+                  </Link>
 
-            {/* Menu Icon - Always visible */}
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8, duration: 0.6, ease: "easeOut" }}
-              className="cursor-pointer hover:text-gray-600 relative"
-              onClick={() => setMenuOpen(!menuOpen)}
-            >
-              <Menu size={32} />
-            </motion.div>
-          </div>
-
-          {/* 🌟 Dropdown Menu (Opens Below Menu Button for Both Desktop & Mobile) */}
-          <AnimatePresence>
-            {menuOpen && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
-                className="absolute top-full left-4 md:right-4 md:left-auto w-48 bg-white shadow-lg rounded-lg py-2 mt-2"
-              >
-                {menuItems.map((item, index) => (
-                  <div
-                    key={index}
-                    onClick={() => {
-                      if (item.onClick) {
-                        item.onClick();
-                      }
-                      setMenuOpen(false);
-                    }}
-                    className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-200 transition cursor-pointer"
+                  {/* Menu Toggle */}
+                  <button
+                    onClick={() => setMenuOpen(!menuOpen)}
+                    className="p-1.5 sm:p-2 rounded-full transition-colors text-white hover:bg-white/10"
                   >
-                    {item.href ? (
-                      <Link href={item.href}>{item.label}</Link>
-                    ) : (
-                      item.label
-                    )}
-                  </div>
-                ))}
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </nav>
-      </header>
+                    <Menu size={24} strokeWidth={1.5} className="sm:w-7 sm:h-7" />
+                  </button>
+                </div>
+              </div>
+            </nav>
+          </motion.header>
+        )}
+      </AnimatePresence>
 
-      {/* Add SearchOverlay */}
+      {/* Sticky Hamburger Menu Button - Shows after scrolling past hero */}
+      <AnimatePresence>
+        {pastHero && !menuOpen && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.2 }}
+            className="fixed top-4 right-4 z-50 flex items-center gap-2"
+          >
+            {/* Cart Button */}
+            <Link href="/cart">
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="w-12 h-12 bg-[#2C2420] rounded-full flex items-center justify-center shadow-lg relative"
+              >
+                <ShoppingCart size={20} className="text-[#F8F3E8]" strokeWidth={1.5} />
+                {cartItemCount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-[#C25A3E] text-white text-[10px] font-condensed rounded-full h-5 w-5 flex items-center justify-center">
+                    {cartItemCount}
+                  </span>
+                )}
+              </motion.div>
+            </Link>
+
+            {/* Menu Button */}
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setMenuOpen(true)}
+              className="w-12 h-12 bg-[#C25A3E] rounded-full flex items-center justify-center shadow-lg"
+            >
+              <Menu size={22} className="text-white" strokeWidth={1.5} />
+            </motion.button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Full-Screen Menu Overlay */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 bg-[#2C2420] z-50"
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setMenuOpen(false)}
+              className="absolute top-4 right-4 w-12 h-12 bg-[#C25A3E] rounded-full flex items-center justify-center z-10 hover:bg-[#A34832] transition-colors"
+            >
+              <X size={24} className="text-white" strokeWidth={1.5} />
+            </button>
+
+            {/* Decorative Pattern */}
+            <div
+              className="absolute inset-0 opacity-5 pointer-events-none"
+              style={{
+                backgroundImage: `repeating-linear-gradient(
+                  45deg,
+                  transparent,
+                  transparent 20px,
+                  #D4A853 20px,
+                  #D4A853 21px
+                )`,
+              }}
+            />
+
+            <div className="relative h-full flex flex-col items-center justify-center px-6 py-12 overflow-y-auto">
+              {/* Menu Items */}
+              <nav className="flex flex-col items-center gap-2 sm:gap-3 md:gap-4">
+                {menuItems.map((item, index) => (
+                  <motion.div
+                    key={item.label}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    transition={{ delay: 0.1 + index * 0.03, duration: 0.3 }}
+                  >
+                    <Link
+                      href={item.href}
+                      onClick={() => setMenuOpen(false)}
+                      className="font-display text-[1.4rem] sm:text-[1.75rem] md:text-[2.25rem] text-[#F8F3E8] hover:text-[#D4A853] transition-colors relative group uppercase tracking-wide"
+                    >
+                      {item.label}
+                      <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#C25A3E] transition-all duration-300 group-hover:w-full" />
+                    </Link>
+                  </motion.div>
+                ))}
+              </nav>
+
+              {/* Contact Info */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5 }}
+                className="absolute bottom-6 sm:bottom-10 left-0 right-0 text-center px-4"
+              >
+                <p className="font-condensed text-xs sm:text-sm text-[#F8F3E8]/60 tracking-wider uppercase mb-1">
+                  255 Sawdust Rd, Spring, TX 77380
+                </p>
+                <p className="font-condensed text-xs sm:text-sm text-[#D4A853] tracking-wider">
+                  281-719-8577
+                </p>
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <SearchOverlay
         isOpen={isSearchOpen}
         onClose={() => setIsSearchOpen(false)}

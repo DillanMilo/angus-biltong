@@ -1,46 +1,34 @@
 import type { Metadata } from "next";
 import {
-  Geist,
-  Geist_Mono,
-  Zen_Kaku_Gothic_New,
+  Bebas_Neue,
+  Lora,
   Roboto_Condensed,
-  Playfair_Display,
 } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "./cart/cartContext";
 
-// Existing fonts
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-const zenKaku = Zen_Kaku_Gothic_New({
-  variable: "--font-zen-kaku",
+// Safari Lodge Luxury Typography
+const bebasNeue = Bebas_Neue({
+  variable: "--font-display",
   subsets: ["latin"],
   weight: "400",
 });
 
-const robotoCondensed = Roboto_Condensed({
-  variable: "--font-roboto-condensed",
+const lora = Lora({
+  variable: "--font-body",
   subsets: ["latin"],
-  weight: "600", // Semi-Bold
+  weight: ["400", "500", "600", "700"],
 });
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
+const robotoCondensed = Roboto_Condensed({
+  variable: "--font-condensed",
   subsets: ["latin"],
-  weight: ["400", "900"], // ✅ Correct syntax
+  weight: ["400", "600", "700"],
 });
 
 export const metadata: Metadata = {
-  title: "Angus Biltong",
-  description: "Authentic South African Biltong in Houston",
+  title: "Angus Biltong | Authentic South African Biltong",
+  description: "Premium South African biltong & droëwors, crafted in Houston with 20+ years of family tradition. Taste the heritage.",
 };
 
 export default function RootLayout({
@@ -49,21 +37,8 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${zenKaku.variable} ${robotoCondensed.variable} ${playfair.variable} antialiased`}
+      className={`${bebasNeue.variable} ${lora.variable} ${robotoCondensed.variable} antialiased`}
     >
-      <head>
-        {/* ✅ Add Google Fonts for Playfair Display */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
-          rel="stylesheet"
-        />
-      </head>
       <body>
         <CartProvider>{children}</CartProvider>
       </body>

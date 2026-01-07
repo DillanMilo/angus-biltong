@@ -5,7 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import Link from "next/link";
 import NavMini from "@/app/components/NavMini";
-import { Truck, PartyPopper, ChevronDown, ChevronUp } from "lucide-react";
+import Footer from "@/app/components/Footer";
+import { Truck, PartyPopper, ChevronDown, ChevronUp, ShoppingBag } from "lucide-react";
 
 const CartPage = () => {
   const { cart, removeFromCart, updateQuantity } = useCart();
@@ -36,7 +37,6 @@ const CartPage = () => {
     if (!couponCode.trim()) return;
 
     try {
-      // Reset any previous errors
       setCouponError(null);
 
       const response = await fetch(`/api/cart/coupon`, {
@@ -59,7 +59,6 @@ const CartPage = () => {
       setCouponCode("");
       setIsCouponOpen(false);
     } catch (error: unknown) {
-      // Type error as unknown
       if (error instanceof Error) {
         setCouponError(error.message || "Invalid coupon code");
       } else {
@@ -68,17 +67,16 @@ const CartPage = () => {
     }
   };
 
-  // Notification components
   const FreeShippingAlert = () => (
     <motion.div
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className="bg-green-100 border-l-4 border-green-500 p-4 mb-4 rounded-r"
+      className="bg-olive/10 border-l-4 border-olive p-4 mb-6"
     >
-      <div className="flex items-center gap-2">
-        <PartyPopper className="text-green-500" size={24} />
-        <p className="text-green-700">
+      <div className="flex items-center gap-3">
+        <PartyPopper className="text-olive" size={24} />
+        <p className="font-body text-olive font-semibold">
           Congratulations! Your order qualifies for FREE shipping!
         </p>
       </div>
@@ -90,24 +88,26 @@ const CartPage = () => {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className="bg-blue-100 border-l-4 border-blue-500 p-4 mb-4 rounded-r"
+      className="bg-amber/10 border-l-4 border-amber p-4 mb-6"
     >
-      <div className="flex items-center gap-2">
-        <Truck className="text-blue-500" size={24} />
-        <p className="text-blue-700">
-          Add just ${amountToFreeShipping.toFixed(2)} more to get FREE shipping!
+      <div className="flex items-center gap-3">
+        <Truck className="text-amber-dark" size={24} />
+        <p className="font-body text-espresso">
+          Add just <span className="text-terracotta font-semibold">${amountToFreeShipping.toFixed(2)}</span> more to get FREE shipping!
         </p>
       </div>
     </motion.div>
   );
 
   return (
-    <>
+    <div className="min-h-screen bg-sand">
       <NavMini />
-      <section className="max-w-6xl mx-auto px-4 py-12 mt-20">
-        <h2 className="text-3xl font-bold mb-6">Shopping Cart</h2>
+      <section className="max-w-6xl mx-auto px-4 py-12 pt-32">
+        <div className="text-center mb-8">
+          <h2 className="heading-lg text-espresso mb-4">Shopping Cart</h2>
+          <div className="w-24 h-1 bg-amber mx-auto" />
+        </div>
 
-        {/* Shipping Alerts */}
         <AnimatePresence>
           {subtotal >= FREE_SHIPPING_THRESHOLD && <FreeShippingAlert />}
           {subtotal > 0 &&
@@ -116,15 +116,19 @@ const CartPage = () => {
         </AnimatePresence>
 
         {cart.length === 0 ? (
-          <div className="text-center py-8">
-            <p className="text-gray-600 mb-4">Your cart is empty.</p>
-            <Link
-              href="/products"
-              className="inline-block bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition-colors"
-            >
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center py-16 bg-cream border border-[#2C2420]/8"
+          >
+            <div className="w-20 h-20 bg-espresso/10 rounded-full flex items-center justify-center mx-auto mb-6">
+              <ShoppingBag className="w-10 h-10 text-espresso/40" />
+            </div>
+            <p className="font-body text-espresso/70 mb-6 text-lg">Your cart is empty.</p>
+            <Link href="/products" className="btn-primary inline-block">
               Continue Shopping
             </Link>
-          </div>
+          </motion.div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <motion.div
@@ -147,28 +151,28 @@ const CartPage = () => {
                       transition: { delay: index * 0.1 },
                     },
                   }}
-                  className="flex flex-col sm:flex-row items-center gap-4 bg-white p-4 rounded-lg shadow-md"
+                  className="flex flex-col sm:flex-row items-center gap-4 bg-cream p-4 border border-[#2C2420]/8"
                 >
                   <div className="relative w-24 h-24">
                     <img
                       src={item.imageUrl}
                       alt={item.name}
-                      className="w-full h-full object-cover rounded-md"
+                      className="w-full h-full object-cover"
                     />
                   </div>
 
-                  <div className="flex-grow">
-                    <h3 className="font-semibold text-lg">{item.name}</h3>
-                    <p className="text-gray-600">${item.price.toFixed(2)}</p>
+                  <div className="flex-grow text-center sm:text-left">
+                    <h3 className="font-display text-lg text-espresso">{item.name}</h3>
+                    <p className="font-body text-terracotta font-semibold">${item.price.toFixed(2)}</p>
                   </div>
 
                   <div className="flex items-center gap-4">
-                    <div className="flex items-center border rounded-md">
+                    <div className="flex items-center border border-espresso/20">
                       <button
                         onClick={() =>
                           handleQuantityChange(item.id, item.quantity - 1)
                         }
-                        className="px-3 py-1 hover:bg-gray-100"
+                        className="px-3 py-1 hover:bg-sand transition-colors font-body"
                         disabled={isUpdating === item.id}
                       >
                         -
@@ -179,14 +183,14 @@ const CartPage = () => {
                         onChange={(e) =>
                           handleQuantityChange(item.id, Number(e.target.value))
                         }
-                        className="w-12 text-center border-x py-1"
+                        className="w-12 text-center border-x border-espresso/20 py-1 bg-transparent font-body"
                         min="1"
                       />
                       <button
                         onClick={() =>
                           handleQuantityChange(item.id, item.quantity + 1)
                         }
-                        className="px-3 py-1 hover:bg-gray-100"
+                        className="px-3 py-1 hover:bg-sand transition-colors font-body"
                         disabled={isUpdating === item.id}
                       >
                         +
@@ -195,7 +199,7 @@ const CartPage = () => {
 
                     <button
                       onClick={() => removeFromCart(item.id)}
-                      className="text-red-500 hover:text-red-700 transition-colors"
+                      className="text-terracotta hover:text-terracotta-dark transition-colors font-condensed uppercase tracking-wider text-sm"
                       disabled={isUpdating === item.id}
                     >
                       Remove
@@ -206,28 +210,28 @@ const CartPage = () => {
             </motion.div>
 
             <div className="lg:col-span-1">
-              <div className="bg-white p-6 rounded-lg shadow-md sticky top-4">
-                <h3 className="text-xl font-semibold mb-4">Order Summary</h3>
-                <div className="space-y-2 mb-4">
+              <div className="bg-cream p-6 border border-[#2C2420]/8 sticky top-28">
+                <h3 className="heading-md text-espresso mb-6">Order Summary</h3>
+                <div className="space-y-3 font-body text-espresso/80 mb-4">
                   <div className="flex justify-between">
                     <span>Subtotal</span>
-                    <span>${subtotal.toFixed(2)}</span>
+                    <span className="text-espresso font-semibold">${subtotal.toFixed(2)}</span>
                   </div>
-                  <div className="flex justify-between border-t pt-2">
+                  <div className="flex justify-between border-t border-espresso/10 pt-3">
                     <span>Shipping (US ONLY)</span>
-                    <span>
+                    <span className={subtotal >= FREE_SHIPPING_THRESHOLD ? "text-olive font-semibold" : "text-espresso font-semibold"}>
                       {subtotal >= FREE_SHIPPING_THRESHOLD
                         ? "FREE"
                         : `$${SHIPPING_RATE.toFixed(2)}`}
                     </span>
                   </div>
 
-                  <div className="border-t pt-2">
+                  <div className="border-t border-espresso/10 pt-3">
                     <button
                       onClick={() => setIsCouponOpen(!isCouponOpen)}
-                      className="flex items-center justify-between w-full text-left text-gray-600 hover:text-gray-800"
+                      className="flex items-center justify-between w-full text-left text-espresso/70 hover:text-espresso transition-colors"
                     >
-                      <span>Add Coupon Code</span>
+                      <span className="font-condensed uppercase tracking-wider text-sm">Add Coupon Code</span>
                       {isCouponOpen ? (
                         <ChevronUp size={20} />
                       ) : (
@@ -240,7 +244,7 @@ const CartPage = () => {
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        className="mt-2"
+                        className="mt-3"
                       >
                         <div className="flex flex-col gap-2">
                           <div className="flex gap-2">
@@ -251,18 +255,18 @@ const CartPage = () => {
                                 setCouponCode(e.target.value.toUpperCase())
                               }
                               placeholder="Enter code"
-                              className="flex-1 px-3 py-1 border rounded-md text-sm uppercase"
+                              className="flex-1 px-3 py-2 bg-sand border border-espresso/20 text-sm uppercase font-body focus:outline-none focus:border-terracotta"
                             />
                             <button
                               onClick={handleApplyCoupon}
                               disabled={!couponCode.trim()}
-                              className="bg-blue-600 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                              className="btn-secondary px-4 py-2 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                             >
                               Apply
                             </button>
                           </div>
                           {couponError && (
-                            <p className="text-red-500 text-sm">
+                            <p className="text-terracotta text-sm">
                               {couponError}
                             </p>
                           )}
@@ -271,11 +275,11 @@ const CartPage = () => {
                     )}
 
                     {appliedCoupon && (
-                      <div className="flex items-center justify-between mt-2 text-green-600 text-sm">
-                        <span>Coupon {appliedCoupon} applied!</span>
+                      <div className="flex items-center justify-between mt-3 text-olive text-sm">
+                        <span className="font-semibold">Coupon {appliedCoupon} applied!</span>
                         <button
                           onClick={() => setAppliedCoupon(null)}
-                          className="text-red-500 hover:text-red-700"
+                          className="text-terracotta hover:text-terracotta-dark"
                         >
                           Remove
                         </button>
@@ -283,14 +287,14 @@ const CartPage = () => {
                     )}
                   </div>
                 </div>
-                <div className="border-t pt-4">
-                  <div className="flex justify-between font-semibold mb-4">
-                    <span>Total</span>
+                <div className="border-t border-espresso/10 pt-4">
+                  <div className="flex justify-between font-display text-xl text-espresso mb-6">
+                    <span>TOTAL</span>
                     <span>${total.toFixed(2)}</span>
                   </div>
                   <Link
                     href="/checkout"
-                    className="block w-full bg-green-600 text-white text-center py-3 rounded-md hover:bg-green-700 transition-colors"
+                    className="btn-primary block w-full text-center"
                   >
                     Proceed to Checkout
                   </Link>
@@ -300,7 +304,8 @@ const CartPage = () => {
           </div>
         )}
       </section>
-    </>
+      <Footer />
+    </div>
   );
 };
 

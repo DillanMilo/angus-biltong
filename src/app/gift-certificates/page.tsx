@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import NavMini from "@/app/components/NavMini";
+import Footer from "@/app/components/Footer";
+import { motion } from "framer-motion";
+import Image from "next/image";
 
 type FormMode = "purchase" | "redeem" | "check";
 
@@ -47,7 +50,6 @@ export default function GiftCertificates() {
 
         const data = await response.json();
         setSuccess(`Gift certificate created successfully! Code: ${data.code}`);
-        // Reset form
         setFormData({
           yourName: "",
           yourEmail: "",
@@ -77,70 +79,91 @@ export default function GiftCertificates() {
   };
 
   return (
-    <>
+    <div className="min-h-screen bg-sand">
       <NavMini />
-      <div className="max-w-4xl mx-auto px-4 py-8 mt-24 sm:mt-28">
-        <h1 className="text-3xl font-bold mb-8 font-playfair">
-          Gift Certificates
-        </h1>
 
-        <div className="flex justify-center space-x-8 mb-12">
-          <button
-            className={`font-semibold font-playfair ${
-              mode === "purchase"
-                ? "border-b-2 border-black"
-                : "text-gray-500 hover:text-black"
-            }`}
-            onClick={() => setMode("purchase")}
+      {/* Hero Section */}
+      <section className="relative h-[30vh] min-h-[240px] overflow-hidden mt-24 sm:mt-28">
+        <Image
+          src="/image-5.jpg"
+          alt="Gift Certificates"
+          fill
+          className="object-cover"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#2C2420]/60 via-[#2C2420]/40 to-[#C25A3E]/30" />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center"
           >
-            Purchase Gift Certificate
-          </button>
-          <button
-            className={`font-playfair ${
-              mode === "redeem"
-                ? "border-b-2 border-black font-semibold"
-                : "text-gray-500 hover:text-black"
-            }`}
-            onClick={() => setMode("redeem")}
-          >
-            Redeem Gift Certificate
-          </button>
-          <button
-            className={`font-playfair ${
-              mode === "check"
-                ? "border-b-2 border-black font-semibold"
-                : "text-gray-500 hover:text-black"
-            }`}
-            onClick={() => setMode("check")}
-          >
-            Check Gift Certificate Balance
-          </button>
+            <h1 className="heading-xl text-white mb-4">Gift Certificates</h1>
+            <div className="w-24 h-1 bg-amber mx-auto" />
+          </motion.div>
+        </div>
+      </section>
+
+      <div className="max-w-4xl mx-auto px-4 py-12">
+        {/* Tab Navigation */}
+        <div className="flex flex-wrap justify-center gap-4 mb-12">
+          {[
+            { key: "purchase", label: "Purchase" },
+            { key: "redeem", label: "Redeem" },
+            { key: "check", label: "Check Balance" },
+          ].map((tab) => (
+            <button
+              key={tab.key}
+              className={`font-display text-lg px-6 py-2 transition-all ${
+                mode === tab.key
+                  ? "bg-terracotta text-white"
+                  : "bg-cream text-espresso hover:bg-sand border border-espresso/10"
+              }`}
+              onClick={() => setMode(tab.key as FormMode)}
+            >
+              {tab.label}
+            </button>
+          ))}
         </div>
 
         {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-terracotta/10 border border-terracotta/30 text-terracotta p-4 mb-6 font-body"
+          >
             {error}
-          </div>
+          </motion.div>
         )}
 
         {success && (
-          <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6">
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-olive/10 border border-olive/30 text-olive p-4 mb-6 font-body font-semibold"
+          >
             {success}
-          </div>
+          </motion.div>
         )}
 
         {mode === "purchase" ? (
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <motion.form
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            onSubmit={handleSubmit}
+            className="bg-cream p-8 border border-[#2C2420]/8 space-y-8"
+          >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Purchaser Details */}
               <div>
-                <label className="block mb-2">
-                  Your Name <span className="text-red-500">*</span>
+                <label className="block font-condensed uppercase tracking-wider text-sm text-espresso/70 mb-2">
+                  Your Name <span className="text-terracotta">*</span>
                 </label>
                 <input
                   type="text"
                   required
-                  className="w-full p-2 border rounded"
+                  className="w-full p-3 bg-sand border border-espresso/20 focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta transition font-body"
                   value={formData.yourName}
                   onChange={(e) =>
                     setFormData({ ...formData, yourName: e.target.value })
@@ -148,13 +171,13 @@ export default function GiftCertificates() {
                 />
               </div>
               <div>
-                <label className="block mb-2">
-                  Your Email <span className="text-red-500">*</span>
+                <label className="block font-condensed uppercase tracking-wider text-sm text-espresso/70 mb-2">
+                  Your Email <span className="text-terracotta">*</span>
                 </label>
                 <input
                   type="email"
                   required
-                  className="w-full p-2 border rounded"
+                  className="w-full p-3 bg-sand border border-espresso/20 focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta transition font-body"
                   value={formData.yourEmail}
                   onChange={(e) =>
                     setFormData({ ...formData, yourEmail: e.target.value })
@@ -164,13 +187,13 @@ export default function GiftCertificates() {
 
               {/* Recipient Details */}
               <div>
-                <label className="block mb-2">
-                  Recipient&apos;s Name <span className="text-red-500">*</span>
+                <label className="block font-condensed uppercase tracking-wider text-sm text-espresso/70 mb-2">
+                  Recipient&apos;s Name <span className="text-terracotta">*</span>
                 </label>
                 <input
                   type="text"
                   required
-                  className="w-full p-2 border rounded"
+                  className="w-full p-3 bg-sand border border-espresso/20 focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta transition font-body"
                   value={formData.recipientName}
                   onChange={(e) =>
                     setFormData({ ...formData, recipientName: e.target.value })
@@ -178,13 +201,13 @@ export default function GiftCertificates() {
                 />
               </div>
               <div>
-                <label className="block mb-2">
-                  Recipient&apos;s Email <span className="text-red-500">*</span>
+                <label className="block font-condensed uppercase tracking-wider text-sm text-espresso/70 mb-2">
+                  Recipient&apos;s Email <span className="text-terracotta">*</span>
                 </label>
                 <input
                   type="email"
                   required
-                  className="w-full p-2 border rounded"
+                  className="w-full p-3 bg-sand border border-espresso/20 focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta transition font-body"
                   value={formData.recipientEmail}
                   onChange={(e) =>
                     setFormData({ ...formData, recipientEmail: e.target.value })
@@ -194,14 +217,14 @@ export default function GiftCertificates() {
 
               {/* Amount */}
               <div>
-                <label className="block mb-2">
-                  Amount <span className="text-red-500">*</span>
+                <label className="block font-condensed uppercase tracking-wider text-sm text-espresso/70 mb-2">
+                  Amount <span className="text-terracotta">*</span>
                 </label>
                 <input
                   type="number"
                   required
                   min="1"
-                  className="w-full p-2 border rounded"
+                  className="w-full p-3 bg-sand border border-espresso/20 focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta transition font-body"
                   value={formData.amount}
                   onChange={(e) =>
                     setFormData({ ...formData, amount: e.target.value })
@@ -211,12 +234,12 @@ export default function GiftCertificates() {
 
               {/* Theme */}
               <div>
-                <label className="block mb-2">
-                  Gift Certificate Theme <span className="text-red-500">*</span>
+                <label className="block font-condensed uppercase tracking-wider text-sm text-espresso/70 mb-2">
+                  Gift Certificate Theme <span className="text-terracotta">*</span>
                 </label>
-                <div className="space-y-2">
+                <div className="space-y-2 font-body">
                   {["Birthday", "Christmas", "General"].map((theme) => (
-                    <label key={theme} className="flex items-center space-x-2">
+                    <label key={theme} className="flex items-center space-x-3 text-espresso/80 cursor-pointer">
                       <input
                         type="radio"
                         name="theme"
@@ -225,6 +248,7 @@ export default function GiftCertificates() {
                         onChange={(e) =>
                           setFormData({ ...formData, theme: e.target.value })
                         }
+                        className="w-4 h-4 accent-terracotta"
                       />
                       <span>{theme}</span>
                     </label>
@@ -235,9 +259,11 @@ export default function GiftCertificates() {
 
             {/* Message */}
             <div>
-              <label className="block mb-2">Optional Message</label>
+              <label className="block font-condensed uppercase tracking-wider text-sm text-espresso/70 mb-2">
+                Optional Message
+              </label>
               <textarea
-                className="w-full p-2 border rounded h-32"
+                className="w-full p-3 bg-sand border border-espresso/20 focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta transition font-body h-32 resize-none"
                 value={formData.message}
                 onChange={(e) =>
                   setFormData({ ...formData, message: e.target.value })
@@ -246,8 +272,8 @@ export default function GiftCertificates() {
             </div>
 
             {/* Terms */}
-            <div className="space-y-2">
-              <label className="flex items-center space-x-2">
+            <div className="space-y-3 font-body text-espresso/80">
+              <label className="flex items-start space-x-3 cursor-pointer">
                 <input
                   type="checkbox"
                   required
@@ -255,13 +281,13 @@ export default function GiftCertificates() {
                   onChange={(e) =>
                     setFormData({ ...formData, understand: e.target.checked })
                   }
-                  className="form-checkbox"
+                  className="w-5 h-5 mt-0.5 accent-terracotta"
                 />
-                <span className="text-gray-700">
+                <span>
                   I understand that Gift Certificates expire after 1825 days
                 </span>
               </label>
-              <label className="flex items-center space-x-2">
+              <label className="flex items-start space-x-3 cursor-pointer">
                 <input
                   type="checkbox"
                   required
@@ -269,9 +295,9 @@ export default function GiftCertificates() {
                   onChange={(e) =>
                     setFormData({ ...formData, agree: e.target.checked })
                   }
-                  className="form-checkbox"
+                  className="w-5 h-5 mt-0.5 accent-terracotta"
                 />
-                <span className="text-gray-700">
+                <span>
                   I agree that Gift Certificates are nonrefundable
                 </span>
               </label>
@@ -280,27 +306,32 @@ export default function GiftCertificates() {
             <div className="flex justify-end">
               <button
                 type="submit"
-                disabled={!formData.understand || !formData.agree}
-                className={`px-8 py-3 rounded transition ${
-                  formData.understand && formData.agree
-                    ? "bg-[#0BDA51] text-white hover:bg-green-700"
-                    : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                disabled={!formData.understand || !formData.agree || loading}
+                className={`btn-primary px-8 ${
+                  !formData.understand || !formData.agree
+                    ? "opacity-50 cursor-not-allowed"
+                    : ""
                 }`}
               >
-                Purchase Gift Certificate
+                {loading ? "Processing..." : "Purchase Gift Certificate"}
               </button>
             </div>
-          </form>
+          </motion.form>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <motion.form
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            onSubmit={handleSubmit}
+            className="bg-cream p-8 border border-[#2C2420]/8 space-y-6"
+          >
             <div>
-              <label className="block mb-2">
-                Gift Certificate Code <span className="text-red-500">*</span>
+              <label className="block font-condensed uppercase tracking-wider text-sm text-espresso/70 mb-2">
+                Gift Certificate Code <span className="text-terracotta">*</span>
               </label>
               <input
                 type="text"
                 required
-                className="w-full p-2 border rounded"
+                className="w-full p-3 bg-sand border border-espresso/20 focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta transition font-body"
                 value={giftCode}
                 onChange={(e) => setGiftCode(e.target.value)}
               />
@@ -310,7 +341,7 @@ export default function GiftCertificates() {
               <button
                 type="submit"
                 disabled={loading}
-                className="bg-[#0BDA51] text-white px-8 py-3 rounded hover:bg-green-700 transition disabled:opacity-50"
+                className="btn-primary px-8"
               >
                 {loading
                   ? "Processing..."
@@ -319,9 +350,10 @@ export default function GiftCertificates() {
                   : "Check Balance"}
               </button>
             </div>
-          </form>
+          </motion.form>
         )}
       </div>
-    </>
+      <Footer />
+    </div>
   );
 }

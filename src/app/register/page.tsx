@@ -3,6 +3,10 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { fallbackCountries } from "@/utils/fallbackCountries";
+import { motion } from "framer-motion";
+import NavMini from "@/app/components/NavMini";
+import Footer from "@/app/components/Footer";
+import Link from "next/link";
 
 export default function Register() {
   const router = useRouter();
@@ -77,139 +81,234 @@ export default function Register() {
   };
 
   return (
-    <section className="max-w-4xl mx-auto py-12 px-6">
-      <h2 className="text-3xl font-bold text-gray-900 mb-6">Create Account</h2>
-
-      <div className="bg-gray-50 p-6 rounded-lg mb-8 border border-gray-200">
-        <h3 className="text-lg font-semibold mb-3">
-          Create an account with us and you&apos;ll be able to:
-        </h3>
-        <ul className="list-disc list-inside space-y-2 text-gray-700">
-          <li>Check out faster</li>
-          <li>Save multiple shipping addresses</li>
-          <li>Access your order history</li>
-          <li>Track new orders</li>
-          <li>Save items to your Wish List</li>
-        </ul>
-      </div>
-
-      {error && <p className="text-red-500">{error}</p>}
-
-      <form
-        onSubmit={handleSubmit}
-        className="grid grid-cols-1 md:grid-cols-2 gap-4"
-      >
-        <input
-          name="firstName"
-          type="text"
-          placeholder="First Name"
-          required
-          className="border p-2"
-          onChange={handleChange}
-        />
-        <input
-          name="lastName"
-          type="text"
-          placeholder="Last Name"
-          required
-          className="border p-2"
-          onChange={handleChange}
-        />
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          required
-          className="border p-2"
-          onChange={handleChange}
-        />
-        <input
-          name="confirmPassword"
-          type="password"
-          placeholder="Confirm Password"
-          required
-          className="border p-2"
-          onChange={handleChange}
-        />
-        <input
-          name="email"
-          type="email"
-          placeholder="Email Address"
-          required
-          className="border p-2"
-          onChange={handleChange}
-        />
-
-        <input
-          name="phone"
-          type="tel"
-          placeholder="Phone Number"
-          required
-          className="border p-2"
-          onChange={handleChange}
-        />
-        <input
-          name="address1"
-          type="text"
-          placeholder="Address Line 1"
-          required
-          className="border p-2"
-          onChange={handleChange}
-        />
-        <input
-          name="address2"
-          type="text"
-          placeholder="Address Line 2 (Optional)"
-          className="border p-2"
-          onChange={handleChange}
-        />
-        <input
-          name="city"
-          type="text"
-          placeholder="City"
-          required
-          className="border p-2"
-          onChange={handleChange}
-        />
-        <input
-          name="state"
-          type="text"
-          placeholder="State"
-          required
-          className="border p-2"
-          onChange={handleChange}
-        />
-        <input
-          name="zip"
-          type="text"
-          placeholder="ZIP Code"
-          required
-          className="border p-2"
-          onChange={handleChange}
-        />
-        <select
-          name="country"
-          required
-          className="border p-2"
-          onChange={handleChange}
-          value={formData.country}
+    <div className="min-h-screen bg-sand">
+      <NavMini />
+      <section className="max-w-4xl mx-auto py-12 px-6 pt-32">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
         >
-          <option value="">Select a Country</option>
-          {countries.map((country) => (
-            <option key={country.code} value={country.code}>
-              {country.name}
-            </option>
-          ))}
-        </select>
+          <div className="text-center mb-8">
+            <h2 className="heading-lg text-espresso mb-4">Create Account</h2>
+            <div className="w-24 h-1 bg-amber mx-auto" />
+          </div>
 
-        <button
-          type="submit"
-          className="col-span-2 bg-green-600 text-white p-3 rounded hover:bg-green-700"
-          disabled={loading}
-        >
-          {loading ? "Creating Account..." : "Create Account"}
-        </button>
-      </form>
-    </section>
+          <div className="bg-cream p-6 md:p-8 border border-[#2C2420]/8 mb-8">
+            <h3 className="font-display text-xl text-espresso mb-4">
+              CREATE AN ACCOUNT WITH US AND YOU&apos;LL BE ABLE TO:
+            </h3>
+            <ul className="space-y-2 font-body text-espresso/80">
+              <li className="flex items-center gap-2">
+                <span className="w-2 h-2 bg-terracotta rounded-full"></span>
+                Check out faster
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="w-2 h-2 bg-terracotta rounded-full"></span>
+                Save multiple shipping addresses
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="w-2 h-2 bg-terracotta rounded-full"></span>
+                Access your order history
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="w-2 h-2 bg-terracotta rounded-full"></span>
+                Track new orders
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="w-2 h-2 bg-terracotta rounded-full"></span>
+                Save items to your Wish List
+              </li>
+            </ul>
+          </div>
+
+          {error && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-terracotta/10 border border-terracotta/30 text-terracotta p-4 mb-6 font-body"
+            >
+              {error}
+            </motion.div>
+          )}
+
+          <form
+            onSubmit={handleSubmit}
+            className="bg-cream p-6 md:p-8 border border-[#2C2420]/8"
+          >
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="block font-condensed uppercase tracking-wider text-sm text-espresso/70 mb-2">
+                  First Name <span className="text-terracotta">*</span>
+                </label>
+                <input
+                  name="firstName"
+                  type="text"
+                  required
+                  className="w-full p-3 bg-sand border border-espresso/20 focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta transition font-body"
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <label className="block font-condensed uppercase tracking-wider text-sm text-espresso/70 mb-2">
+                  Last Name <span className="text-terracotta">*</span>
+                </label>
+                <input
+                  name="lastName"
+                  type="text"
+                  required
+                  className="w-full p-3 bg-sand border border-espresso/20 focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta transition font-body"
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <label className="block font-condensed uppercase tracking-wider text-sm text-espresso/70 mb-2">
+                  Password <span className="text-terracotta">*</span>
+                </label>
+                <input
+                  name="password"
+                  type="password"
+                  required
+                  className="w-full p-3 bg-sand border border-espresso/20 focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta transition font-body"
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <label className="block font-condensed uppercase tracking-wider text-sm text-espresso/70 mb-2">
+                  Confirm Password <span className="text-terracotta">*</span>
+                </label>
+                <input
+                  name="confirmPassword"
+                  type="password"
+                  required
+                  className="w-full p-3 bg-sand border border-espresso/20 focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta transition font-body"
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <label className="block font-condensed uppercase tracking-wider text-sm text-espresso/70 mb-2">
+                  Email Address <span className="text-terracotta">*</span>
+                </label>
+                <input
+                  name="email"
+                  type="email"
+                  required
+                  className="w-full p-3 bg-sand border border-espresso/20 focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta transition font-body"
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <label className="block font-condensed uppercase tracking-wider text-sm text-espresso/70 mb-2">
+                  Phone Number <span className="text-terracotta">*</span>
+                </label>
+                <input
+                  name="phone"
+                  type="tel"
+                  required
+                  className="w-full p-3 bg-sand border border-espresso/20 focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta transition font-body"
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="md:col-span-2">
+                <label className="block font-condensed uppercase tracking-wider text-sm text-espresso/70 mb-2">
+                  Address Line 1 <span className="text-terracotta">*</span>
+                </label>
+                <input
+                  name="address1"
+                  type="text"
+                  required
+                  className="w-full p-3 bg-sand border border-espresso/20 focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta transition font-body"
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="md:col-span-2">
+                <label className="block font-condensed uppercase tracking-wider text-sm text-espresso/70 mb-2">
+                  Address Line 2 (Optional)
+                </label>
+                <input
+                  name="address2"
+                  type="text"
+                  className="w-full p-3 bg-sand border border-espresso/20 focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta transition font-body"
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <label className="block font-condensed uppercase tracking-wider text-sm text-espresso/70 mb-2">
+                  City <span className="text-terracotta">*</span>
+                </label>
+                <input
+                  name="city"
+                  type="text"
+                  required
+                  className="w-full p-3 bg-sand border border-espresso/20 focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta transition font-body"
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <label className="block font-condensed uppercase tracking-wider text-sm text-espresso/70 mb-2">
+                  State <span className="text-terracotta">*</span>
+                </label>
+                <input
+                  name="state"
+                  type="text"
+                  required
+                  className="w-full p-3 bg-sand border border-espresso/20 focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta transition font-body"
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <label className="block font-condensed uppercase tracking-wider text-sm text-espresso/70 mb-2">
+                  ZIP Code <span className="text-terracotta">*</span>
+                </label>
+                <input
+                  name="zip"
+                  type="text"
+                  required
+                  className="w-full p-3 bg-sand border border-espresso/20 focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta transition font-body"
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <label className="block font-condensed uppercase tracking-wider text-sm text-espresso/70 mb-2">
+                  Country <span className="text-terracotta">*</span>
+                </label>
+                <select
+                  name="country"
+                  required
+                  className="w-full p-3 bg-sand border border-espresso/20 focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta transition font-body"
+                  onChange={handleChange}
+                  value={formData.country}
+                >
+                  <option value="">Select a Country</option>
+                  {countries.map((country) => (
+                    <option key={country.code} value={country.code}>
+                      {country.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              className="btn-primary w-full mt-8"
+              disabled={loading}
+            >
+              {loading ? "Creating Account..." : "Create Account"}
+            </button>
+
+            <div className="text-center mt-6 pt-6 border-t border-espresso/10">
+              <Link
+                href="/login"
+                className="font-body text-terracotta hover:text-terracotta-dark transition-colors text-sm"
+              >
+                Already have an account? <span className="font-semibold">Sign in here</span>
+              </Link>
+            </div>
+          </form>
+        </motion.div>
+      </section>
+      <Footer />
+    </div>
   );
 }
