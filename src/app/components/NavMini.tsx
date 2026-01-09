@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import React, { useEffect, useState } from "react";
-import { Menu, X, ShoppingCart } from "lucide-react";
+import { Menu, X, ShoppingCart, Search } from "lucide-react";
 import Link from "next/link";
 import { useCart } from "@/app/cart/cartContext";
 import SearchOverlay from "./SearchOverlay";
@@ -100,6 +100,15 @@ const NavMini: React.FC = () => {
 
           {/* Right - Icons */}
           <div className="flex items-center gap-1 sm:gap-2">
+            {/* Search Icon */}
+            <button
+              onClick={() => setIsSearchOpen(true)}
+              className="p-1.5 text-[#2C2420] hover:text-[#C25A3E] transition-colors"
+              aria-label="Search products"
+            >
+              <Search size={22} strokeWidth={1.5} />
+            </button>
+
             {/* Cart Icon */}
             <Link href="/cart" className="relative">
               <div className="p-1.5 text-[#2C2420] hover:text-[#C25A3E] transition-colors">
@@ -180,6 +189,25 @@ const NavMini: React.FC = () => {
                     </Link>
                   </motion.div>
                 ))}
+                {/* Search Button */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  transition={{ delay: 0.1 + menuItems.length * 0.03, duration: 0.3 }}
+                >
+                  <button
+                    onClick={() => {
+                      setMenuOpen(false);
+                      setIsSearchOpen(true);
+                    }}
+                    className="font-display text-[1.4rem] sm:text-[1.75rem] md:text-[2.25rem] text-[#F8F3E8] hover:text-[#D4A853] transition-colors relative group uppercase tracking-wide flex items-center gap-3"
+                  >
+                    <Search size={24} strokeWidth={1.5} className="sm:w-7 sm:h-7 md:w-8 md:h-8" />
+                    Search
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#C25A3E] transition-all duration-300 group-hover:w-full" />
+                  </button>
+                </motion.div>
               </nav>
 
               {/* Contact Info */}

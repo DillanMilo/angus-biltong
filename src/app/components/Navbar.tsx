@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import React, { useEffect, useState } from "react";
-import { ShoppingCart, Menu, X } from "lucide-react";
+import { ShoppingCart, Menu, X, Search } from "lucide-react";
 import Link from "next/link";
 import { useCart } from "@/app/cart/cartContext";
 import SearchOverlay from "./SearchOverlay";
@@ -134,7 +134,16 @@ const Navbar: React.FC = () => {
 
                 {/* Right - Icons */}
                 <div className="flex items-center gap-1 sm:gap-2">
-                  {/* Mobile Cart Icon */}
+                  {/* Search Icon */}
+                  <button
+                    onClick={() => setIsSearchOpen(true)}
+                    className="p-1.5 text-white hover:text-[#D4A853] transition-colors"
+                    aria-label="Search products"
+                  >
+                    <Search size={22} strokeWidth={1.5} />
+                  </button>
+
+                  {/* Cart Icon */}
                   <Link href="/cart" className="relative">
                     <div className="p-1.5 text-white">
                       <ShoppingCart size={22} strokeWidth={1.5} />
@@ -170,6 +179,17 @@ const Navbar: React.FC = () => {
             transition={{ duration: 0.2 }}
             className="fixed top-4 right-4 z-50 flex items-center gap-2"
           >
+            {/* Search Button */}
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setIsSearchOpen(true)}
+              className="w-12 h-12 bg-[#2C2420] rounded-full flex items-center justify-center shadow-lg"
+              aria-label="Search products"
+            >
+              <Search size={20} className="text-[#F8F3E8]" strokeWidth={1.5} />
+            </motion.button>
+
             {/* Cart Button */}
             <Link href="/cart">
               <motion.div
@@ -252,6 +272,25 @@ const Navbar: React.FC = () => {
                     </Link>
                   </motion.div>
                 ))}
+                {/* Search Button */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  transition={{ delay: 0.1 + menuItems.length * 0.03, duration: 0.3 }}
+                >
+                  <button
+                    onClick={() => {
+                      setMenuOpen(false);
+                      setIsSearchOpen(true);
+                    }}
+                    className="font-display text-[1.4rem] sm:text-[1.75rem] md:text-[2.25rem] text-[#F8F3E8] hover:text-[#D4A853] transition-colors relative group uppercase tracking-wide flex items-center gap-3"
+                  >
+                    <Search size={24} strokeWidth={1.5} className="sm:w-7 sm:h-7 md:w-8 md:h-8" />
+                    Search
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#C25A3E] transition-all duration-300 group-hover:w-full" />
+                  </button>
+                </motion.div>
               </nav>
 
               {/* Contact Info */}
