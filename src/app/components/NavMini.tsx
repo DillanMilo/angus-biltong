@@ -64,7 +64,7 @@ const NavMini: React.FC = () => {
                       className="font-condensed text-sm tracking-[0.15em] uppercase mx-12"
                     >
                       <span className="text-[#D4A853]">Free Shipping</span>
-                      <span className="mx-3">on orders over $79</span>
+                      <span className="mx-3">on orders over $129</span>
                       <span className="text-[#D4A853] mx-6">|</span>
                       <span>Authentic South African Flavors</span>
                       <span className="text-[#D4A853] mx-6">|</span>

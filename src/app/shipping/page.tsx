@@ -53,7 +53,7 @@ const ShippingPage = () => {
             </div>
             <div className="font-body text-espresso/90">
               <p>
-                Shipping is a flat rate of <span className="text-terracotta font-semibold">$9.99</span> per order up to $79. After that
+                Shipping is a flat rate of <span className="text-terracotta font-semibold">$9.99</span> per order up to $129. After that
                 the shipping is <span className="text-olive font-bold">FREE FREE FREE</span>.
               </p>
             </div>

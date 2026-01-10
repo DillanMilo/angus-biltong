@@ -11,7 +11,7 @@ import { Truck, PartyPopper, ChevronDown, ChevronUp, ShoppingBag } from "lucide-
 const CartPage = () => {
   const { cart, removeFromCart, updateQuantity } = useCart();
   const [isUpdating, setIsUpdating] = useState<number | null>(null);
-  const FREE_SHIPPING_THRESHOLD = 79;
+  const FREE_SHIPPING_THRESHOLD = 129;
   const SHIPPING_RATE = 9.99;
   const [couponCode, setCouponCode] = useState("");
   const [isCouponOpen, setIsCouponOpen] = useState(false);
