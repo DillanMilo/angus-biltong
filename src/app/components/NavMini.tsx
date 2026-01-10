@@ -7,6 +7,7 @@ import { Menu, X, ShoppingCart, Search } from "lucide-react";
 import Link from "next/link";
 import { useCart } from "@/app/cart/cartContext";
 import SearchOverlay from "./SearchOverlay";
+import DriedMeatsDropdown from "./DriedMeatsDropdown";
 
 const NavMini: React.FC = () => {
   const { cart } = useCart();
@@ -179,14 +180,18 @@ const NavMini: React.FC = () => {
                     exit={{ opacity: 0, y: 10 }}
                     transition={{ delay: 0.1 + index * 0.03, duration: 0.3 }}
                   >
-                    <Link
-                      href={item.href}
-                      onClick={() => setMenuOpen(false)}
-                      className="font-display text-[1.4rem] sm:text-[1.75rem] md:text-[2.25rem] text-[#F8F3E8] hover:text-[#D4A853] transition-colors relative group uppercase tracking-wide"
-                    >
-                      {item.label}
-                      <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#C25A3E] transition-all duration-300 group-hover:w-full" />
-                    </Link>
+                    {item.label === "Dried Meats" ? (
+                      <DriedMeatsDropdown variant="mobile" onNavigate={() => setMenuOpen(false)} />
+                    ) : (
+                      <Link
+                        href={item.href}
+                        onClick={() => setMenuOpen(false)}
+                        className="font-display text-[1.4rem] sm:text-[1.75rem] md:text-[2.25rem] text-[#F8F3E8] hover:text-[#D4A853] transition-colors relative group uppercase tracking-wide"
+                      >
+                        {item.label}
+                        <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#C25A3E] transition-all duration-300 group-hover:w-full" />
+                      </Link>
+                    )}
                   </motion.div>
                 ))}
                 {/* Search Button */}

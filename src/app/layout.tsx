@@ -38,6 +38,7 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${bebasNeue.variable} ${lora.variable} ${robotoCondensed.variable} antialiased`}
+      suppressHydrationWarning
     >
       <body>
         <CartProvider>{children}</CartProvider>
