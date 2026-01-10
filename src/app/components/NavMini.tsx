@@ -79,7 +79,7 @@ const NavMini: React.FC = () => {
         </AnimatePresence>
 
         {/* 🔹 Navbar */}
-        <nav className="w-full flex justify-between items-center px-4 sm:px-6 py-2 sm:py-3 bg-[#F8F3E8]/95 backdrop-blur-sm">
+        <nav className="w-full flex justify-between items-center px-6 sm:px-6 py-2 sm:py-3 bg-[#F8F3E8]/95 backdrop-blur-sm">
           {/* Left - Angus Logo with Link */}
           <Link href="/">
             <motion.div
@@ -150,7 +150,7 @@ const NavMini: React.FC = () => {
             {/* Close Button */}
             <button
               onClick={() => setMenuOpen(false)}
-              className="absolute top-4 right-4 w-12 h-12 bg-[#C25A3E] rounded-full flex items-center justify-center z-10 hover:bg-[#A34832] transition-colors"
+              className="absolute top-6 right-6 w-12 h-12 bg-[#C25A3E] rounded-full flex items-center justify-center z-10 hover:bg-[#A34832] transition-colors"
             >
               <X size={24} className="text-white" strokeWidth={1.5} />
             </button>

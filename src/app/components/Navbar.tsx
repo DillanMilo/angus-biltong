@@ -109,7 +109,7 @@ const Navbar: React.FC = () => {
 
             {/* Main Navbar in Hero */}
             <nav className="w-full bg-transparent">
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
+              <div className="max-w-7xl mx-auto px-6 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
                 {/* Left spacer */}
                 <div className="w-10" />
 
@@ -216,7 +216,7 @@ const Navbar: React.FC = () => {
             {/* Close Button */}
             <button
               onClick={() => setMenuOpen(false)}
-              className="absolute top-4 right-4 w-12 h-12 bg-[#C25A3E] rounded-full flex items-center justify-center z-10 hover:bg-[#A34832] transition-colors"
+              className="absolute top-6 right-6 w-12 h-12 bg-[#C25A3E] rounded-full flex items-center justify-center z-10 hover:bg-[#A34832] transition-colors"
             >
               <X size={24} className="text-white" strokeWidth={1.5} />
             </button>

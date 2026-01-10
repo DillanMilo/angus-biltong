@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ChevronLeft, ChevronRight, ShoppingCart, Check } from "lucide-react";
+import { ChevronLeft, ChevronRight, Check } from "lucide-react";
 import React, { useState, useEffect, useRef } from "react";
 import { fetchProducts } from "@/app/lib/bigcommerce";
 import { useCart } from "@/app/cart/cartContext";
@@ -39,11 +39,10 @@ const ProductCard: React.FC<{
         ease: [0.25, 0.46, 0.45, 0.94],
       }}
       viewport={{ once: true }}
-      className={`card-product rounded-none group ${
-        isMobileGrid 
-          ? "w-[160px] flex-shrink-0" 
-          : "w-[260px] md:w-[280px] flex-shrink-0"
-      }`}
+      className={`card-product rounded-none group ${isMobileGrid
+        ? "w-[160px] flex-shrink-0"
+        : "w-[260px] md:w-[280px] flex-shrink-0"
+        }`}
     >
       {/* Image Container */}
       <div className={`relative overflow-hidden bg-[#EDE5D4] ${isMobileGrid ? "aspect-square" : "aspect-[4/5]"}`}>
@@ -58,44 +57,12 @@ const ProductCard: React.FC<{
             No Image
           </div>
         )}
-
-        {/* Quick Add Overlay */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileHover={{ opacity: 1 }}
-          className="absolute inset-0 bg-[#2C2420]/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-        >
-          <button
-            onClick={() => onAddToCart(product)}
-            disabled={isAdded}
-            className={`font-condensed tracking-wider uppercase transition-all duration-300 flex items-center gap-2 ${
-              isMobileGrid ? "px-3 py-2 text-xs" : "px-6 py-3 text-sm"
-            } ${
-              isAdded
-                ? "bg-[#3D4A3A] text-white"
-                : "bg-[#F8F3E8] text-[#2C2420] hover:bg-[#D4A853] hover:text-white"
-            }`}
-          >
-            {isAdded ? (
-              <>
-                <Check size={isMobileGrid ? 12 : 16} />
-                Added
-              </>
-            ) : (
-              <>
-                <ShoppingCart size={isMobileGrid ? 12 : 16} />
-                Quick Add
-              </>
-            )}
-          </button>
-        </motion.div>
       </div>
 
       {/* Product Info */}
       <div className={isMobileGrid ? "p-3 space-y-1.5" : "p-5 space-y-3"}>
-        <h3 className={`font-body text-[#2C2420] font-semibold leading-tight line-clamp-2 ${
-          isMobileGrid ? "text-sm min-h-[2rem]" : "text-base min-h-[2.5rem]"
-        }`}>
+        <h3 className={`font-body text-[#2C2420] font-semibold leading-tight line-clamp-2 ${isMobileGrid ? "text-sm min-h-[2rem]" : "text-base min-h-[2.5rem]"
+          }`}>
           {product.name}
         </h3>
 
@@ -119,6 +86,26 @@ const ProductCard: React.FC<{
             </div>
           )}
         </div>
+
+        {/* Add to Cart Button */}
+        <button
+          onClick={() => onAddToCart(product)}
+          disabled={isAdded}
+          className={`w-full mt-2 font-condensed uppercase tracking-wider border border-[#2C2420] transition-colors duration-300 flex items-center justify-center gap-2 ${isMobileGrid ? "py-2 text-xs" : "py-2.5 text-sm"
+            } ${isAdded
+              ? "bg-[#3D4A3A] text-white border-[#3D4A3A]"
+              : "text-[#2C2420] hover:bg-[#2C2420] hover:text-[#F8F3E8]"
+            }`}
+        >
+          {isAdded ? (
+            <>
+              <Check size={isMobileGrid ? 14 : 16} />
+              Added
+            </>
+          ) : (
+            "Add to Cart"
+          )}
+        </button>
       </div>
     </motion.div>
   );
