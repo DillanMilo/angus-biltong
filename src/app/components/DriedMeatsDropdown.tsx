@@ -28,9 +28,8 @@ const menuStructure: MenuItem[] = [
             {
                 label: "Flavored",
                 children: [
-                    { label: "BBQ", href: "/dried-meats/biltong/flavored/bbq" },
                     { label: "Chutney", href: "/dried-meats/biltong/flavored/chutney" },
-                    { label: "Mango Habanero", href: "/dried-meats/biltong/flavored/mango-habanero" },
+                    { label: "Peri Peri", href: "/dried-meats/biltong/flavored/peri-peri" },
                 ],
             },
         ],
@@ -46,7 +45,6 @@ const menuStructure: MenuItem[] = [
                     { label: "Mango Habanero", href: "/dried-meats/chilli-bites/mango-habanero" },
                     { label: "Mild", href: "/dried-meats/chilli-bites/mild" },
                     { label: "Spicy", href: "/dried-meats/chilli-bites/spicy" },
-                    { label: "Teriyaki", href: "/dried-meats/chilli-bites/teriyaki" },
                 ],
             },
         ],

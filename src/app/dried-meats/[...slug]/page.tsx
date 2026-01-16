@@ -10,6 +10,7 @@ import { ShoppingCart } from "lucide-react";
 import { useCart } from "@/app/cart/cartContext";
 import Image from "next/image";
 import Link from "next/link";
+import { productCategories } from "@/app/config/productCategories";
 
 interface Product {
     id: number;
@@ -19,33 +20,6 @@ interface Product {
         url_standard: string;
     }[];
 }
-
-// Map URL slugs to filter keywords and display titles
-const categoryConfig: Record<string, { title: string; keywords: string[] }> = {
-    // Biltong categories
-    "biltong": { title: "All Biltong", keywords: ["biltong"] },
-    "biltong/traditional/lean": { title: "Lean Traditional Biltong", keywords: ["biltong", "lean"] },
-    "biltong/traditional/normal": { title: "Traditional Biltong", keywords: ["biltong", "traditional"] },
-    "biltong/traditional/more-dry": { title: "More Dry Traditional Biltong", keywords: ["biltong", "more dry", "dry"] },
-    "biltong/traditional/lean-more-dry": { title: "Lean More Dry Biltong", keywords: ["biltong", "lean", "dry"] },
-    "biltong/flavored/bbq": { title: "BBQ Biltong", keywords: ["biltong", "bbq"] },
-    "biltong/flavored/chutney": { title: "Chutney Biltong", keywords: ["biltong", "chutney"] },
-    "biltong/flavored/mango-habanero": { title: "Mango Habanero Biltong", keywords: ["biltong", "mango", "habanero"] },
-
-    // Chilli Bites categories
-    "chilli-bites": { title: "All Chilli Bites", keywords: ["chilli", "chili", "bites"] },
-    "chilli-bites/inferno": { title: "Inferno Chilli Bites", keywords: ["chilli", "chili", "bites", "inferno"] },
-    "chilli-bites/mango-habanero": { title: "Mango Habanero Chilli Bites", keywords: ["chilli", "chili", "bites", "mango", "habanero"] },
-    "chilli-bites/mild": { title: "Mild Chilli Bites", keywords: ["chilli", "chili", "bites", "mild"] },
-    "chilli-bites/spicy": { title: "Spicy Chilli Bites", keywords: ["chilli", "chili", "bites", "spicy"] },
-    "chilli-bites/teriyaki": { title: "Teriyaki Chilli Bites", keywords: ["chilli", "chili", "bites", "teriyaki"] },
-
-    // Droewors categories
-    "droewors": { title: "All Droewors", keywords: ["droewors", "drywors"] },
-    "droewors/more-dry": { title: "More Dry Droewors", keywords: ["droewors", "drywors", "dry"] },
-    "droewors/regular": { title: "Regular Droewors", keywords: ["droewors", "drywors", "regular"] },
-    "droewors/peri-peri": { title: "Peri Peri Droewors", keywords: ["droewors", "drywors", "peri"] },
-};
 
 // Breadcrumb helper
 function generateBreadcrumbs(slug: string[]): { label: string; href: string }[] {
@@ -57,7 +31,7 @@ function generateBreadcrumbs(slug: string[]): { label: string; href: string }[] 
     let path = "";
     for (let i = 0; i < slug.length; i++) {
         path += (i === 0 ? "" : "/") + slug[i];
-        const config = categoryConfig[path];
+        const config = productCategories[path];
         if (config) {
             breadcrumbs.push({
                 label: i === slug.length - 1 ? config.title : slug[i].charAt(0).toUpperCase() + slug[i].slice(1).replace(/-/g, " "),
@@ -80,7 +54,7 @@ const FilteredProductsPage = () => {
     const { addToCart } = useCart();
     const [addedProducts, setAddedProducts] = useState<Set<number>>(new Set());
 
-    const config = categoryConfig[slugPath] || { title: "Products", keywords: [] };
+    const config = productCategories[slugPath] || { title: "Products", productIds: [] };
     const breadcrumbs = generateBreadcrumbs(slug || []);
 
     useEffect(() => {
@@ -95,29 +69,11 @@ const FilteredProductsPage = () => {
                     return;
                 }
 
-                // Filter products based on keywords
-                const keywords = config.keywords;
-                const filteredProducts = allProducts.filter((product: Product) => {
-                    const name = product.name.toLowerCase();
-
-                    // For "All" categories, just check the main keyword
-                    if (keywords.length === 1) {
-                        return name.includes(keywords[0].toLowerCase());
-                    }
-
-                    // For specific flavors/types, check that all keywords are present
-                    // The first keyword is the category (biltong, chilli, droewors)
-                    const categoryMatch = name.includes(keywords[0].toLowerCase()) ||
-                        (keywords[1] && name.includes(keywords[1].toLowerCase()));
-
-                    // Check for specific flavor/type (keywords after the first two)
-                    const specificKeywords = keywords.slice(keywords.length > 2 ? 2 : 1);
-                    const specificMatch = specificKeywords.some(keyword =>
-                        name.includes(keyword.toLowerCase())
-                    );
-
-                    return categoryMatch && specificMatch;
-                });
+                // Filter products based on product IDs
+                const productIds = config.productIds;
+                const filteredProducts = allProducts.filter((product: Product) =>
+                    productIds.includes(product.id)
+                );
 
                 setProducts(filteredProducts);
             } catch (error) {
@@ -128,13 +84,13 @@ const FilteredProductsPage = () => {
             }
         }
 
-        if (slugPath && categoryConfig[slugPath]) {
+        if (slugPath && productCategories[slugPath]) {
             load();
         } else {
             setError("Category not found");
             setLoading(false);
         }
-    }, [slugPath, config.keywords]);
+    }, [slugPath, config.productIds]);
 
     const handleAddToCart = (product: Product) => {
         addToCart({

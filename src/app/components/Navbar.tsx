@@ -235,58 +235,60 @@ const Navbar: React.FC = () => {
               }}
             />
 
-            <div className="relative h-full flex flex-col items-center justify-center px-6 py-12 overflow-y-auto">
-              {/* Menu Items */}
-              <nav className="flex flex-col items-center gap-2 sm:gap-3 md:gap-4">
-                {menuItems.map((item, index) => (
+            <div className="relative h-full flex flex-col items-center px-6 py-12 overflow-y-auto">
+              <div className="flex-1 flex flex-col items-center justify-center w-full">
+                {/* Menu Items */}
+                <nav className="flex flex-col items-center gap-2 sm:gap-3 md:gap-4">
+                  {menuItems.map((item, index) => (
+                    <motion.div
+                      key={item.label}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      transition={{ delay: 0.1 + index * 0.03, duration: 0.3 }}
+                    >
+                      {item.label === "Dried Meats" ? (
+                        <DriedMeatsDropdown variant="mobile" onNavigate={() => setMenuOpen(false)} />
+                      ) : (
+                        <Link
+                          href={item.href}
+                          onClick={() => setMenuOpen(false)}
+                          className="font-display text-[1.4rem] sm:text-[1.75rem] md:text-[2.25rem] text-[#F8F3E8] hover:text-[#D4A853] transition-colors relative group uppercase tracking-wide"
+                        >
+                          {item.label}
+                          <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#C25A3E] transition-all duration-300 group-hover:w-full" />
+                        </Link>
+                      )}
+                    </motion.div>
+                  ))}
+                  {/* Search Button */}
                   <motion.div
-                    key={item.label}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 10 }}
-                    transition={{ delay: 0.1 + index * 0.03, duration: 0.3 }}
+                    transition={{ delay: 0.1 + menuItems.length * 0.03, duration: 0.3 }}
                   >
-                    {item.label === "Dried Meats" ? (
-                      <DriedMeatsDropdown variant="mobile" onNavigate={() => setMenuOpen(false)} />
-                    ) : (
-                      <Link
-                        href={item.href}
-                        onClick={() => setMenuOpen(false)}
-                        className="font-display text-[1.4rem] sm:text-[1.75rem] md:text-[2.25rem] text-[#F8F3E8] hover:text-[#D4A853] transition-colors relative group uppercase tracking-wide"
-                      >
-                        {item.label}
-                        <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#C25A3E] transition-all duration-300 group-hover:w-full" />
-                      </Link>
-                    )}
+                    <button
+                      onClick={() => {
+                        setMenuOpen(false);
+                        setIsSearchOpen(true);
+                      }}
+                      className="font-display text-[1.4rem] sm:text-[1.75rem] md:text-[2.25rem] text-[#F8F3E8] hover:text-[#D4A853] transition-colors relative group uppercase tracking-wide flex items-center gap-3"
+                    >
+                      <Search size={24} strokeWidth={1.5} className="sm:w-7 sm:h-7 md:w-8 md:h-8" />
+                      Search
+                      <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#C25A3E] transition-all duration-300 group-hover:w-full" />
+                    </button>
                   </motion.div>
-                ))}
-                {/* Search Button */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
-                  transition={{ delay: 0.1 + menuItems.length * 0.03, duration: 0.3 }}
-                >
-                  <button
-                    onClick={() => {
-                      setMenuOpen(false);
-                      setIsSearchOpen(true);
-                    }}
-                    className="font-display text-[1.4rem] sm:text-[1.75rem] md:text-[2.25rem] text-[#F8F3E8] hover:text-[#D4A853] transition-colors relative group uppercase tracking-wide flex items-center gap-3"
-                  >
-                    <Search size={24} strokeWidth={1.5} className="sm:w-7 sm:h-7 md:w-8 md:h-8" />
-                    Search
-                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#C25A3E] transition-all duration-300 group-hover:w-full" />
-                  </button>
-                </motion.div>
-              </nav>
+                </nav>
+              </div>
 
               {/* Contact Info */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5 }}
-                className="absolute bottom-6 sm:bottom-10 left-0 right-0 text-center px-4"
+                className="mt-12 text-center px-4 pb-4 sm:hidden"
               >
                 <p className="font-condensed text-xs sm:text-sm text-[#F8F3E8]/60 tracking-wider uppercase mb-1">
                   255 Sawdust Rd, Spring, TX 77380
@@ -298,7 +300,7 @@ const Navbar: React.FC = () => {
             </div>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence >
 
       <SearchOverlay
         isOpen={isSearchOpen}
