@@ -89,7 +89,7 @@ const CartPage = () => {
       <div className="flex items-center gap-3">
         <PartyPopper className="text-olive" size={24} />
         <p className="font-body text-olive font-semibold">
-          Congratulations! Your order qualifies for FREE shipping!
+          Congratulations! Your order qualifies for FREE ground shipping!
         </p>
       </div>
     </motion.div>
@@ -105,7 +105,7 @@ const CartPage = () => {
       <div className="flex items-center gap-3">
         <Truck className="text-amber-dark" size={24} />
         <p className="font-body text-espresso">
-          Add just <span className="text-terracotta font-semibold">${amountToFreeShipping.toFixed(2)}</span> more to get FREE shipping!
+          Add just <span className="text-terracotta font-semibold">${amountToFreeShipping.toFixed(2)}</span> more to get FREE ground shipping!
         </p>
       </div>
     </motion.div>

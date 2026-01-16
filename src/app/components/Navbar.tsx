@@ -92,7 +92,7 @@ const Navbar: React.FC = () => {
                           key={i}
                           className="font-condensed text-sm tracking-[0.15em] uppercase mx-12"
                         >
-                          <span className="text-[#D4A853]">Free Shipping</span>
+                          <span className="text-[#D4A853]">Free Ground Shipping</span>
                           <span className="mx-3">on orders over $129</span>
                           <span className="text-[#D4A853] mx-6">|</span>
                           <span>Authentic South African Flavors</span>
@@ -110,10 +110,15 @@ const Navbar: React.FC = () => {
             {/* Main Navbar in Hero */}
             <nav className="w-full bg-transparent">
               <div className="max-w-7xl mx-auto px-6 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
-                {/* Left spacer */}
-                <div className="w-10" />
+                {/* Left - Menu Toggle */}
+                <button
+                  onClick={() => setMenuOpen(!menuOpen)}
+                  className="p-1.5 sm:p-2 rounded-full transition-colors text-white hover:bg-white/10"
+                >
+                  <Menu size={24} strokeWidth={1.5} className="sm:w-7 sm:h-7" />
+                </button>
 
-                {/* Center - Spacer (was navigation) */}
+                {/* Center - Spacer */}
                 <div className="flex-1" />
 
                 {/* Right - Icons */}
@@ -138,14 +143,6 @@ const Navbar: React.FC = () => {
                       )}
                     </div>
                   </Link>
-
-                  {/* Menu Toggle */}
-                  <button
-                    onClick={() => setMenuOpen(!menuOpen)}
-                    className="p-1.5 sm:p-2 rounded-full transition-colors text-white hover:bg-white/10"
-                  >
-                    <Menu size={24} strokeWidth={1.5} className="sm:w-7 sm:h-7" />
-                  </button>
                 </div>
               </div>
             </nav>
@@ -153,7 +150,25 @@ const Navbar: React.FC = () => {
         )}
       </AnimatePresence>
 
-      {/* Sticky Hamburger Menu Button - Shows after scrolling past hero */}
+      {/* Sticky Menu Button - Top Left - Shows after scrolling past hero */}
+      <AnimatePresence>
+        {pastHero && !menuOpen && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.2 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => setMenuOpen(true)}
+            className="fixed top-4 left-4 z-50 w-12 h-12 bg-[#C25A3E] rounded-full flex items-center justify-center shadow-lg"
+          >
+            <Menu size={22} className="text-white" strokeWidth={1.5} />
+          </motion.button>
+        )}
+      </AnimatePresence>
+
+      {/* Sticky Search & Cart Buttons - Top Right - Shows after scrolling past hero */}
       <AnimatePresence>
         {pastHero && !menuOpen && (
           <motion.div
@@ -189,16 +204,6 @@ const Navbar: React.FC = () => {
                 )}
               </motion.div>
             </Link>
-
-            {/* Menu Button */}
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setMenuOpen(true)}
-              className="w-12 h-12 bg-[#C25A3E] rounded-full flex items-center justify-center shadow-lg"
-            >
-              <Menu size={22} className="text-white" strokeWidth={1.5} />
-            </motion.button>
           </motion.div>
         )}
       </AnimatePresence>

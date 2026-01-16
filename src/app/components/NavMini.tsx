@@ -41,7 +41,7 @@ const NavMini: React.FC = () => {
   return (
     <>
       <header className="fixed top-0 w-full z-50">
-        {/* 📢 Free Shipping Banner */}
+        {/* 📢 Free Ground Shipping Banner */}
         <AnimatePresence>
           {showBanner && (
             <motion.div
@@ -63,7 +63,7 @@ const NavMini: React.FC = () => {
                       key={i}
                       className="font-condensed text-sm tracking-[0.15em] uppercase mx-12"
                     >
-                      <span className="text-[#D4A853]">Free Shipping</span>
+                      <span className="text-[#D4A853]">Free Ground Shipping</span>
                       <span className="mx-3">on orders over $129</span>
                       <span className="text-[#D4A853] mx-6">|</span>
                       <span>Authentic South African Flavors</span>
@@ -80,24 +80,39 @@ const NavMini: React.FC = () => {
 
         {/* 🔹 Navbar */}
         <nav className="w-full flex justify-between items-center px-6 sm:px-6 py-2 sm:py-3 bg-[#F8F3E8]/95 backdrop-blur-sm">
-          {/* Left - Angus Logo with Link */}
-          <Link href="/">
-            <motion.div
+          {/* Left - Menu Toggle and Logo */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            {/* Menu Toggle - Far Left */}
+            <motion.button
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
-              className="w-20 sm:w-28"
+              className="p-1.5 sm:p-2 rounded-full transition-colors text-[#2C2420] hover:bg-[#2C2420]/10"
+              onClick={() => setMenuOpen(!menuOpen)}
+              aria-label="Toggle menu"
             >
-              <Image
-                src="/AB-Logo-300dpi-Alpha-Only-2.png"
-                alt="Angus Biltong Logo"
-                width={100}
-                height={40}
-                className="w-full h-auto"
-                priority
-              />
-            </motion.div>
-          </Link>
+              <Menu size={24} strokeWidth={1.5} className="sm:w-7 sm:h-7" />
+            </motion.button>
+
+            {/* Angus Logo with Link */}
+            <Link href="/">
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                className="w-20 sm:w-28"
+              >
+                <Image
+                  src="/AB-Logo-300dpi-Alpha-Only-2.png"
+                  alt="Angus Biltong Logo"
+                  width={100}
+                  height={40}
+                  className="w-full h-auto"
+                  priority
+                />
+              </motion.div>
+            </Link>
+          </div>
 
           {/* Right - Icons */}
           <div className="flex items-center gap-1 sm:gap-2">
@@ -121,18 +136,6 @@ const NavMini: React.FC = () => {
                 )}
               </div>
             </Link>
-
-            {/* Menu Toggle */}
-            <motion.button
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              className="p-1.5 sm:p-2 rounded-full transition-colors text-[#2C2420] hover:bg-[#2C2420]/10"
-              onClick={() => setMenuOpen(!menuOpen)}
-              aria-label="Toggle menu"
-            >
-              <Menu size={24} strokeWidth={1.5} className="sm:w-7 sm:h-7" />
-            </motion.button>
           </div>
         </nav>
       </header>
