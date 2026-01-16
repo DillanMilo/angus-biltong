@@ -150,6 +150,34 @@ const Navbar: React.FC = () => {
         )}
       </AnimatePresence>
 
+      {/* Hero Quick Links - Only shows in hero section */}
+      <AnimatePresence>
+        {!pastHero && (
+          <div className="fixed left-6 top-32 z-40 flex flex-col gap-3">
+            {[
+              { label: "Biltong", href: "/dried-meats/biltong", delay: 0.3 },
+              { label: "Chilli Bites", href: "/dried-meats/chilli-bites", delay: 0.5 },
+              { label: "Droewors", href: "/dried-meats/droewors", delay: 0.7 },
+            ].map((item) => (
+              <motion.div
+                key={item.label}
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -50 }}
+                transition={{ duration: 0.4, delay: item.delay, ease: "easeOut" }}
+              >
+                <Link
+                  href={item.href}
+                  className="font-display text-xl sm:text-2xl text-white hover:text-[#D4A853] transition-colors uppercase tracking-wide"
+                >
+                  {item.label}
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        )}
+      </AnimatePresence>
+
       {/* Sticky Menu Button - Top Left - Shows after scrolling past hero */}
       <AnimatePresence>
         {pastHero && !menuOpen && (

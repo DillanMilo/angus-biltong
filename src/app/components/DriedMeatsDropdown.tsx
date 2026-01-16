@@ -14,19 +14,24 @@ interface MenuItem {
 const menuStructure: MenuItem[] = [
     { label: "All", href: "/dried-meats" },
     {
-        label: "Traditional",
+        label: "Biltong",
         children: [
-            { label: "Lean", href: "/dried-meats/biltong/traditional/lean" },
-            { label: "Normal", href: "/dried-meats/biltong/traditional/normal" },
-            { label: "More Dry", href: "/dried-meats/biltong/traditional/more-dry" },
-            { label: "Lean/More Dry", href: "/dried-meats/biltong/traditional/lean-more-dry" },
-        ],
-    },
-    {
-        label: "Flavored",
-        children: [
-            { label: "Chutney", href: "/dried-meats/biltong/flavored/chutney" },
-            { label: "Peri Peri", href: "/dried-meats/biltong/flavored/peri-peri" },
+            {
+                label: "Traditional",
+                children: [
+                    { label: "Lean", href: "/dried-meats/biltong/traditional/lean" },
+                    { label: "Normal", href: "/dried-meats/biltong/traditional/normal" },
+                    { label: "More Dry", href: "/dried-meats/biltong/traditional/more-dry" },
+                    { label: "Lean/More Dry", href: "/dried-meats/biltong/traditional/lean-more-dry" },
+                ],
+            },
+            {
+                label: "Flavored",
+                children: [
+                    { label: "Chutney", href: "/dried-meats/biltong/flavored/chutney" },
+                    { label: "Peri Peri", href: "/dried-meats/biltong/flavored/peri-peri" },
+                ],
+            },
         ],
     },
     { label: "Chilli Bites", href: "/dried-meats/chilli-bites" },
