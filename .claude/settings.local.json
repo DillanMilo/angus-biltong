@@ -3,7 +3,10 @@
     "allow": [
       "Skill(frontend-design)",
       "Bash(ls:*)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(grep:*)",
+      "Bash(curl:*)",
+      "Bash(python3:*)"
     ]
   }
 }

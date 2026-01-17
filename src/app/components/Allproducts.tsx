@@ -117,7 +117,7 @@ const AllProducts = () => {
   return (
     <div className="min-h-screen bg-sand">
       {/* Hero Section */}
-      <section className="relative h-[30vh] min-h-[240px] overflow-hidden mt-24 sm:mt-28">
+      <section className="relative h-[30vh] min-h-[240px] overflow-hidden mt-32 sm:mt-36">
         <Image
           src="/image-5.jpg"
           alt="All Products"
@@ -206,9 +206,9 @@ const AllProducts = () => {
                   transition: { duration: 0.4, delay: index * 0.03 },
                 },
               }}
-              className="card-product bg-cream p-4"
+              className="card-product bg-cream p-3 md:p-4"
             >
-              <div className="relative pt-[100%] mb-4">
+              <div className="relative pt-[85%] md:pt-[75%] lg:pt-[70%] mb-3">
                 <Image
                   src={product.images?.[0]?.url_standard || ""}
                   alt={product.name}
@@ -218,11 +218,11 @@ const AllProducts = () => {
                   priority={index < 4}
                 />
               </div>
-              <div className="space-y-2">
-                <h3 className="font-display text-sm md:text-base text-espresso line-clamp-2 min-h-[2.5rem]">
+              <div className="space-y-1.5">
+                <h3 className="font-display text-sm md:text-base text-espresso line-clamp-2 min-h-[2rem] md:min-h-[2.25rem]">
                   {product.name}
                 </h3>
-                <p className="font-body text-terracotta font-semibold">
+                <p className="font-body text-terracotta font-semibold text-sm md:text-base">
                   ${Number(product.price).toFixed(2)}
                 </p>
                 <button

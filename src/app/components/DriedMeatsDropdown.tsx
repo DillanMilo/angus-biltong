@@ -12,59 +12,16 @@ interface MenuItem {
 }
 
 const menuStructure: MenuItem[] = [
+    { label: "All", href: "/dried-meats" },
     {
         label: "Biltong",
         children: [
-            { label: "All", href: "/dried-meats/biltong" },
-            {
-                label: "Traditional",
-                children: [
-                    { label: "Lean", href: "/dried-meats/biltong/traditional/lean" },
-                    { label: "Normal", href: "/dried-meats/biltong/traditional/normal" },
-                    { label: "More Dry", href: "/dried-meats/biltong/traditional/more-dry" },
-                    { label: "Lean/More Dry", href: "/dried-meats/biltong/traditional/lean-more-dry" },
-                ],
-            },
-            {
-                label: "Flavored",
-                children: [
-                    { label: "BBQ", href: "/dried-meats/biltong/flavored/bbq" },
-                    { label: "Chutney", href: "/dried-meats/biltong/flavored/chutney" },
-                    { label: "Mango Habanero", href: "/dried-meats/biltong/flavored/mango-habanero" },
-                ],
-            },
+            { label: "Traditional", href: "/dried-meats/biltong/traditional" },
+            { label: "Flavored", href: "/dried-meats/biltong/flavored" },
         ],
     },
-    {
-        label: "Chilli Bites",
-        children: [
-            { label: "All", href: "/dried-meats/chilli-bites" },
-            {
-                label: "Flavors",
-                children: [
-                    { label: "Inferno", href: "/dried-meats/chilli-bites/inferno" },
-                    { label: "Mango Habanero", href: "/dried-meats/chilli-bites/mango-habanero" },
-                    { label: "Mild", href: "/dried-meats/chilli-bites/mild" },
-                    { label: "Spicy", href: "/dried-meats/chilli-bites/spicy" },
-                    { label: "Teriyaki", href: "/dried-meats/chilli-bites/teriyaki" },
-                ],
-            },
-        ],
-    },
-    {
-        label: "Droewors",
-        children: [
-            { label: "All", href: "/dried-meats/droewors" },
-            {
-                label: "Flavors",
-                children: [
-                    { label: "More Dry", href: "/dried-meats/droewors/more-dry" },
-                    { label: "Regular", href: "/dried-meats/droewors/regular" },
-                    { label: "Peri Peri", href: "/dried-meats/droewors/peri-peri" },
-                ],
-            },
-        ],
-    },
+    { label: "Chilli Bites", href: "/dried-meats/chilli-bites" },
+    { label: "Droewors", href: "/dried-meats/droewors" },
 ];
 
 interface SubMenuProps {
@@ -219,31 +176,43 @@ const DriedMeatsDropdown: React.FC<DriedMeatsDropdownProps> = ({ variant = "hero
                             className="overflow-hidden mt-2"
                         >
                             <div className="pl-4 space-y-1">
-                                {menuStructure.map((category, catIndex) => (
-                                    <div key={category.label}>
-                                        <button
-                                            onClick={() => setOpenCategoryIndex(openCategoryIndex === catIndex ? null : catIndex)}
-                                            className="flex items-center justify-between w-full py-2 font-display text-lg text-[#D4A853] hover:text-[#F8F3E8] transition-colors uppercase tracking-wide"
-                                        >
-                                            {category.label}
-                                            <ChevronDown
-                                                size={18}
-                                                className={`transition-transform duration-200 ${openCategoryIndex === catIndex ? "rotate-180" : ""}`}
-                                            />
-                                        </button>
-                                        <AnimatePresence>
-                                            {openCategoryIndex === catIndex && category.children && (
-                                                <motion.div
-                                                    initial={{ height: 0, opacity: 0 }}
-                                                    animate={{ height: "auto", opacity: 1 }}
-                                                    exit={{ height: 0, opacity: 0 }}
-                                                    transition={{ duration: 0.2 }}
-                                                    className="overflow-hidden"
+                                {menuStructure.map((item, itemIndex) => (
+                                    <div key={item.label}>
+                                        {item.href ? (
+                                            <Link
+                                                href={item.href}
+                                                onClick={handleNavigate}
+                                                className="block py-2 font-display text-lg text-[#D4A853] hover:text-[#F8F3E8] transition-colors uppercase tracking-wide"
+                                            >
+                                                {item.label}
+                                            </Link>
+                                        ) : (
+                                            <>
+                                                <button
+                                                    onClick={() => setOpenCategoryIndex(openCategoryIndex === itemIndex ? null : itemIndex)}
+                                                    className="flex items-center justify-between w-full py-2 font-display text-lg text-[#D4A853] hover:text-[#F8F3E8] transition-colors uppercase tracking-wide"
                                                 >
-                                                    <SubMenu items={category.children} onNavigate={handleNavigate} isMobile />
-                                                </motion.div>
-                                            )}
-                                        </AnimatePresence>
+                                                    {item.label}
+                                                    <ChevronDown
+                                                        size={18}
+                                                        className={`transition-transform duration-200 ${openCategoryIndex === itemIndex ? "rotate-180" : ""}`}
+                                                    />
+                                                </button>
+                                                <AnimatePresence>
+                                                    {openCategoryIndex === itemIndex && item.children && (
+                                                        <motion.div
+                                                            initial={{ height: 0, opacity: 0 }}
+                                                            animate={{ height: "auto", opacity: 1 }}
+                                                            exit={{ height: 0, opacity: 0 }}
+                                                            transition={{ duration: 0.2 }}
+                                                            className="overflow-hidden"
+                                                        >
+                                                            <SubMenu items={item.children} onNavigate={handleNavigate} isMobile />
+                                                        </motion.div>
+                                                    )}
+                                                </AnimatePresence>
+                                            </>
+                                        )}
                                     </div>
                                 ))}
                             </div>
@@ -288,30 +257,42 @@ const DriedMeatsDropdown: React.FC<DriedMeatsDropdownProps> = ({ variant = "hero
                         transition={{ duration: 0.2 }}
                         className="absolute top-full left-0 mt-2 bg-[#F8F3E8] shadow-lg border border-[#2C2420]/10 min-w-[180px] z-50"
                     >
-                        {menuStructure.map((category, catIndex) => (
+                        {menuStructure.map((item, itemIndex) => (
                             <div
-                                key={category.label}
+                                key={item.label}
                                 className="relative"
-                                onMouseEnter={() => setOpenCategoryIndex(catIndex)}
-                                onMouseLeave={() => setOpenCategoryIndex(null)}
+                                onMouseEnter={() => item.children && setOpenCategoryIndex(itemIndex)}
+                                onMouseLeave={() => item.children && setOpenCategoryIndex(null)}
                             >
-                                <div className="flex items-center justify-between px-4 py-2.5 font-condensed text-sm text-[#2C2420] hover:bg-[#D4A853]/20 hover:text-[#C25A3E] transition-colors uppercase tracking-wider cursor-pointer whitespace-nowrap">
-                                    {category.label}
-                                    <ChevronRight size={14} className="ml-2" />
-                                </div>
-                                <AnimatePresence>
-                                    {openCategoryIndex === catIndex && category.children && (
-                                        <motion.div
-                                            initial={{ opacity: 0, x: -10 }}
-                                            animate={{ opacity: 1, x: 0 }}
-                                            exit={{ opacity: 0, x: -10 }}
-                                            transition={{ duration: 0.15 }}
-                                            className="absolute left-full top-0 bg-[#F8F3E8] shadow-lg border border-[#2C2420]/10 min-w-[160px]"
-                                        >
-                                            <SubMenu items={category.children} onNavigate={handleNavigate} />
-                                        </motion.div>
-                                    )}
-                                </AnimatePresence>
+                                {item.href ? (
+                                    <Link
+                                        href={item.href}
+                                        onClick={handleNavigate}
+                                        className="block px-4 py-2.5 font-condensed text-sm text-[#2C2420] hover:bg-[#D4A853]/20 hover:text-[#C25A3E] transition-colors uppercase tracking-wider whitespace-nowrap"
+                                    >
+                                        {item.label}
+                                    </Link>
+                                ) : (
+                                    <>
+                                        <div className="flex items-center justify-between px-4 py-2.5 font-condensed text-sm text-[#2C2420] hover:bg-[#D4A853]/20 hover:text-[#C25A3E] transition-colors uppercase tracking-wider cursor-pointer whitespace-nowrap">
+                                            {item.label}
+                                            <ChevronRight size={14} className="ml-2" />
+                                        </div>
+                                        <AnimatePresence>
+                                            {openCategoryIndex === itemIndex && item.children && (
+                                                <motion.div
+                                                    initial={{ opacity: 0, x: -10 }}
+                                                    animate={{ opacity: 1, x: 0 }}
+                                                    exit={{ opacity: 0, x: -10 }}
+                                                    transition={{ duration: 0.15 }}
+                                                    className="absolute left-full top-0 bg-[#F8F3E8] shadow-lg border border-[#2C2420]/10 min-w-[160px]"
+                                                >
+                                                    <SubMenu items={item.children} onNavigate={handleNavigate} />
+                                                </motion.div>
+                                            )}
+                                        </AnimatePresence>
+                                    </>
+                                )}
                             </div>
                         ))}
                     </motion.div>

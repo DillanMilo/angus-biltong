@@ -83,7 +83,7 @@ export default function Register() {
   return (
     <div className="min-h-screen bg-sand">
       <NavMini />
-      <section className="max-w-4xl mx-auto py-12 px-6 pt-32">
+      <section className="max-w-4xl mx-auto py-12 px-6 pt-36">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

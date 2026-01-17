@@ -84,7 +84,7 @@ const Navbar: React.FC = () => {
                     <div
                       className="flex whitespace-nowrap"
                       style={{
-                        animation: "marquee 30s linear infinite",
+                        animation: "marquee 22s linear infinite",
                       }}
                     >
                       {[...Array(20)].map((_, i) => (
@@ -92,7 +92,7 @@ const Navbar: React.FC = () => {
                           key={i}
                           className="font-condensed text-sm tracking-[0.15em] uppercase mx-12"
                         >
-                          <span className="text-[#D4A853]">Free Shipping</span>
+                          <span className="text-[#D4A853]">Free Ground Shipping</span>
                           <span className="mx-3">on orders over $129</span>
                           <span className="text-[#D4A853] mx-6">|</span>
                           <span>Authentic South African Flavors</span>
@@ -110,10 +110,15 @@ const Navbar: React.FC = () => {
             {/* Main Navbar in Hero */}
             <nav className="w-full bg-transparent">
               <div className="max-w-7xl mx-auto px-6 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
-                {/* Left spacer */}
-                <div className="w-10" />
+                {/* Left - Menu Toggle */}
+                <button
+                  onClick={() => setMenuOpen(!menuOpen)}
+                  className="p-1.5 sm:p-2 rounded-full transition-colors text-white hover:bg-white/10"
+                >
+                  <Menu size={24} strokeWidth={1.5} className="sm:w-7 sm:h-7" />
+                </button>
 
-                {/* Center - Spacer (was navigation) */}
+                {/* Center - Spacer */}
                 <div className="flex-1" />
 
                 {/* Right - Icons */}
@@ -138,14 +143,6 @@ const Navbar: React.FC = () => {
                       )}
                     </div>
                   </Link>
-
-                  {/* Menu Toggle */}
-                  <button
-                    onClick={() => setMenuOpen(!menuOpen)}
-                    className="p-1.5 sm:p-2 rounded-full transition-colors text-white hover:bg-white/10"
-                  >
-                    <Menu size={24} strokeWidth={1.5} className="sm:w-7 sm:h-7" />
-                  </button>
                 </div>
               </div>
             </nav>
@@ -153,7 +150,53 @@ const Navbar: React.FC = () => {
         )}
       </AnimatePresence>
 
-      {/* Sticky Hamburger Menu Button - Shows after scrolling past hero */}
+      {/* Hero Quick Links - Only shows in hero section on larger screens */}
+      <AnimatePresence>
+        {!pastHero && (
+          <div className="hidden md:flex fixed left-6 top-32 z-40 flex-col gap-3">
+            {[
+              { label: "Biltong", href: "/dried-meats/biltong", delay: 0.3 },
+              { label: "Chilli Bites", href: "/dried-meats/chilli-bites", delay: 0.5 },
+              { label: "Droewors", href: "/dried-meats/droewors", delay: 0.7 },
+            ].map((item) => (
+              <motion.div
+                key={item.label}
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -50 }}
+                transition={{ duration: 0.4, delay: item.delay, ease: "easeOut" }}
+              >
+                <Link
+                  href={item.href}
+                  className="font-display text-xl sm:text-2xl text-[#D4A853] hover:text-white transition-colors uppercase tracking-wide"
+                >
+                  {item.label}
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* Sticky Menu Button - Top Left - Shows after scrolling past hero */}
+      <AnimatePresence>
+        {pastHero && !menuOpen && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.2 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => setMenuOpen(true)}
+            className="fixed top-4 left-4 z-50 w-12 h-12 bg-[#C25A3E] rounded-full flex items-center justify-center shadow-lg"
+          >
+            <Menu size={22} className="text-white" strokeWidth={1.5} />
+          </motion.button>
+        )}
+      </AnimatePresence>
+
+      {/* Sticky Search & Cart Buttons - Top Right - Shows after scrolling past hero */}
       <AnimatePresence>
         {pastHero && !menuOpen && (
           <motion.div
@@ -189,16 +232,6 @@ const Navbar: React.FC = () => {
                 )}
               </motion.div>
             </Link>
-
-            {/* Menu Button */}
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setMenuOpen(true)}
-              className="w-12 h-12 bg-[#C25A3E] rounded-full flex items-center justify-center shadow-lg"
-            >
-              <Menu size={22} className="text-white" strokeWidth={1.5} />
-            </motion.button>
           </motion.div>
         )}
       </AnimatePresence>
@@ -235,58 +268,60 @@ const Navbar: React.FC = () => {
               }}
             />
 
-            <div className="relative h-full flex flex-col items-center justify-center px-6 py-12 overflow-y-auto">
-              {/* Menu Items */}
-              <nav className="flex flex-col items-center gap-2 sm:gap-3 md:gap-4">
-                {menuItems.map((item, index) => (
+            <div className="relative h-full flex flex-col items-center px-6 py-12 overflow-y-auto">
+              <div className="flex-1 flex flex-col items-center justify-center w-full">
+                {/* Menu Items */}
+                <nav className="flex flex-col items-center gap-2 sm:gap-3 md:gap-4">
+                  {menuItems.map((item, index) => (
+                    <motion.div
+                      key={item.label}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      transition={{ delay: 0.1 + index * 0.03, duration: 0.3 }}
+                    >
+                      {item.label === "Dried Meats" ? (
+                        <DriedMeatsDropdown variant="mobile" onNavigate={() => setMenuOpen(false)} />
+                      ) : (
+                        <Link
+                          href={item.href}
+                          onClick={() => setMenuOpen(false)}
+                          className="font-display text-[1.4rem] sm:text-[1.75rem] md:text-[2.25rem] text-[#F8F3E8] hover:text-[#D4A853] transition-colors relative group uppercase tracking-wide"
+                        >
+                          {item.label}
+                          <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#C25A3E] transition-all duration-300 group-hover:w-full" />
+                        </Link>
+                      )}
+                    </motion.div>
+                  ))}
+                  {/* Search Button */}
                   <motion.div
-                    key={item.label}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 10 }}
-                    transition={{ delay: 0.1 + index * 0.03, duration: 0.3 }}
+                    transition={{ delay: 0.1 + menuItems.length * 0.03, duration: 0.3 }}
                   >
-                    {item.label === "Dried Meats" ? (
-                      <DriedMeatsDropdown variant="mobile" onNavigate={() => setMenuOpen(false)} />
-                    ) : (
-                      <Link
-                        href={item.href}
-                        onClick={() => setMenuOpen(false)}
-                        className="font-display text-[1.4rem] sm:text-[1.75rem] md:text-[2.25rem] text-[#F8F3E8] hover:text-[#D4A853] transition-colors relative group uppercase tracking-wide"
-                      >
-                        {item.label}
-                        <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#C25A3E] transition-all duration-300 group-hover:w-full" />
-                      </Link>
-                    )}
+                    <button
+                      onClick={() => {
+                        setMenuOpen(false);
+                        setIsSearchOpen(true);
+                      }}
+                      className="font-display text-[1.4rem] sm:text-[1.75rem] md:text-[2.25rem] text-[#F8F3E8] hover:text-[#D4A853] transition-colors relative group uppercase tracking-wide flex items-center gap-3"
+                    >
+                      <Search size={24} strokeWidth={1.5} className="sm:w-7 sm:h-7 md:w-8 md:h-8" />
+                      Search
+                      <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#C25A3E] transition-all duration-300 group-hover:w-full" />
+                    </button>
                   </motion.div>
-                ))}
-                {/* Search Button */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
-                  transition={{ delay: 0.1 + menuItems.length * 0.03, duration: 0.3 }}
-                >
-                  <button
-                    onClick={() => {
-                      setMenuOpen(false);
-                      setIsSearchOpen(true);
-                    }}
-                    className="font-display text-[1.4rem] sm:text-[1.75rem] md:text-[2.25rem] text-[#F8F3E8] hover:text-[#D4A853] transition-colors relative group uppercase tracking-wide flex items-center gap-3"
-                  >
-                    <Search size={24} strokeWidth={1.5} className="sm:w-7 sm:h-7 md:w-8 md:h-8" />
-                    Search
-                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#C25A3E] transition-all duration-300 group-hover:w-full" />
-                  </button>
-                </motion.div>
-              </nav>
+                </nav>
+              </div>
 
               {/* Contact Info */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5 }}
-                className="absolute bottom-6 sm:bottom-10 left-0 right-0 text-center px-4"
+                className="mt-12 text-center px-4 pb-4 sm:hidden"
               >
                 <p className="font-condensed text-xs sm:text-sm text-[#F8F3E8]/60 tracking-wider uppercase mb-1">
                   255 Sawdust Rd, Spring, TX 77380
@@ -298,7 +333,7 @@ const Navbar: React.FC = () => {
             </div>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence >
 
       <SearchOverlay
         isOpen={isSearchOpen}

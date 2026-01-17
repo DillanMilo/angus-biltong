@@ -6,13 +6,23 @@ import { useState } from "react";
 import Link from "next/link";
 import NavMini from "@/app/components/NavMini";
 import Footer from "@/app/components/Footer";
-import { Truck, PartyPopper, ChevronDown, ChevronUp, ShoppingBag } from "lucide-react";
+import { Truck, PartyPopper, ChevronDown, ChevronUp, ShoppingBag, Snowflake } from "lucide-react";
+
+type ShippingMethod = "standard" | "secondDay";
+
+const SHIPPING_OPTIONS = {
+  standard: { label: "Standard (UPS Ground)", price: 9.99 },
+  secondDay: { label: "Second Day Air (UPS)", price: 24.99 },
+};
+
+const COOLER_BOX_PRICE = 10;
 
 const CartPage = () => {
   const { cart, removeFromCart, updateQuantity } = useCart();
   const [isUpdating, setIsUpdating] = useState<number | null>(null);
   const FREE_SHIPPING_THRESHOLD = 129;
-  const SHIPPING_RATE = 9.99;
+  const [shippingMethod, setShippingMethod] = useState<ShippingMethod>("standard");
+  const [includeCoolerBox, setIncludeCoolerBox] = useState(false);
   const [couponCode, setCouponCode] = useState("");
   const [isCouponOpen, setIsCouponOpen] = useState(false);
   const [appliedCoupon, setAppliedCoupon] = useState<string | null>(null);
@@ -23,8 +33,10 @@ const CartPage = () => {
     0
   );
   const amountToFreeShipping = FREE_SHIPPING_THRESHOLD - subtotal;
-  const shippingCost = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_RATE;
-  const total = subtotal + shippingCost;
+  const baseShippingCost = SHIPPING_OPTIONS[shippingMethod].price;
+  const shippingCost = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : baseShippingCost;
+  const coolerBoxCost = includeCoolerBox ? COOLER_BOX_PRICE : 0;
+  const total = subtotal + shippingCost + coolerBoxCost;
 
   const handleQuantityChange = async (id: number, quantity: number) => {
     if (quantity < 1) return;
@@ -77,7 +89,7 @@ const CartPage = () => {
       <div className="flex items-center gap-3">
         <PartyPopper className="text-olive" size={24} />
         <p className="font-body text-olive font-semibold">
-          Congratulations! Your order qualifies for FREE shipping!
+          Congratulations! Your order qualifies for FREE ground shipping!
         </p>
       </div>
     </motion.div>
@@ -93,7 +105,7 @@ const CartPage = () => {
       <div className="flex items-center gap-3">
         <Truck className="text-amber-dark" size={24} />
         <p className="font-body text-espresso">
-          Add just <span className="text-terracotta font-semibold">${amountToFreeShipping.toFixed(2)}</span> more to get FREE shipping!
+          Add just <span className="text-terracotta font-semibold">${amountToFreeShipping.toFixed(2)}</span> more to get FREE ground shipping!
         </p>
       </div>
     </motion.div>
@@ -102,7 +114,7 @@ const CartPage = () => {
   return (
     <div className="min-h-screen bg-sand">
       <NavMini />
-      <section className="max-w-6xl mx-auto px-4 py-12 pt-32">
+      <section className="max-w-6xl mx-auto px-4 py-12 pt-40 sm:pt-44">
         <div className="text-center mb-8">
           <h2 className="heading-lg text-espresso mb-4">Shopping Cart</h2>
           <div className="w-24 h-1 bg-amber mx-auto" />
@@ -217,13 +229,58 @@ const CartPage = () => {
                     <span>Subtotal</span>
                     <span className="text-espresso font-semibold">${subtotal.toFixed(2)}</span>
                   </div>
-                  <div className="flex justify-between border-t border-espresso/10 pt-3">
-                    <span>Shipping (US ONLY)</span>
-                    <span className={subtotal >= FREE_SHIPPING_THRESHOLD ? "text-olive font-semibold" : "text-espresso font-semibold"}>
-                      {subtotal >= FREE_SHIPPING_THRESHOLD
-                        ? "FREE"
-                        : `$${SHIPPING_RATE.toFixed(2)}`}
-                    </span>
+                  {/* Shipping Method Dropdown */}
+                  <div className="border-t border-espresso/10 pt-3">
+                    <label className="block text-sm font-condensed uppercase tracking-wider text-espresso/70 mb-2">
+                      Shipping Method (US ONLY)
+                    </label>
+                    <div className="relative">
+                      <select
+                        value={shippingMethod}
+                        onChange={(e) => setShippingMethod(e.target.value as ShippingMethod)}
+                        className="w-full px-3 py-2 bg-sand border border-espresso/20 text-sm font-body focus:outline-none focus:border-terracotta appearance-none cursor-pointer"
+                      >
+                        <option value="standard">
+                          {SHIPPING_OPTIONS.standard.label} - ${SHIPPING_OPTIONS.standard.price.toFixed(2)}
+                        </option>
+                        <option value="secondDay">
+                          {SHIPPING_OPTIONS.secondDay.label} - ${SHIPPING_OPTIONS.secondDay.price.toFixed(2)}
+                        </option>
+                      </select>
+                      <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-espresso/50" />
+                    </div>
+                    <div className="flex justify-between mt-2">
+                      <span>Shipping</span>
+                      <span className={subtotal >= FREE_SHIPPING_THRESHOLD ? "text-olive font-semibold" : "text-espresso font-semibold"}>
+                        {subtotal >= FREE_SHIPPING_THRESHOLD
+                          ? "FREE"
+                          : `$${baseShippingCost.toFixed(2)}`}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Cooler Box Option */}
+                  <div className="border-t border-espresso/10 pt-3">
+                    <label className="flex items-center gap-3 cursor-pointer group">
+                      <input
+                        type="checkbox"
+                        checked={includeCoolerBox}
+                        onChange={(e) => setIncludeCoolerBox(e.target.checked)}
+                        className="w-5 h-5 border-2 border-espresso/30 rounded accent-terracotta cursor-pointer"
+                      />
+                      <div className="flex-1 flex items-center gap-2">
+                        <Snowflake size={18} className="text-blue-500" />
+                        <span className="text-sm font-body group-hover:text-espresso transition-colors">
+                          Add Cooler Box
+                        </span>
+                      </div>
+                      <span className="text-espresso font-semibold text-sm">
+                        +${COOLER_BOX_PRICE.toFixed(2)}
+                      </span>
+                    </label>
+                    <p className="text-xs text-espresso/50 mt-1 ml-8">
+                      Keep your meats fresh during shipping
+                    </p>
                   </div>
 
                   <div className="border-t border-espresso/10 pt-3">

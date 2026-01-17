@@ -355,6 +355,15 @@ body::before {
   100% { transform: translateX(-50%); }
 }
 
+@keyframes marquee-seamless {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+.animate-marquee-seamless {
+  animation: marquee-seamless 60s linear infinite;
+}
+
 .animate-slide-up {
   animation: slideUp 0.8s ease-out forwards;
 }

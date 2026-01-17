@@ -11,7 +11,7 @@ const AboutPage = () => {
       <NavMini />
 
       {/* Hero Section */}
-      <section className="relative h-[40vh] min-h-[300px] overflow-hidden mt-24 sm:mt-28">
+      <section className="relative h-[40vh] min-h-[300px] overflow-hidden mt-32 sm:mt-36">
         <Image
           src="/image-5.jpg"
           alt="South African Landscape"
