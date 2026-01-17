@@ -16,7 +16,13 @@ export const productCategories: Record<string, CategoryConfig> = {
         productIds: [709, 463, 740, 708, 745, 747, 737, 458, 627, 739], // All biltong products
     },
 
-    // Traditional Biltong
+    // Traditional Biltong (All)
+    "biltong/traditional": {
+        title: "Traditional Biltong",
+        productIds: [740, 708, 709, 463, 747, 737, 745], // All traditional: Lean, Normal, More Dry, Lean/More Dry
+    },
+
+    // Traditional Biltong (Individual)
     "biltong/traditional/lean": {
         title: "Lean Traditional Biltong",
         productIds: [740, 708], // Biltong Lean (Slab-8oz), Biltong Lean (Sliced)
@@ -34,7 +40,13 @@ export const productCategories: Record<string, CategoryConfig> = {
         productIds: [745], // Biltong Lean and More Dry (Sliced)
     },
 
-    // Flavored Biltong
+    // Flavored Biltong (All)
+    "biltong/flavored": {
+        title: "Flavored Biltong",
+        productIds: [627, 739], // All flavored: Chutney, Peri Peri
+    },
+
+    // Flavored Biltong (Individual)
     "biltong/flavored/chutney": {
         title: "Chutney Biltong",
         productIds: [627], // Chutney Biltong 8oz

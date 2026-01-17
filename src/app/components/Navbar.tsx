@@ -150,10 +150,10 @@ const Navbar: React.FC = () => {
         )}
       </AnimatePresence>
 
-      {/* Hero Quick Links - Only shows in hero section */}
+      {/* Hero Quick Links - Only shows in hero section on larger screens */}
       <AnimatePresence>
         {!pastHero && (
-          <div className="fixed left-6 top-32 z-40 flex flex-col gap-3">
+          <div className="hidden md:flex fixed left-6 top-32 z-40 flex-col gap-3">
             {[
               { label: "Biltong", href: "/dried-meats/biltong", delay: 0.3 },
               { label: "Chilli Bites", href: "/dried-meats/chilli-bites", delay: 0.5 },
@@ -168,7 +168,7 @@ const Navbar: React.FC = () => {
               >
                 <Link
                   href={item.href}
-                  className="font-display text-xl sm:text-2xl text-white hover:text-[#D4A853] transition-colors uppercase tracking-wide"
+                  className="font-display text-xl sm:text-2xl text-[#D4A853] hover:text-white transition-colors uppercase tracking-wide"
                 >
                   {item.label}
                 </Link>

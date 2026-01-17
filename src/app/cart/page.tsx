@@ -114,7 +114,7 @@ const CartPage = () => {
   return (
     <div className="min-h-screen bg-sand">
       <NavMini />
-      <section className="max-w-6xl mx-auto px-4 py-12 pt-32">
+      <section className="max-w-6xl mx-auto px-4 py-12 pt-36">
         <div className="text-center mb-8">
           <h2 className="heading-lg text-espresso mb-4">Shopping Cart</h2>
           <div className="w-24 h-1 bg-amber mx-auto" />

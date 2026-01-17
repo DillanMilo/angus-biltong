@@ -11,7 +11,7 @@ const TermsPage = () => {
       <NavMini />
 
       {/* Hero Section */}
-      <section className="relative h-[30vh] min-h-[240px] overflow-hidden mt-24 sm:mt-28">
+      <section className="relative h-[30vh] min-h-[240px] overflow-hidden mt-32 sm:mt-36">
         <Image
           src="/image-5.jpg"
           alt="Terms of Service"

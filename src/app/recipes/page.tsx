@@ -11,7 +11,7 @@ const RecipesPage = () => {
       <NavMini />
 
       {/* Hero Section */}
-      <section className="relative h-[35vh] min-h-[280px] overflow-hidden mt-24 sm:mt-28">
+      <section className="relative h-[35vh] min-h-[280px] overflow-hidden mt-32 sm:mt-36">
         <Image
           src="/image-5.jpg"
           alt="Recipes"
@@ -45,7 +45,7 @@ const RecipesPage = () => {
             This page serves as a guide on how to prepare any of our fresh
             sausages. As with any raw product, please follow all the safe handling
             instructions on the packaging and always cook to an internal
-            temperature of at least <span className="text-terracotta font-semibold">145°F</span>. A good instant read thermometer can
+            temperature of at least <span className="text-terracotta font-semibold">165°F</span>. A good instant read thermometer can
             help if you are new to this.
           </p>
         </motion.div>
@@ -114,7 +114,7 @@ const RecipesPage = () => {
               <p>
                 The traditional barometer for boerewors has always been, if you
                 bend it and it breaks it is ready but please do use an instant
-                read thermometer to ensure you hit at least <span className="text-terracotta font-semibold">145°F</span>. Total cooking
+                read thermometer to ensure you hit at least <span className="text-terracotta font-semibold">165°F</span>. Total cooking
                 time is going to be somewhere between 10 and 15 minutes, depending
                 on the heat and height of your grill grid.
               </p>
@@ -175,7 +175,7 @@ const RecipesPage = () => {
                 <li>Now remove the lid and allow the water boil away leaving behind the rendered fat from the boerewors. Brown the outside of the boerewors by turning it over 2 to 3 times.</li>
               </ol>
               <p className="mt-4 bg-sand p-4 border-l-4 border-amber">
-                Once the color is good the boerewors is ready. Check to make sure the internal temperature is at least <span className="text-terracotta font-semibold">145°F</span>.
+                Once the color is good the boerewors is ready. Check to make sure the internal temperature is at least <span className="text-terracotta font-semibold">165°F</span>.
               </p>
             </div>
           </motion.section>
