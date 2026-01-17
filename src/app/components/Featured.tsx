@@ -90,7 +90,7 @@ const ProductCard: React.FC<{
         <button
           onClick={() => onAddToCart(product)}
           disabled={isAdded}
-          className={`w-full mt-2 font-condensed uppercase tracking-wider border border-[#2C2420] transition-colors duration-300 flex items-center justify-center gap-2 ${isMobileGrid ? "py-2 text-xs" : "py-2.5 text-sm"
+          className={`w-full mt-2 font-condensed uppercase tracking-wider rounded-full border border-[#2C2420] transition-colors duration-300 flex items-center justify-center gap-1.5 ${isMobileGrid ? "py-1.5 text-[10px]" : "py-2.5 text-sm"
             } ${isAdded
               ? "bg-[#3D4A3A] text-white border-[#3D4A3A]"
               : "text-[#2C2420] hover:bg-[#2C2420] hover:text-[#F8F3E8]"
@@ -98,7 +98,7 @@ const ProductCard: React.FC<{
         >
           {isAdded ? (
             <>
-              <Check size={isMobileGrid ? 14 : 16} />
+              <Check size={isMobileGrid ? 12 : 16} />
               Added
             </>
           ) : (

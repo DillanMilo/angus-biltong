@@ -183,7 +183,7 @@ const SausagePage = () => {
                   </p>
                   <button
                     onClick={() => handleAddToCart(product)}
-                    className={`w-full py-2 px-4 rounded-full transition-all flex items-center justify-center gap-2 font-condensed uppercase tracking-wider text-sm
+                    className={`w-full py-1.5 px-3 md:py-2 md:px-4 rounded-full transition-all flex items-center justify-center gap-1.5 font-condensed uppercase tracking-wider text-xs md:text-sm
                       ${
                         addedProducts.has(product.id)
                           ? "bg-olive text-white"
