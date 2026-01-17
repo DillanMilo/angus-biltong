@@ -52,23 +52,39 @@ const NavMini: React.FC = () => {
               className="overflow-hidden bg-[#2C2420] text-[#F8F3E8]"
             >
               <div className="py-2 overflow-hidden">
-                <div
-                  className="flex whitespace-nowrap animate-marquee-banner"
-                >
-                  {[...Array(20)].map((_, i) => (
-                    <span
-                      key={i}
-                      className="font-condensed text-sm tracking-[0.15em] uppercase mx-12"
-                    >
-                      <span className="text-[#D4A853]">Free Ground Shipping</span>
-                      <span className="mx-3">on orders over $129</span>
-                      <span className="text-[#D4A853] mx-6">|</span>
-                      <span>Authentic South African Flavors</span>
-                      <span className="text-[#D4A853] mx-6">|</span>
-                      <span>20+ Years of Family Recipes</span>
-                      <span className="text-[#D4A853] mx-6">|</span>
-                    </span>
-                  ))}
+                <div className="flex">
+                  <div className="flex whitespace-nowrap animate-marquee-banner-seamless">
+                    {[...Array(10)].map((_, i) => (
+                      <span
+                        key={`a-${i}`}
+                        className="font-condensed text-sm tracking-[0.15em] uppercase mx-12"
+                      >
+                        <span className="text-[#D4A853]">Free Ground Shipping</span>
+                        <span className="mx-3">on orders over $129</span>
+                        <span className="text-[#D4A853] mx-6">|</span>
+                        <span>Authentic South African Flavors</span>
+                        <span className="text-[#D4A853] mx-6">|</span>
+                        <span>20+ Years of Family Recipes</span>
+                        <span className="text-[#D4A853] mx-6">|</span>
+                      </span>
+                    ))}
+                  </div>
+                  <div className="flex whitespace-nowrap animate-marquee-banner-seamless">
+                    {[...Array(10)].map((_, i) => (
+                      <span
+                        key={`b-${i}`}
+                        className="font-condensed text-sm tracking-[0.15em] uppercase mx-12"
+                      >
+                        <span className="text-[#D4A853]">Free Ground Shipping</span>
+                        <span className="mx-3">on orders over $129</span>
+                        <span className="text-[#D4A853] mx-6">|</span>
+                        <span>Authentic South African Flavors</span>
+                        <span className="text-[#D4A853] mx-6">|</span>
+                        <span>20+ Years of Family Recipes</span>
+                        <span className="text-[#D4A853] mx-6">|</span>
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
             </motion.div>

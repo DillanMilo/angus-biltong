@@ -356,12 +356,22 @@ body::before {
 }
 
 .animate-marquee-banner {
-  animation: marquee 25s linear infinite;
+  animation: marquee 8s linear infinite;
 }
 
 @media (min-width: 640px) {
   .animate-marquee-banner {
     animation: marquee 22s linear infinite;
+  }
+}
+
+.animate-marquee-banner-seamless {
+  animation: marquee-seamless 44s linear infinite;
+}
+
+@media (min-width: 640px) {
+  .animate-marquee-banner-seamless {
+    animation: marquee-seamless 44s linear infinite;
   }
 }
 
