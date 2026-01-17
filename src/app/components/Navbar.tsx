@@ -82,10 +82,7 @@ const Navbar: React.FC = () => {
                 >
                   <div className="py-2 overflow-hidden">
                     <div
-                      className="flex whitespace-nowrap"
-                      style={{
-                        animation: "marquee 22s linear infinite",
-                      }}
+                      className="flex whitespace-nowrap animate-marquee-banner"
                     >
                       {[...Array(20)].map((_, i) => (
                         <span
