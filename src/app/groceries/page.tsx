@@ -192,7 +192,7 @@ const GroceriesPage = () => {
                   </p>
                   <button
                     onClick={() => handleAddToCart(product)}
-                    className={`w-full py-2 px-4 transition-all flex items-center justify-center gap-2 font-condensed uppercase tracking-wider text-sm
+                    className={`w-full py-2 px-4 rounded-full transition-all flex items-center justify-center gap-2 font-condensed uppercase tracking-wider text-sm
                       ${
                         addedProducts.has(product.id)
                           ? "bg-olive text-white"
