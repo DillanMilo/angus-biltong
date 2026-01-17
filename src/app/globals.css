@@ -366,12 +366,12 @@ body::before {
 }
 
 .animate-marquee-banner-seamless {
-  animation: marquee-seamless 44s linear infinite;
+  animation: marquee-seamless 38s linear infinite;
 }
 
 @media (min-width: 640px) {
   .animate-marquee-banner-seamless {
-    animation: marquee-seamless 44s linear infinite;
+    animation: marquee-seamless 38s linear infinite;
   }
 }
 
