@@ -31,12 +31,11 @@ const ProductCard: React.FC<{
 }> = ({ product, index, onAddToCart, isAdded, isMobileGrid = false }) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
       transition={{
-        delay: index * 0.08,
-        duration: 0.5,
-        ease: [0.25, 0.46, 0.45, 0.94],
+        delay: index * 0.05,
+        duration: 0.3,
       }}
       viewport={{ once: true }}
       className={`card-product rounded-none group ${isMobileGrid
