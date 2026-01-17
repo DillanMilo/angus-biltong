@@ -49,36 +49,37 @@ const Gallery: React.FC = () => {
         viewport={{ once: true }}
         className="origin-center overflow-hidden bg-[#C25A3E] py-6 md:py-8"
       >
-        <div
-          className="flex whitespace-nowrap"
-          style={{
-            animation: "marquee 10s linear infinite",
-          }}
-        >
-          {/* First set of content */}
-          {Array.from({ length: 12 }, () => values)
-            .flat()
-            .map((word, i) => (
-              <span
-                key={`a-${i}`}
-                className="font-display text-[40px] md:text-[60px] lg:text-[80px] text-white/90 mx-6 md:mx-12 tracking-wider"
-              >
-                {word}
-                <span className="mx-8 md:mx-16 text-[#D4A853]">|</span>
-              </span>
-            ))}
-          {/* Duplicate set for seamless loop */}
-          {Array.from({ length: 12 }, () => values)
-            .flat()
-            .map((word, i) => (
-              <span
-                key={`b-${i}`}
-                className="font-display text-[40px] md:text-[60px] lg:text-[80px] text-white/90 mx-6 md:mx-12 tracking-wider"
-              >
-                {word}
-                <span className="mx-8 md:mx-16 text-[#D4A853]">|</span>
-              </span>
-            ))}
+        <div className="flex">
+          <div
+            className="flex whitespace-nowrap animate-marquee-seamless"
+          >
+            {Array.from({ length: 8 }, () => values)
+              .flat()
+              .map((word, i) => (
+                <span
+                  key={`a-${i}`}
+                  className="font-display text-[40px] md:text-[60px] lg:text-[80px] text-white/90 mx-6 md:mx-12 tracking-wider"
+                >
+                  {word}
+                  <span className="mx-6 md:mx-12 text-[#D4A853]">|</span>
+                </span>
+              ))}
+          </div>
+          <div
+            className="flex whitespace-nowrap animate-marquee-seamless"
+          >
+            {Array.from({ length: 8 }, () => values)
+              .flat()
+              .map((word, i) => (
+                <span
+                  key={`b-${i}`}
+                  className="font-display text-[40px] md:text-[60px] lg:text-[80px] text-white/90 mx-6 md:mx-12 tracking-wider"
+                >
+                  {word}
+                  <span className="mx-6 md:mx-12 text-[#D4A853]">|</span>
+                </span>
+              ))}
+          </div>
         </div>
       </motion.div>
 
