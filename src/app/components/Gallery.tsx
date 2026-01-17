@@ -47,12 +47,12 @@ const Gallery: React.FC = () => {
         whileInView={{ scaleX: 1 }}
         transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
         viewport={{ once: true }}
-        className="origin-center overflow-hidden bg-[#C25A3E] py-10 md:py-14"
+        className="origin-center overflow-hidden bg-[#C25A3E] py-6 md:py-8"
       >
         <div
           className="flex whitespace-nowrap"
           style={{
-            animation: "marquee 20s linear infinite",
+            animation: "marquee 10s linear infinite",
           }}
         >
           {/* First set of content */}
@@ -61,7 +61,7 @@ const Gallery: React.FC = () => {
             .map((word, i) => (
               <span
                 key={`a-${i}`}
-                className="font-display text-[60px] md:text-[100px] lg:text-[120px] text-white/90 mx-8 md:mx-16 tracking-wider"
+                className="font-display text-[40px] md:text-[60px] lg:text-[80px] text-white/90 mx-6 md:mx-12 tracking-wider"
               >
                 {word}
                 <span className="mx-8 md:mx-16 text-[#D4A853]">|</span>
@@ -73,7 +73,7 @@ const Gallery: React.FC = () => {
             .map((word, i) => (
               <span
                 key={`b-${i}`}
-                className="font-display text-[60px] md:text-[100px] lg:text-[120px] text-white/90 mx-8 md:mx-16 tracking-wider"
+                className="font-display text-[40px] md:text-[60px] lg:text-[80px] text-white/90 mx-6 md:mx-12 tracking-wider"
               >
                 {word}
                 <span className="mx-8 md:mx-16 text-[#D4A853]">|</span>
