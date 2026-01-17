@@ -84,7 +84,7 @@ const Navbar: React.FC = () => {
                     <div
                       className="flex whitespace-nowrap"
                       style={{
-                        animation: "marquee 30s linear infinite",
+                        animation: "marquee 22s linear infinite",
                       }}
                     >
                       {[...Array(20)].map((_, i) => (
