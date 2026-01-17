@@ -216,10 +216,10 @@ const FilteredProductsPage = () => {
                                         transition: { delay: index * 0.05 },
                                     },
                                 }}
-                                className="card-product bg-cream p-4"
+                                className="card-product bg-cream p-3 md:p-4"
                             >
                                 {product.images?.[0]?.url_standard ? (
-                                    <div className="relative pt-[100%] mb-4">
+                                    <div className="relative pt-[85%] md:pt-[75%] lg:pt-[70%] mb-3">
                                         <Image
                                             src={product.images[0].url_standard}
                                             alt={product.name}
@@ -229,13 +229,13 @@ const FilteredProductsPage = () => {
                                         />
                                     </div>
                                 ) : (
-                                    <div className="pt-[100%] relative bg-sand flex items-center justify-center mb-4">
+                                    <div className="pt-[85%] md:pt-[75%] lg:pt-[70%] relative bg-sand flex items-center justify-center mb-3">
                                         <span className="absolute inset-0 flex items-center justify-center font-body text-espresso/40">No image</span>
                                     </div>
                                 )}
-                                <div className="space-y-2">
-                                    <h3 className="font-display text-sm md:text-base text-espresso line-clamp-2 min-h-[2.5rem]">{product.name}</h3>
-                                    <p className="font-body text-terracotta font-semibold">
+                                <div className="space-y-1.5">
+                                    <h3 className="font-display text-sm md:text-base text-espresso line-clamp-2 min-h-[2rem] md:min-h-[2.25rem]">{product.name}</h3>
+                                    <p className="font-body text-terracotta font-semibold text-sm md:text-base">
                                         ${Number(product.price).toFixed(2)}
                                     </p>
                                     <button

@@ -41,11 +41,11 @@ const ProductCard: React.FC<{
       viewport={{ once: true }}
       className={`card-product rounded-none group ${isMobileGrid
         ? "w-[160px] flex-shrink-0"
-        : "w-[260px] md:w-[280px] flex-shrink-0"
+        : "w-[240px] md:w-[260px] flex-shrink-0"
         }`}
     >
       {/* Image Container */}
-      <div className={`relative overflow-hidden bg-[#EDE5D4] ${isMobileGrid ? "aspect-square" : "aspect-[4/5]"}`}>
+      <div className={`relative overflow-hidden bg-[#EDE5D4] ${isMobileGrid ? "aspect-[5/4]" : "aspect-[4/3]"}`}>
         {product.imageUrl ? (
           <img
             src={product.imageUrl}
@@ -60,14 +60,14 @@ const ProductCard: React.FC<{
       </div>
 
       {/* Product Info */}
-      <div className={isMobileGrid ? "p-3 space-y-1.5" : "p-5 space-y-3"}>
-        <h3 className={`font-body text-[#2C2420] font-semibold leading-tight line-clamp-2 ${isMobileGrid ? "text-sm min-h-[2rem]" : "text-base min-h-[2.5rem]"
+      <div className={isMobileGrid ? "p-3 space-y-1.5" : "p-4 space-y-2"}>
+        <h3 className={`font-body text-[#2C2420] font-semibold leading-tight line-clamp-2 ${isMobileGrid ? "text-sm min-h-[2rem]" : "text-sm min-h-[2.25rem]"
           }`}>
           {product.name}
         </h3>
 
         <div className="flex items-center justify-between">
-          <p className={`font-display text-[#C25A3E] ${isMobileGrid ? "text-lg" : "text-2xl"}`}>
+          <p className={`font-display text-[#C25A3E] ${isMobileGrid ? "text-lg" : "text-xl"}`}>
             {product.price}
           </p>
 
